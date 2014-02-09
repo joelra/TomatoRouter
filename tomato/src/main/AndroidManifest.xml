@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.somethingprofane.tomato.OpenNewPageActivity"
+            android:label="@string/title_activity_open_new_page"
+            android:parentActivityName="com.somethingprofane.tomato.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.somethingprofane.tomato.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
