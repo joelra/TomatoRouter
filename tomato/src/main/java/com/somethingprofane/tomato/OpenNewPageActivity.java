@@ -1,9 +1,7 @@
 package com.somethingprofane.tomato;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -34,10 +43,10 @@ public class OpenNewPageActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         // get the view by Id from the layout that you just inflated
-        TextView textview = (TextView) findViewById(R.id.textView);
+        //TextView textview = (TextView) findViewById(R.id.textView);
 
         // now that you have the object you can access different methods on it, like setText("").
-        textview.setText("Joel this is how you set text");
+        //textview.setText("Joel this is how you set text");
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -54,7 +63,8 @@ public class OpenNewPageActivity extends ActionBarActivity {
 
     @OnClick(R.id.new_request_button)
     public void requestHTML(Button button){
-        new DownloadFilesTask().execute();
+        TextView textview = (TextView) findViewById(R.id.textView);
+        new GetURLTask().execute(textview);
     }
 
 
@@ -78,34 +88,55 @@ public class OpenNewPageActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
+    private class GetURLTask extends AsyncTask<TextView, Void, String> {
+        TextView inTextView;
+        String results = "N/A";
+        @Override
+        protected String doInBackground(TextView... textViews) {
+            this.inTextView = textViews[0];
+            return GetHTMLFromURL();
+        }
 
-        protected String doInBackground(String... stringUrl) {
+        final String GetHTMLFromURL() {
+            EditText mEdit = (EditText)findViewById(R.id.new_IP_textInput);
+            String url = String.valueOf(mEdit.getText());
+            BufferedReader inStream = null;
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpRequest = new HttpGet(url);
+                HttpResponse response = httpClient.execute(httpRequest);
+                inStream = new BufferedReader(
+                        new InputStreamReader(
+                                response.getEntity().getContent()));
 
-            /*
-            Create Http client apache
-            Set Get method on http client (http://simplehtml.com
-            Response res = client.execute();
-            res.statusCode == 200 or throw error
-            return stringHtml
-             */
-            int count = urls.length;
-            long totalSize = 0;
-            for (int i = 0; i < count; i++) {
-                totalSize += Downloader.downloadFile(urls[i]);
-                publishProgress((int) ((i / (float) count) * 100));
-                // Escape early if cancel() is called
-                if (isCancelled()) break;
+                StringBuffer buffer = new StringBuffer("");
+                String line = "";
+                String NL = System.getProperty("line.separator");
+                while ((line = inStream.readLine()) != null) {
+                    buffer.append(line + NL);
+                }
+                inStream.close();
+
+                results = buffer.toString();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                if (inStream != null) {
+                    try {
+                        inStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            return totalSize;
+            return results;
         }
 
         protected void onPostExecute(String html) {
 
             // access the activity thread
-            textView.setText(html);
-
-            showDialog("Downloaded " + result + " bytes");
+            inTextView.setText(html);
         }
     }
 
