@@ -91,6 +91,8 @@ public class OpenNewPageActivity extends ActionBarActivity {
     private class GetURLTask extends AsyncTask<TextView, Void, String> {
         TextView inTextView;
         String results = "N/A";
+        private Parser parserClass = new Parser();
+
         @Override
         protected String doInBackground(TextView... textViews) {
             this.inTextView = textViews[0];
@@ -98,38 +100,9 @@ public class OpenNewPageActivity extends ActionBarActivity {
         }
 
         final String GetHTMLFromURL() {
-            EditText mEdit = (EditText)findViewById(R.id.new_IP_textInput);
-            String url = String.valueOf(mEdit.getText());
-            BufferedReader inStream = null;
-            try {
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpRequest = new HttpGet(url);
-                HttpResponse response = httpClient.execute(httpRequest);
-                inStream = new BufferedReader(
-                        new InputStreamReader(
-                                response.getEntity().getContent()));
-
-                StringBuffer buffer = new StringBuffer("");
-                String line = "";
-                String NL = System.getProperty("line.separator");
-                while ((line = inStream.readLine()) != null) {
-                    buffer.append(line + NL);
-                }
-                inStream.close();
-
-                results = buffer.toString();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } finally {
-                if (inStream != null) {
-                    try {
-                        inStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            //EditText mEdit = (EditText)findViewById(R.id.new_IP_textInput);
+            String url = "http://www.duoh.com/404";//String.valueOf(mEdit.getText());
+            results = parserClass.getHTMLFromURL(url);
             return results;
         }
 
