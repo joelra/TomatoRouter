@@ -85,7 +85,7 @@ public class Parser {
     private void jSoupParser(String html){
         Document doc = Jsoup.parse(html);
         // Parse though document and place all elements in a map.
-        
+
     }
 
     private boolean validateURLAddress(String url) {
