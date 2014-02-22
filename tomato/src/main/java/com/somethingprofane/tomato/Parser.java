@@ -156,6 +156,7 @@ public class Parser {
                 .header("Authorization", "Basic " + base64login)
                 .userAgent("Mozilla")
                 .post();
+        responseHTML = doc.text();
         return responseHTML;
     }
 }
