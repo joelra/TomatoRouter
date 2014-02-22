@@ -2,6 +2,8 @@ package com.somethingprofane.tomato;
 
 import android.util.Base64;
 
+import org.json.JSONArray;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,19 +24,7 @@ public class Parser {
     //TODO: 3. Modify OpenNewPageActivity to display router information and controls
 
     public static void HTMLParse(){
-        try {
-            String username = "root";
-            String password = "admin";
-            String login = username + ":" + password;
-            String base64login = new String(Base64.encodeToString(login.getBytes(), Base64.DEFAULT));
-            System.out.println(base64login);
-            Document doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
-            String result = doc.text();
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     // TODO Implement this class
@@ -51,13 +41,42 @@ public class Parser {
      * @param website The URL of the web address that the user wishes to get the HTML for.
      * @return A string of the HTML from the web address.
      */
-    public static String ParseHTMLFromURL(String website){
+    public static String ParseHTMLFromURL(String website, String username, String password){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
-        Document doc = GetRequestFromAddress(properSite);
+        Document doc = null;
+        String base64login = GetBase64Login(username, password);
+        if(ValidateAuthentication(website, base64login)){
+            doc = GetRequestFromAddress(properSite, base64login);
+        }
         // TODO Update where this will returned formatted HTML, not just the entire page.
         returnHTML = doc.body().html();
         return returnHTML;
+    }
+
+    public static String GetBase64Login(String username, String password) {
+        String loginCreds = username + password;
+        String base64login = new String(Base64.encodeToString(loginCreds.getBytes(), Base64.DEFAULT));
+        return base64login;
+    }
+
+    private static boolean ValidateAuthentication(String website, String base64login) {
+        Boolean validated = false;
+
+        Connection.Response response = null;
+        try {
+            response = Jsoup.connect(website)
+                    .header("Authorization", "Basic " + base64login)
+                    .execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(response.statusCode() == 200){
+            validated =  true;
+        }
+
+        return validated;
     }
 
     /**
@@ -67,13 +86,12 @@ public class Parser {
      * @param cssQuery The cssQuery that is to be applied. For more information on valid CSS queries, see http://jsoup.org/cookbook/extracting-data/selector-syntax.
      * @return The string of all the selected elements that were passed in as the cssQuery.
      */
-    public static String ParseHTMLFromURL(String website, String cssQuery){
+    public static String ParseHTMLFromURL(String website, String username, String password, String cssQuery){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
-        Document doc = GetRequestFromAddress(properSite);
+        String base64login = GetBase64Login(username, password);
+        Document doc = GetRequestFromAddress(properSite, base64login);
         Elements elements = doc.select(cssQuery);
-        @SuppressWarnings("unused")
-        String[] strings = new String[elements.size()];
         returnHTML = elements.text();
         return returnHTML;
     }
@@ -83,11 +101,12 @@ public class Parser {
      * @param address The web address to perform the HTTP Get request on.
      * @return A Jsoup.Document object is returned;
      */
-    private static Document GetRequestFromAddress(String address){
+    private static Document GetRequestFromAddress(String address, String base64login){
+
         Document doc = null;
         if(IsReachable(address)){
             try {
-                doc = Jsoup.connect(address).get();
+                doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
