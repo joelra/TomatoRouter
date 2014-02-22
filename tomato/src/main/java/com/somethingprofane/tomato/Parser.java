@@ -16,12 +16,11 @@ import java.util.Map;
  */
 public class Parser {
 
+    //TODO: Add check in login class for wifi connectivity.
+    //TODO: 1. Clean up parser class
+    //TODO: 2. Add POST method.
+    //TODO: 3. Modify OpenNewPageActivity to display router information and controls
 
-//        //TODO: Add check in login class for wifi connectivity.
-
-
-
-    // JAnderson note: This is for reference currently.
     public static void HTMLParse(){
         try {
             String username = "root";
@@ -29,25 +28,14 @@ public class Parser {
             String login = username + ":" + password;
             String base64login = new String(Base64.encodeToString(login.getBytes(), Base64.DEFAULT));
             System.out.println(base64login);
-            Document doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get(); 
+            Document doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
             String result = doc.text();
 
-            //ExampleJsoup.GetElementsFromBody(doc.body());
-
-//			System.out.println(doc.title());
-//			Elements elements = doc.select("div[id=content]");
-//			for(Element el : elements){
-//				System.out.println(el.text());
-//			}
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-}
-
-
-class ExampleJsoup {
 
     // TODO Implement this class
     public String ParseHTMLFromString(String html){
