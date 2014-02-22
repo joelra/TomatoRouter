@@ -83,14 +83,14 @@ public class MainLoginActivity extends ActionBarActivity {
 
         final String validateCredentials() {
             String url = "http://www.duoh.com/404";//String.valueOf(mEdit.getText());
-            results = parserClass.getHTMLFromURL(url);
+            results = "Test";
             return results;
         }
 
         protected void onPostExecute(String html) {
 
             // access the activity thread
-            inTextView.setText(html);
+            usrnameTextView.setText(html);
         }
 
 

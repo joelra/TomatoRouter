@@ -1,6 +1,7 @@
 package com.somethingprofane.tomato;
 
 import android.util.Base64;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,29 +16,21 @@ import java.util.Map;
  */
 public class Parser {
 
-//    public static void main(String[] args){
+
 //        //TODO: Add check in login class for wifi connectivity.
-//    }
-
-//JAnderson Note: Implement all this code into this class in a bomb awesome way.
-//TODO implement this shizz baby!
 
 
-    public static void main(String[] args){
-        System.out.println("Hello World");
-        String HTML = "";
-        HTML = ExampleJsoup.ParseHTMLFromURL("joelra.github.io", "p");
-    }
 
     // JAnderson note: This is for reference currently.
-    private static void HTMLParse(){
+    public static void HTMLParse(){
         try {
             String username = "root";
             String password = "admin";
             String login = username + ":" + password;
-            String base64login = new String(Base64.encodeBase64(login.getBytes()));
+            String base64login = new String(Base64.encodeToString(login.getBytes(), Base64.DEFAULT));
             System.out.println(base64login);
-            Document doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
+            Document doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get(); 
+            String result = doc.text();
 
             //ExampleJsoup.GetElementsFromBody(doc.body());
 
@@ -148,5 +141,4 @@ class ExampleJsoup {
         }
         return formattedWebsite;
     }
-}
 }

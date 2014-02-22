@@ -102,7 +102,8 @@ public class OpenNewPageActivity extends ActionBarActivity {
         final String GetHTMLFromURL() {
             //EditText mEdit = (EditText)findViewById(R.id.new_IP_textInput);
             String url = "http://www.duoh.com/404";//String.valueOf(mEdit.getText());
-            results = parserClass.getHTMLFromURL(url);
+            parserClass.HTMLParse();
+            results = "Test" ;
             return results;
         }
 
