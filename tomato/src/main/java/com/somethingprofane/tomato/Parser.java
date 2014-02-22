@@ -49,7 +49,6 @@ public class Parser {
         if(ValidateAuthentication(website, base64login)){
             doc = GetRequestFromAddress(properSite, base64login);
         }
-        // TODO Update where this will returned formatted HTML, not just the entire page.
         returnHTML = doc.body().html();
         return returnHTML;
     }
@@ -147,5 +146,16 @@ public class Parser {
             formattedWebsite = "http://" + website;
         }
         return formattedWebsite;
+    }
+
+    public String PostToWebadress(String website, String username, String password, String parameterString) throws IOException {
+        String responseHTML = "";
+        String base64login = GetBase64Login(username, password);
+        Document doc = Jsoup.connect(website)
+                .data(parameterString)
+                .header("Authorization", "Basic " + base64login)
+                .userAgent("Mozilla")
+                .post();
+        return responseHTML;
     }
 }
