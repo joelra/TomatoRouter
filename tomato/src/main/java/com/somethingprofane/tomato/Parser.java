@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by somethingPr0fane on 2/6/14.
@@ -151,6 +153,11 @@ public class Parser {
     public String PostToWebadress(String website, String username, String password, String parameterString) throws IOException {
         String responseHTML = "";
         String base64login = GetBase64Login(username, password);
+        /**
+         * This is just for testing purposes. //TODO implement the data parameters a lot better. Possibly a map?
+         */
+        String httpID = "_http_id";
+        String id = GetRouterHTTPId();
         Document doc = Jsoup.connect(website)
                 .data(parameterString)
                 .header("Authorization", "Basic " + base64login)
@@ -159,4 +166,19 @@ public class Parser {
         responseHTML = doc.text();
         return responseHTML;
     }
+
+    private String GetRouterHTTPId() {
+        String http_id = "";
+        String website = "http://192.168.1.1";
+        String basic64login = "cm9vdDphZG1pbg==";
+        Document doc = GetRequestFromAddress(website, basic64login);
+        String scriptTag = doc.getElementsByTag("head").html();
+        String pattern = "http_id=(.*?)\"";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(scriptTag);
+        if(m.find()){
+            System.out.println(m.group(1));
+            http_id = m.group(1);
+        }
+        return http_id;    }
 }
