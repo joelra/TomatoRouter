@@ -37,13 +37,13 @@ public class Parser {
      * @param website The URL of the web address that the user wishes to get the HTML for.
      * @return A string of the HTML from the web address.
      */
-    public static String ParseHTMLFromURL(String website, String username, String password){
+    public String ParseHTMLFromURL(String website, String username, String password){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
         Document doc = null;
         String base64login = GetBase64Login(username, password);
         if(ValidateAuthentication(website, base64login)){
-            doc = GetRequestFromAddress(properSite, base64login);
+            doc = GetDocumentFromAddress(properSite, base64login);
         }
         returnHTML = doc.body().html();
         return returnHTML;
@@ -55,19 +55,12 @@ public class Parser {
         return base64login;
     }
 
-    private static boolean ValidateAuthentication(String website, String base64login) {
+    private boolean ValidateAuthentication(String website, String base64login) {
         Boolean validated = false;
 
-        Connection.Response response = null;
-        try {
-            response = Jsoup.connect(website)
-                    .header("Authorization", "Basic " + base64login)
-                    .execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        int responseCode = GetResponseCodeFromAddress(website, base64login);
 
-        if(response.statusCode() == 200){
+        if(responseCode == 200){
             validated =  true;
         }
 
@@ -85,7 +78,7 @@ public class Parser {
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
         String base64login = GetBase64Login(username, password);
-        Document doc = GetRequestFromAddress(properSite, base64login);
+        Document doc = GetDocumentFromAddress(properSite, base64login);
         Elements elements = doc.select(cssQuery);
         returnHTML = elements.text();
         return returnHTML;
@@ -96,7 +89,7 @@ public class Parser {
      * @param address The web address to perform the HTTP Get request on.
      * @return A Jsoup.Document object is returned;
      */
-    private static Document GetRequestFromAddress(String address, String base64login){
+    private static Document GetDocumentFromAddress(String address, String base64login){
 
         Document doc = null;
         if(IsReachable(address)){
@@ -174,7 +167,7 @@ public class Parser {
         String http_id = "";
         String website = "http://192.168.1.1";
         String basic64login = GetBase64Login("root", "admin");
-        Document doc = GetRequestFromAddress(website, basic64login);
+        Document doc = GetDocumentFromAddress(website, basic64login);
         String scriptTag = doc.getElementsByTag("head").html();
         String pattern = "http_id=(.*?)\"";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -184,5 +177,20 @@ public class Parser {
             http_id = m.group(1);
         }
         return http_id;
+    }
+
+    public int GetResponseCodeFromAddress(String url, String base64login){
+        int response;
+        Connection.Response urlResponse = null;
+        try {
+            urlResponse = Jsoup.connect(ValidateWebAddress(url))
+                    .header("Authorization", "Basic " + base64login)
+                    .execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        response = urlResponse.statusCode();
+        return response;
     }
 }
