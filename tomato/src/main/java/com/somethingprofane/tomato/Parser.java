@@ -31,11 +31,9 @@ public class Parser {
 
     // TODO Implement this class
     public String ParseHTMLFromString(String html){
-        String returnHtml = "";
-
-
-
-        return returnHtml;
+        throw null;
+//        String returnHtml = "";
+//        return returnHtml;
     }
 
     /**
@@ -170,7 +168,7 @@ public class Parser {
     private String GetRouterHTTPId() {
         String http_id = "";
         String website = "http://192.168.1.1";
-        String basic64login = "cm9vdDphZG1pbg==";
+        String basic64login = GetBase64Login("root", "admin");
         Document doc = GetRequestFromAddress(website, basic64login);
         String scriptTag = doc.getElementsByTag("head").html();
         String pattern = "http_id=(.*?)\"";
@@ -180,5 +178,6 @@ public class Parser {
             System.out.println(m.group(1));
             http_id = m.group(1);
         }
-        return http_id;    }
+        return http_id;
+    }
 }
