@@ -25,12 +25,8 @@ public class Parser {
     //TODO: 2. Add POST method.
     //TODO: 3. Modify OpenNewPageActivity to display router information and controls
 
-    public static void HTMLParse(){
-
-    }
-
-    // TODO Implement this class
     public String ParseHTMLFromString(String html){
+        //TODO Implement this class
         throw null;
 //        String returnHtml = "";
 //        return returnHtml;
@@ -148,6 +144,15 @@ public class Parser {
         return formattedWebsite;
     }
 
+    /**
+     * Will send a post request to a specified address and return the html if the post if successful. Currently, this doesn't accept the right number of parameters.
+     * @param website The website to post to.
+     * @param username The username to authenticate with.
+     * @param password The password to authentication with.
+     * @param parameterString The parameter to send in. Currently not implemented.
+     * @return Returns a string of the HTML that came from the post request.
+     * @throws IOException
+     */
     public String PostToWebadress(String website, String username, String password, String parameterString) throws IOException {
         String responseHTML = "";
         String base64login = GetBase64Login(username, password);
