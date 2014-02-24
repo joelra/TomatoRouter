@@ -49,7 +49,7 @@ public class Parser {
         return returnHTML;
     }
 
-    public static String GetBase64Login(String username, String password) {
+    public String GetBase64Login(String username, String password) {
         String loginCreds = username + password;
         String base64login = new String(Base64.encodeToString(loginCreds.getBytes(), Base64.DEFAULT));
         return base64login;
@@ -74,7 +74,7 @@ public class Parser {
      * @param cssQuery The cssQuery that is to be applied. For more information on valid CSS queries, see http://jsoup.org/cookbook/extracting-data/selector-syntax.
      * @return The string of all the selected elements that were passed in as the cssQuery.
      */
-    public static String ParseHTMLFromURL(String website, String username, String password, String cssQuery){
+    public String ParseHTMLFromURL(String website, String username, String password, String cssQuery){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
         String base64login = GetBase64Login(username, password);
@@ -185,6 +185,8 @@ public class Parser {
         try {
             urlResponse = Jsoup.connect(ValidateWebAddress(url))
                     .header("Authorization", "Basic " + base64login)
+                    .userAgent("Mozilla")
+                    .timeout(3000)
                     .execute();
         } catch (IOException e) {
             e.printStackTrace();

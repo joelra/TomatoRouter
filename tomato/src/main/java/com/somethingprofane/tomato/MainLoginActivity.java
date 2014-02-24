@@ -1,28 +1,16 @@
 package com.somethingprofane.tomato;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,7 +28,7 @@ public class MainLoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         // inflate your layout and set it to the screen
-        setContentView(R.layout.login_main);
+        setContentView(R.layout.activity_main_login);
 
         // Inject Button
         ButterKnife.inject(this);
@@ -60,9 +48,10 @@ public class MainLoginActivity extends ActionBarActivity {
 
     @OnClick(R.id.login_main_loginbtn)
     public void LoginClicked(Button button){
-
-
-
+        TextView username = (TextView) findViewById(R.id.login_main_usrname_text);
+        TextView passwd = (TextView) findViewById(R.id.login_main_passwd_text);
+        TextView ipAddr = (TextView) findViewById(R.id.login_main_ip_text);
+        new LoginValidation().execute(username, passwd, ipAddr);
     }
 
     private class LoginValidation extends AsyncTask<TextView, Void, String>{
@@ -70,7 +59,8 @@ public class MainLoginActivity extends ActionBarActivity {
         TextView usrnameTextView;
         TextView pswrdTextView;
         TextView ipTextView;
-        String results = "N/A";
+        String response = "N/A";
+        int responseCode;
         private Parser parserClass = new Parser();
 
         @Override
@@ -82,15 +72,26 @@ public class MainLoginActivity extends ActionBarActivity {
         }
 
         final String validateCredentials() {
-            String url = "http://www.duoh.com/404";//String.valueOf(mEdit.getText());
-            results = "Test";
-            return results;
+            String ip = ipTextView.getText().toString();
+            String username = usrnameTextView.getText().toString();
+            String password = pswrdTextView.getText().toString();
+            String base64login = parserClass.GetBase64Login(username,password);
+            responseCode = parserClass.GetResponseCodeFromAddress(ip,base64login);
+            response = Integer.toString(responseCode);
+            return null;
         }
 
-        protected void onPostExecute(String html) {
-
+        protected void onPostExecute(String response) {
             // access the activity thread
-            usrnameTextView.setText(html);
+            if(responseCode == 200){
+                Intent intent = new Intent(MainLoginActivity.this, OpenNewPageActivity.class);
+                MainLoginActivity.this.startActivity(intent);
+            } else {
+                Context context = getApplicationContext();
+                CharSequence text = "Something went wrong...";
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+            }
         }
 
 
