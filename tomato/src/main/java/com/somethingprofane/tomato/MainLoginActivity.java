@@ -66,10 +66,6 @@ public class MainLoginActivity extends ActionBarActivity {
             this.usrnameTextView = textViews[0];
             this.pswrdTextView = textViews[1];
             this.ipTextView = textViews[2];
-            return validateCredentials();
-        }
-
-        final String validateCredentials() {
             String ip = ipTextView.getText().toString();
             String username = usrnameTextView.getText().toString();
             String password = pswrdTextView.getText().toString();
@@ -84,6 +80,8 @@ public class MainLoginActivity extends ActionBarActivity {
             if(response.equals("200")){
                 Intent intent = new Intent(MainLoginActivity.this, RouterInformationActivity.class);
                 MainLoginActivity.this.startActivity(intent);
+                // Finish the activity;
+                finish();
             } else {
                 Context context = getApplicationContext();
                 CharSequence text = "Something went wrong...";
