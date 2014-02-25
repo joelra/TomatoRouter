@@ -12,5 +12,6 @@
     <string name="title_activity_open_new_page">New Page Baby</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_device_screen">DeviceScreen</string>
 
 </resources>

@@ -30,6 +30,14 @@
             android:name="com.somethingprofane.tomato.MainScreen"
             android:label="@string/title_activity_main_screen" >
         </activity>
+        <activity
+            android:name="com.somethingprofane.tomato.DeviceScreen"
+            android:label="@string/title_activity_device_screen"
+            android:parentActivityName="com.somethingprofane.tomato.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainScreen" />
+        </activity>
     </application>
 
 </manifest>

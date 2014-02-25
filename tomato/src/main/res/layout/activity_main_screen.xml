@@ -36,8 +36,8 @@ tools:context="com.somethingprofane.tomato.MainScreen">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="Router"
+        android:id="@+id/mainscr_btnRouter"
         android:gravity="center|center_horizontal"
         android:layout_gravity="center_horizontal|left"
         android:layout_marginLeft="25dp"
