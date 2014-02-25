@@ -51,7 +51,7 @@ public class Parser {
     }
 
     public String GetBase64Login(String username, String password) {
-        String loginCreds = username + password;
+        String loginCreds = username + ":" + password;
         String base64login = new String(Base64.encodeToString(loginCreds.getBytes(), Base64.DEFAULT));
         base64login = base64login.trim();
         if(!base64login.endsWith("=")){
