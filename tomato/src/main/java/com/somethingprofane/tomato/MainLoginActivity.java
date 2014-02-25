@@ -83,7 +83,7 @@ public class MainLoginActivity extends ActionBarActivity {
 
         protected void onPostExecute(String response) {
             // access the activity thread
-            if(response == "200"){
+            if(response.equals("200")){
                 Intent intent = new Intent(MainLoginActivity.this, OpenNewPageActivity.class);
                 MainLoginActivity.this.startActivity(intent);
             } else {
