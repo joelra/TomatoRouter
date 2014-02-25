@@ -4,6 +4,7 @@ import android.util.Base64;
 
 import org.json.JSONArray;
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -52,6 +53,10 @@ public class Parser {
     public String GetBase64Login(String username, String password) {
         String loginCreds = username + password;
         String base64login = new String(Base64.encodeToString(loginCreds.getBytes(), Base64.DEFAULT));
+        base64login = base64login.trim();
+        if(!base64login.endsWith("=")){
+            base64login += "==";
+        }
         return base64login;
     }
 
@@ -180,7 +185,7 @@ public class Parser {
     }
 
     public int GetResponseCodeFromAddress(String url, String base64login){
-        int response;
+        int response = 0;
         Connection.Response urlResponse = null;
         try {
             urlResponse = Jsoup.connect(ValidateWebAddress(url))
@@ -188,11 +193,13 @@ public class Parser {
                     .userAgent("Mozilla")
                     .timeout(3000)
                     .execute();
+            response = urlResponse.statusCode();
+        } catch (HttpStatusException error401){
+            response = error401.getStatusCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        response = urlResponse.statusCode();
         return response;
     }
 }

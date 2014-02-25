@@ -78,7 +78,7 @@ public class MainLoginActivity extends ActionBarActivity {
             String base64login = parserClass.GetBase64Login(username,password);
             responseCode = parserClass.GetResponseCodeFromAddress(ip,base64login);
             response = Integer.toString(responseCode);
-            return null;
+            return response;
         }
 
         protected void onPostExecute(String response) {
