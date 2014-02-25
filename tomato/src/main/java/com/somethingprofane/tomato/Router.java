@@ -2,6 +2,7 @@ package com.somethingprofane.tomato;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +25,14 @@ public class Router {
     String uptime;
     int totalRam;
     int freeRam;
+    List deviceList;
 
+    /**
+     *
+     * @param url
+     * @param usrname
+     * @param pswrd
+     */
     public Router (String url, String usrname, String pswrd){
         Parser tempParser = new Parser();
         String returnedHtml = null;
@@ -52,6 +60,10 @@ public class Router {
         return routerName;
     }
 
+    /**
+     *
+     * @param html string of html regex is run on to extract routerName
+     */
     public void setRouterName(String html) {
 
         String pattern = "router_name: '(.*?)'";
@@ -67,6 +79,10 @@ public class Router {
         return wanHwAddr;
     }
 
+    /**
+     *
+     * @param html string of html regex is run on to extract wanAddress
+     */
     public void setWanHwAddr(String html) {
         String pattern = "wan_hwaddr: '(.*?)'";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -81,6 +97,10 @@ public class Router {
         return lanIpAddr;
     }
 
+    /**
+     *
+     * @param html string of html regex is run on to extract lan ip address
+     */
     public void setLanIpAddr(String html) {
         String pattern = "lan_ipaddr: '(.*?)'";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -91,10 +111,15 @@ public class Router {
         }
     }
 
+
     public String getModelName() {
         return modelName;
     }
 
+    /**
+     *
+     * @param html - string of html regex is run on to extract modelName
+     */
     public void setModelName(String html) {
         String pattern = "t_model_name: '(.*?)'";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -109,6 +134,10 @@ public class Router {
         return uptime;
     }
 
+    /**
+     *
+     * @param html string of html regex is run on to extract setuptime
+     */
     public void setUptime(String html) {
         String pattern = "uptime_s: '(.*?)'";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -123,6 +152,10 @@ public class Router {
         return totalRam;
     }
 
+    /**
+     *
+     * @param html - string of html regex is run on to extract totalRam
+     */
     public void setTotalRam(String html) {
         String pattern = "freeram: (.*?),";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
@@ -145,6 +178,14 @@ public class Router {
             System.out.println(m.group(1));
             freeRam = Integer.parseInt(m.group(1));
         }
+    }
+
+    public List getDeviceList() {
+        return deviceList;
+    }
+
+    public void setDeviceList(List deviceList) {
+        this.deviceList = deviceList;
     }
 
 
