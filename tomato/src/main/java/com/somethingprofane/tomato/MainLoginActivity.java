@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -84,7 +82,7 @@ public class MainLoginActivity extends ActionBarActivity {
         protected void onPostExecute(String response) {
             // access the activity thread
             if(response.equals("200")){
-                Intent intent = new Intent(MainLoginActivity.this, OpenNewPageActivity.class);
+                Intent intent = new Intent(MainLoginActivity.this, RouterInformationActivity.class);
                 MainLoginActivity.this.startActivity(intent);
             } else {
                 Context context = getApplicationContext();

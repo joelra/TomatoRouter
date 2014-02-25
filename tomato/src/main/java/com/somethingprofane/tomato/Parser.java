@@ -25,7 +25,7 @@ public class Parser {
     //TODO: Add check in login class for wifi connectivity.
     //TODO: 1. Clean up parser class
     //TODO: 2. Add POST method.
-    //TODO: 3. Modify OpenNewPageActivity to display router information and controls
+    //TODO: 3. Modify RouterInformationActivity to display router information and controls
 
     public String ParseHTMLFromString(String html){
         //TODO Implement this class

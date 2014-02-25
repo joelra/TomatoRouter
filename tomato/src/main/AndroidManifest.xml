@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.somethingprofane.tomato.OpenNewPageActivity"
+            android:name=".RouterInformationActivity"
             android:label="@string/title_activity_open_new_page"
             android:parentActivityName="com.somethingprofane.tomato.MainActivity" >
             <meta-data

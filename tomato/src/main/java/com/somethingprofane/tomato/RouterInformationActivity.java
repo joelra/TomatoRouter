@@ -11,25 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class OpenNewPageActivity extends ActionBarActivity {
+public class RouterInformationActivity extends ActionBarActivity {
 
     @InjectView(R.id.new_request_button)Button requestButton;
 
@@ -38,7 +28,7 @@ public class OpenNewPageActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         // inflate your layout and set it to the screen
-        setContentView(R.layout.activity_open_new_page);
+        setContentView(R.layout.activity_router_information);
 
 
 
