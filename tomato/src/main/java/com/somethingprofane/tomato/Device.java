@@ -12,4 +12,18 @@ public class Device {
      * How long connected
      * etc.
      */
+
+    // Variables
+    String deviceMacAddr = "";
+    String deviceName = "";
+    String deviceIPAddr = "";
+    String deviceConnTime = "";
+
+    /**
+     * Constructor
+     */
+    public Device(){
+        Parser parser = new Parser();
+        //parser.PostToWebadress(routerIP, username, password,);
+    }
 }
