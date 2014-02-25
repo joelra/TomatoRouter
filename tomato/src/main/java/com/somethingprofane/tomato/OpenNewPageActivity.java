@@ -23,6 +23,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,6 +39,9 @@ public class OpenNewPageActivity extends ActionBarActivity {
 
         // inflate your layout and set it to the screen
         setContentView(R.layout.activity_open_new_page);
+
+
+
 
         // Inject Button
         ButterKnife.inject(this);
@@ -59,6 +63,8 @@ public class OpenNewPageActivity extends ActionBarActivity {
             //Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+
     }
 
     @OnClick(R.id.new_request_button)
@@ -96,6 +102,13 @@ public class OpenNewPageActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(TextView... textViews) {
             this.inTextView = textViews[0];
+            String http_id = null;
+            http_id = new Parser().GetRouterHTTPId();
+            try {
+                String html = new Parser().PostToWebadress("http://192.168.1.1/status-data.jsx","root","admin",new Parser().buildParamsMap("_http_id",http_id));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return GetHTMLFromURL();
         }
 

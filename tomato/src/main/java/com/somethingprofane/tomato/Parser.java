@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,7 +98,7 @@ public class Parser {
     private static Document GetDocumentFromAddress(String address, String base64login){
 
         Document doc = null;
-        if(IsReachable(address)){
+       // if(IsReachable(address)){
             try {
                 doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
 
@@ -105,7 +106,7 @@ public class Parser {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }
+        //}
         return doc;
     }
 
@@ -147,11 +148,11 @@ public class Parser {
      * @param website The website to post to.
      * @param username The username to authenticate with.
      * @param password The password to authentication with.
-     * @param parameterString The parameter to send in. Currently not implemented.
+     * @param parameterMap The parameter to send in. Currently not implemented.
      * @return Returns a string of the HTML that came from the post request.
      * @throws IOException
      */
-    public String PostToWebadress(String website, String username, String password, String parameterString) throws IOException {
+    public String PostToWebadress(String website, String username, String password, HashMap parameterMap) throws IOException {
         String responseHTML = "";
         String base64login = GetBase64Login(username, password);
         /**
@@ -160,15 +161,27 @@ public class Parser {
         String httpID = "_http_id";
         String id = GetRouterHTTPId();
         Document doc = Jsoup.connect(website)
-                .data(parameterString)
                 .header("Authorization", "Basic " + base64login)
                 .userAgent("Mozilla")
+                .data(parameterMap)
                 .post();
         responseHTML = doc.text();
         return responseHTML;
     }
 
-    private String GetRouterHTTPId() {
+    public HashMap buildParamsMap(String ... param){
+        HashMap <String, String> paramsMap = new HashMap<String, String>();
+
+        for ( int i = 0; i<param.length-1; i++){
+            if (i%2==0){
+                paramsMap.put(param[i],param[i+1]);
+            }
+        }
+
+        return paramsMap;
+    }
+
+    public String GetRouterHTTPId() {
         String http_id = "";
         String website = "http://192.168.1.1";
         String basic64login = GetBase64Login("root", "admin");
