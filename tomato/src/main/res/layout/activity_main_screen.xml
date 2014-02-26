@@ -28,7 +28,7 @@ tools:context="com.somethingprofane.tomato.MainScreen">
 </LinearLayout>
 
 <LinearLayout
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight=".25">
@@ -54,7 +54,7 @@ tools:context="com.somethingprofane.tomato.MainScreen">
 </LinearLayout>
 
 <LinearLayout
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight=".25">
