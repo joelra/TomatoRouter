@@ -47,7 +47,7 @@ public class Parser {
         if(ValidateAuthentication(website, base64login)){
             doc = GetDocumentFromAddress(properSite, base64login);
         }
-        returnHTML = doc.body().html();
+        returnHTML = doc.html();
         return returnHTML;
     }
 
@@ -100,7 +100,7 @@ public class Parser {
         Document doc = null;
        // if(IsReachable(address)){
             try {
-                doc = Jsoup.connect("http://192.168.1.1").header("Authorization", "Basic " + base64login).get();
+                doc = Jsoup.connect(address).header("Authorization", "Basic " + base64login).get();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block

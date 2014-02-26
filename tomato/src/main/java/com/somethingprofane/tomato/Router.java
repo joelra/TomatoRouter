@@ -1,8 +1,8 @@
 package com.somethingprofane.tomato;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +25,7 @@ public class Router {
     String uptime;
     String totalRam;
     int freeRam;
-    List deviceList;
+    ArrayList<Device> deviceList = new ArrayList<Device>();
 
     /**
      *
@@ -182,7 +182,7 @@ public class Router {
         }
     }
 
-    public List getDeviceList() {
+    public ArrayList getDeviceList() {
         return deviceList;
     }
 
@@ -195,7 +195,7 @@ public class Router {
         String pattern = "dhcpd_lease([^;]*)";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
         Matcher m = r.matcher(deviceHTML);
-        while(m.find()){
+        if(m.find()){
             pattern = "(?<=\\[)(.*?)(?=\\])";
             Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
             Matcher m2 = r2.matcher(m.group(1));
