@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity
 
     @OnClick(R.id.button_main_activity)
     public void clickButton(Button button){
-        startActivity(new Intent(this, RouterInformationActivity.class));
+        startActivity(new Intent(this, RouterOverviewActivity.class));
     }
 
 

@@ -19,14 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.somethingprofane.tomato.RouterInformationActivity"
-            android:label="@string/title_activity_open_new_page"
-            android:parentActivityName="com.somethingprofane.tomato.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.somethingprofane.tomato.MainActivity" />
-        </activity>
-        <activity
             android:name="com.somethingprofane.tomato.MainScreen"
             android:label="@string/title_activity_main_screen" >
         </activity>
@@ -37,6 +29,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainScreen" />
+        </activity>
+        <activity
+            android:name=".RouterOverviewActivity"
+            android:label="@string/title_activity_device_screen" >
         </activity>
     </application>
 

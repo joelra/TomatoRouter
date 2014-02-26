@@ -39,7 +39,7 @@ public class Router {
         HashMap <String, String> tempHashMap = tempParser.buildParamsMap("_http_id", tempParser.GetRouterHTTPId());
 
         try {
-            returnedHtml = tempParser.PostToWebadress(url+"/status.jsx","root","admin", tempHashMap);
+            returnedHtml = tempParser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
             //Set all the values with the returned HTML
             setRouterName(returnedHtml);
             setFreeRam(returnedHtml);

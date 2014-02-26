@@ -1,9 +1,10 @@
 package com.somethingprofane.tomato;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -13,13 +14,17 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainScreen extends ActionBarActivity {
+/**
+ * Created by garrett on 2/25/14.
+ */
+public class RouterOverviewActivity extends Activity {
 
-    @InjectView(R.id.mainscr_btnRouter) Button routerButton;
+
+    @InjectView(R.id.router_overview_retrieveRouter) Button routerButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+        setContentView(R.layout.activity_router_overview);
 
         ButterKnife.inject(this);
 
@@ -28,9 +33,10 @@ public class MainScreen extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_screen, menu);
+        new retrieveRouterInfo().execute();
         return true;
     }
 
@@ -46,21 +52,29 @@ public class MainScreen extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.mainscr_btnRouter)
-    public void LoginClicked(Button routerButton){
-        new moveToRouter().execute();
-    }
+    //@OnClick(R.id.router_overview_retrieveRouter)
+   // public void LoginClicked(Button routerButton){
+//
+  //  }
 
-    private class moveToRouter extends AsyncTask<TextView, Void, String> {
+    private class retrieveRouterInfo extends AsyncTask<TextView, Void, String> {
+
+        TextView routerName = (TextView) findViewById(R.id.router_main_labelRouter);
 
         @Override
         protected String doInBackground(TextView... textViews) {
-            Intent intent = new Intent(MainScreen.this, RouterOverviewActivity.class);
-            MainScreen.this.startActivity(intent);
-            // Finish the activity;
-            finish();
+
+            Router tempRouter = new Router("http://192.168.1.1","root","admin");
+            String currentText = routerName.getText().toString();
+            try{
+                routerName.append(" "+tempRouter.getRouterName());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+
             return null;
         }
     }
-
 }

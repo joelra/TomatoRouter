@@ -158,6 +158,7 @@ public class Parser {
         /**
          * This is just for testing purposes. //TODO implement the data parameters a lot better. Possibly a map?
          */
+        //TODO Remove httpID from this
         String httpID = "_http_id";
         String id = GetRouterHTTPId();
         Document doc = Jsoup.connect(website)
