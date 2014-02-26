@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 public class RouterInformationActivity extends ActionBarActivity {
 
-    @InjectView(R.id.new_request_button)Button requestButton;
+    //@InjectView(R.id.new_request_button)Button requestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class RouterInformationActivity extends ActionBarActivity {
 
     }
 
-    @OnClick(R.id.new_request_button)
+   // @OnClick(R.id.new_request_button)
     public void requestHTML(Button button){
         TextView textview = (TextView) findViewById(R.id.textView);
         new GetURLTask().execute(textview);
