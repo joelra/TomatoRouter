@@ -182,7 +182,16 @@ public class Router {
         }
     }
 
-    public List getDeviceList() {
+    public List getDeviceList(String html) {
+        Parser parser = new Parser();
+        String deviceHTML = "";
+        deviceHTML = parser.ParseHTMLFromURL("http://192.168.1.1/status-devices.asp", "root", "admin");
+        String pattern = "dhcpd_lease([^;]*)";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+
+        }
         return deviceList;
     }
 
