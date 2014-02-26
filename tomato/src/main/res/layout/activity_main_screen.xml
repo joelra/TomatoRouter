@@ -27,7 +27,7 @@ tools:context="com.somethingprofane.tomato.MainScreen">
         android:textSize="42dp" />
 </LinearLayout>
 
-<LinearLayout
+<RelativeLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -39,25 +39,29 @@ tools:context="com.somethingprofane.tomato.MainScreen">
         android:text="Router"
         android:id="@+id/mainscr_btnRouter"
         android:gravity="center|center_horizontal"
-        android:layout_gravity="center_horizontal|left"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp" />
+        android:layout_gravity="left"
+        android:layout_alignTop="@+id/button2"
+        android:layout_toLeftOf="@+id/button2"
+        android:layout_marginRight="50dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal|right"
         android:gravity="center|center_horizontal"
-        android:layout_marginRight="25dp" />
-</LinearLayout>
+        android:layout_marginRight="51dp"
+        android:layout_gravity="right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
 
-<LinearLayout
+<RelativeLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight=".25">
+    android:layout_weight=".25" >
 
     <Button
         android:layout_width="wrap_content"
@@ -65,7 +69,10 @@ tools:context="com.somethingprofane.tomato.MainScreen">
         android:text="New Button"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal|left"
-        android:layout_marginLeft="25dp" />
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/mainscr_btnDevices"
+        android:layout_marginRight="43dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -73,8 +80,12 @@ tools:context="com.somethingprofane.tomato.MainScreen">
         android:text="Devices"
         android:id="@+id/mainscr_btnDevices"
         android:layout_gravity="center_horizontal|right"
-        android:layout_marginRight="25dp" />
-</LinearLayout>
+        android:layout_weight="1"
+        android:layout_marginRight="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
 
 <LinearLayout
     android:orientation="vertical"
