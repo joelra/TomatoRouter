@@ -14,10 +14,10 @@ public class Device {
      */
 
     // Variables
-    String deviceMacAddr = "";
-    String deviceName = "";
-    String deviceIPAddr = "";
-    String deviceConnTime = "";
+    String deviceMacAddr;
+    String deviceName;
+    String deviceIPAddr;
+    String deviceConnTime;
 
     /**
      * Constructor
@@ -25,5 +25,37 @@ public class Device {
     public Device(){
         Parser parser = new Parser();
         //parser.PostToWebadress(routerIP, username, password,);
+    }
+
+    public String getDeviceMacAddr() {
+        return deviceMacAddr;
+    }
+
+    public void setDeviceMacAddr(String deviceMacAddr) {
+        this.deviceMacAddr = deviceMacAddr;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceIPAddr() {
+        return deviceIPAddr;
+    }
+
+    public void setDeviceIPAddr(String deviceIPAddr) {
+        this.deviceIPAddr = deviceIPAddr;
+    }
+
+    public String getDeviceConnTime() {
+        return deviceConnTime;
+    }
+
+    public void setDeviceConnTime(String deviceConnTime) {
+        this.deviceConnTime = deviceConnTime;
     }
 }

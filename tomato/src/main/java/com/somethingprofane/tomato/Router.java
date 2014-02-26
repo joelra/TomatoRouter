@@ -182,23 +182,34 @@ public class Router {
         }
     }
 
-    public List getDeviceList(String html) {
+    public List getDeviceList() {
+        return deviceList;
+    }
+
+    public void setDeviceList() {
         Parser parser = new Parser();
+        String[] deviceInfoArray;
+
         String deviceHTML = "";
         deviceHTML = parser.ParseHTMLFromURL("http://192.168.1.1/status-devices.asp", "root", "admin");
         String pattern = "dhcpd_lease([^;]*)";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-
+        Matcher m = r.matcher(deviceHTML);
+        while(m.find()){
+            pattern = "(?<=\\[)(.*?)(?=\\])";
+            Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
+            Matcher m2 = r2.matcher(m.group(1));
+            while(m2.find()){
+                deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
+                Device device = new Device();
+                device.setDeviceName(deviceInfoArray[0]);
+                device.setDeviceIPAddr(deviceInfoArray[1]);
+                device.setDeviceMacAddr(deviceInfoArray[2]);
+                device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
+                this.deviceList.add(device);
+            }
         }
-        return deviceList;
-    }
-
-    public void setDeviceList(List deviceList) {
-        this.deviceList = deviceList;
     }
 
 
 }
-
