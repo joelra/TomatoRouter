@@ -23,7 +23,7 @@ public class Router {
     String lanIpAddr;
     String modelName;
     String uptime;
-    int totalRam;
+    String totalRam;
     int freeRam;
     List deviceList;
 
@@ -148,7 +148,7 @@ public class Router {
         }
     }
 
-    public int getTotalRam() {
+    public String getTotalRam() {
         return totalRam;
     }
 
@@ -162,7 +162,9 @@ public class Router {
         Matcher m = r.matcher(html);
         if(m.find()){
             System.out.println(m.group(1));
-            totalRam = Integer.parseInt(m.group(1));
+            double totalRamNum = Integer.parseInt(m.group(1));
+            totalRamNum = totalRamNum / 1000;
+            totalRam = totalRamNum + "kb";
         }
     }
 

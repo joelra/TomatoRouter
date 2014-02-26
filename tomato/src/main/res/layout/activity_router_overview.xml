@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.somethingprofane.tomato.MainScreen">
+    tools:context="com.somethingprofane.tomato.MainScreen"
+    android:weightSum="1">
 
     <TableLayout
         android:layout_width="fill_parent"
@@ -36,10 +37,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/router_main_txtRouter"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="75dp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:layout_column="1" />
 
         </TableRow>
 
@@ -63,7 +65,8 @@
                 android:id="@+id/router_main_txtMAC"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="75dp" />
+                android:layout_marginRight="75dp"
+                android:layout_column="1" />
         </TableRow>
 
         <TableRow
@@ -87,7 +90,8 @@
                 android:id="@+id/trouter_main_txtIP"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="75dp" />
+                android:layout_marginRight="75dp"
+                android:layout_column="1" />
         </TableRow>
 
         <TableRow
@@ -111,7 +115,8 @@
                 android:id="@+id/router_main_txtModel"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="75dp" />
+                android:layout_marginRight="75dp"
+                android:layout_column="1" />
         </TableRow>
 
         <TableRow
@@ -135,7 +140,8 @@
                 android:id="@+id/router_main_txtUptime"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="75dp" />
+                android:layout_marginRight="75dp"
+                android:layout_column="1" />
         </TableRow>
 
         <TableRow
@@ -159,7 +165,14 @@
                 android:id="@+id/router_main_txtRAM"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="75dp" />
+                android:layout_marginRight="75dp"
+                android:layout_column="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
         </TableRow>
 
@@ -168,7 +181,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/router_overview_retrieveRouter" />
+        android:text="Refresh "
+        android:id="@+id/router_overview_retrieveRouter"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

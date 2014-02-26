@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -19,6 +21,12 @@ import butterknife.OnClick;
  */
 public class RouterOverviewActivity extends Activity {
 
+    TextView routerNameTxt;
+    TextView routerMacTxt;
+    TextView routerIPTxt;
+    TextView routerModelTxt;
+    TextView routerUptimeTxt;
+    TextView routerRamTxt;
 
     @InjectView(R.id.router_overview_retrieveRouter) Button routerButton;
     @Override
@@ -27,6 +35,13 @@ public class RouterOverviewActivity extends Activity {
         setContentView(R.layout.activity_router_overview);
 
         ButterKnife.inject(this);
+         routerNameTxt = (TextView)findViewById(R.id.router_main_txtRouter);
+         routerMacTxt = (TextView)findViewById(R.id.router_main_txtMAC);
+         routerIPTxt = (TextView)findViewById(R.id.trouter_main_txtIP);
+         routerModelTxt = (TextView)findViewById(R.id.router_main_txtModel);
+         routerUptimeTxt = (TextView) findViewById(R.id.router_main_txtUptime);
+         routerRamTxt = (TextView) findViewById(R.id.router_main_txtRAM);
+        new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
 
     }
 
@@ -36,7 +51,6 @@ public class RouterOverviewActivity extends Activity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_screen, menu);
-        new retrieveRouterInfo().execute();
         return true;
     }
 
@@ -52,29 +66,49 @@ public class RouterOverviewActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    //@OnClick(R.id.router_overview_retrieveRouter)
-   // public void LoginClicked(Button routerButton){
-//
-  //  }
+    @OnClick(R.id.router_overview_retrieveRouter)
+    public void refreshClicked(Button routerButton){
 
-    private class retrieveRouterInfo extends AsyncTask<TextView, Void, String> {
+        new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
 
-        TextView routerName = (TextView) findViewById(R.id.router_main_labelRouter);
+    }
+
+    private class retrieveRouterInfo extends AsyncTask<TextView, Void, Router> {
+
+        TextView routerNameTxt;
+        TextView routerMacTxt;
+        TextView routerIPTxt;
+        TextView routerModelTxt;
+        TextView routerUptimeTxt;
+        TextView routerRamTxt;
+
+
+
 
         @Override
-        protected String doInBackground(TextView... textViews) {
-
-            Router tempRouter = new Router("http://192.168.1.1","root","admin");
-            String currentText = routerName.getText().toString();
-            try{
-                routerName.append(" "+tempRouter.getRouterName());
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
+        protected Router doInBackground(TextView... textViews) {
 
 
-            return null;
+            Router tempRouter = new Router("http://192.168.1.1", "root", "admin");
+
+            routerNameTxt = textViews[0];
+            routerMacTxt = textViews[1];
+            routerIPTxt = textViews[2];
+            routerModelTxt = textViews[3];
+            routerUptimeTxt = textViews[4];
+            routerRamTxt = textViews[5];
+
+            return tempRouter;
+        }
+
+        @Override
+        protected void onPostExecute(Router router){
+            routerNameTxt.setText(router.getRouterName());
+            routerMacTxt.setText(router.getWanHwAddr());
+            routerIPTxt.setText(router.getLanIpAddr());
+            routerModelTxt.setText(router.getModelName());
+            routerUptimeTxt.setText(router.getUptime());
+            routerRamTxt.setText(router.getTotalRam());
         }
     }
 }
