@@ -48,6 +48,7 @@ public class Router {
             setTotalRam(returnedHtml);
             setUptime(returnedHtml);
             setWanHwAddr(returnedHtml);
+            setDeviceList();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -210,6 +211,8 @@ public class Router {
             }
         }
     }
+
+
 
 
 }

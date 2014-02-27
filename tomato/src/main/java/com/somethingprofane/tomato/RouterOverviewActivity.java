@@ -94,7 +94,7 @@ public class RouterOverviewActivity extends Activity {
             routerModelTxt = textViews[3];
             routerUptimeTxt = textViews[4];
             routerRamTxt = textViews[5];
-            tempRouter.setDeviceList();
+
             return tempRouter;
         }
 
