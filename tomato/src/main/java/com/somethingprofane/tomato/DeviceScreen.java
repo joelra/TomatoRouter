@@ -1,6 +1,7 @@
 package com.somethingprofane.tomato;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,13 +14,17 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DeviceScreen extends ActionBarActivity {
 
     private ListView lv;
+
 
 
     @Override
@@ -32,7 +37,8 @@ public class DeviceScreen extends ActionBarActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(DeviceScreen.this, "" + i, Toast.LENGTH_SHORT).show();
+
+                new disableClickedDevice().execute(i);
             }
         });
 
@@ -110,5 +116,38 @@ public class DeviceScreen extends ActionBarActivity {
 
 
     }
+    public class disableClickedDevice extends AsyncTask <Integer, Void, Router>{
+        int key;
+        boolean isFailed = false;
+        @Override
+        protected Router doInBackground(Integer... integers) {
+            key = integers[0];
+            Router tempRouter = new Router("http://192.168.1.1","root","admin");
+            String html;
+            Parser parser = new Parser();
+            HashMap<String, String> hashmap = new HashMap<String, String>();
+            String htmlId = tempRouter.getHttpId();
+            try {
+                hashmap = parser.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+tempRouter.getDeviceList().get(key).getDeviceMacAddr()+"|||0|Rule Description","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
+                html = parser.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isFailed=true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                isFailed=true;
+            }
+            return tempRouter;
+        }
 
+        protected void onPostExecute(Router router){
+            if(isFailed){
+                Toast.makeText(DeviceScreen.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+            }else{
+
+            Toast.makeText(DeviceScreen.this, "" + router.getDeviceList().get(key).getDeviceName()+" has been blacklisted.", Toast.LENGTH_SHORT).show();
+            
+            }
+        }
+    }
 }

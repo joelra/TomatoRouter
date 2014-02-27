@@ -24,6 +24,16 @@ public class Router {
     String modelName;
     String uptime;
     String totalRam;
+
+    public String getHttpId() {
+        return httpId;
+    }
+
+    public void setHttpId(String httpId) {
+        this.httpId = httpId;
+    }
+
+    String httpId;
     int freeRam;
     ArrayList<Device> deviceList = new ArrayList<Device>();
 
@@ -36,7 +46,8 @@ public class Router {
     public Router (String url, String usrname, String pswrd){
         Parser tempParser = new Parser();
         String returnedHtml = null;
-        HashMap <String, String> tempHashMap = tempParser.buildParamsMap("_http_id", tempParser.GetRouterHTTPId());
+        setHttpId(tempParser.GetRouterHTTPId());
+        HashMap <String, String> tempHashMap = tempParser.buildParamsMap("_http_id", getHttpId());
 
         try {
             returnedHtml = tempParser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);

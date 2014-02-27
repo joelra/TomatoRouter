@@ -88,6 +88,7 @@ public class MainLoginActivity extends ActionBarActivity {
             if(response.equals("200")){
                 Intent intent = new Intent(MainLoginActivity.this, MainScreen.class);
                 MainLoginActivity.this.startActivity(intent);
+                dialog.dismiss();
                 // Finish the activity;
                 finish();
             } else {
