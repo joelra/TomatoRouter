@@ -184,7 +184,7 @@
             </TableRow>
             <Button
                 android:text="Update"
-                android:id="@+id/buttonSubmit"
+                android:id="@+id/router_overview_retrieveRouter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
