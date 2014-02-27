@@ -6,11 +6,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DeviceScreen extends ActionBarActivity {
 
@@ -23,6 +28,13 @@ public class DeviceScreen extends ActionBarActivity {
         setContentView(R.layout.activity_device_screen);
 
         lv = (ListView) findViewById(R.id.devicescrn_listviewDevices);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(DeviceScreen.this, "" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -73,14 +85,23 @@ public class DeviceScreen extends ActionBarActivity {
         }
 
         protected void onPostExecute(Router router){
+            ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 
-            lv.setAdapter(null);
-            ArrayAdapter<Device> arrayAdapter = new ArrayAdapter<Device>(
-                    DeviceScreen.this,
-                    android.R.layout.simple_list_item_1,
-                    router.getDeviceListNames()
-                    );
-            lv.setAdapter(arrayAdapter);
+            HashMap<String,String> item;
+            for(int i=0;i<router.getDeviceList().size();i++){
+                item = new HashMap<String,String>();
+                item.put( "line1", (router.getDeviceList().get(i).getDeviceName()));
+                item.put( "line2", ("IP: "+router.getDeviceList().get(i).getDeviceIPAddr()));
+                list.add(item);
+            }
+
+            SimpleAdapter sa = new SimpleAdapter(DeviceScreen.this, list,
+                    android.R.layout.two_line_list_item ,
+                    new String[] { "line1","line2" },
+                    new int[] {android.R.id.text1, android.R.id.text2});
+
+
+            lv.setAdapter(sa);
 
             if (dialog.isShowing()){
                 dialog.dismiss();
