@@ -27,6 +27,7 @@
     <string name="router_page_model">Model No.:</string>
     <string name="router_page_uptime">Router Uptime:</string>
     <string name="router_page_ram">RAM Usage:</string>
+    <string name="router_title">Router Screen</string>
 
 </resources>
 

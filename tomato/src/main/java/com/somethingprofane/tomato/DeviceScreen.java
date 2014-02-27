@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -21,15 +22,21 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class DeviceScreen extends ActionBarActivity {
 
     private ListView lv;
 
 
+    @InjectView(R.id.device_screen_updateButton) Button updateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_device_screen);
 
         lv = (ListView) findViewById(R.id.devicescrn_listviewDevices);
@@ -42,7 +49,7 @@ public class DeviceScreen extends ActionBarActivity {
             }
         });
 
-
+        ButterKnife.inject(this);
 
         new populateDeviceList().execute(lv);
     }
@@ -66,6 +73,12 @@ public class DeviceScreen extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @OnClick(R.id.device_screen_updateButton)
+    public void updateClicked(Button updateButton){
+
+        new populateDeviceList().execute(lv);
+
     }
 
     public class populateDeviceList extends AsyncTask <ListView, Void, Router>{

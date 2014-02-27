@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Select a device to restrict it's internet access"
+            android:text="Select a device to restrict its internet access"
             android:id="@+id/devicescrn_lableDevices"
             android:layout_gravity="center"
             android:textSize="14dp" />
@@ -48,7 +48,7 @@
             android:layout_marginTop="10sp" />
         <Button
             android:text="Update"
-            android:id="@+id/buttonSubmit"
+            android:id="@+id/device_screen_updateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
