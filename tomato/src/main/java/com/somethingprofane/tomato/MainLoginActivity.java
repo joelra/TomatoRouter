@@ -1,5 +1,6 @@
 package com.somethingprofane.tomato;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -60,6 +61,13 @@ public class MainLoginActivity extends ActionBarActivity {
         String response = "N/A";
         int responseCode;
         private Parser parserClass = new Parser();
+        private ProgressDialog dialog = new ProgressDialog(MainLoginActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            this.dialog.setMessage("Logging in...");
+            this.dialog.show();
+        }
 
         @Override
         protected String doInBackground(TextView... textViews) {

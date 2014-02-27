@@ -23,7 +23,7 @@ public class Device {
      * Constructor
      */
     public Device(){
-        Parser parser = new Parser();
+
         //parser.PostToWebadress(routerIP, username, password,);
     }
 

@@ -16,6 +16,7 @@ import butterknife.OnClick;
 public class MainScreen extends ActionBarActivity {
 
     @InjectView(R.id.mainscr_btnRouter) Button routerButton;
+    @InjectView(R.id.mainscr_btnDevices)Button devicesButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,7 @@ public class MainScreen extends ActionBarActivity {
         new moveToRouter().execute();
     }
 
+
     private class moveToRouter extends AsyncTask<TextView, Void, String> {
 
         @Override
@@ -58,6 +60,21 @@ public class MainScreen extends ActionBarActivity {
             Intent intent = new Intent(MainScreen.this, RouterOverviewActivity.class);
             MainScreen.this.startActivity(intent);
             // Finish the activity;
+            return null;
+        }
+    }
+
+    @OnClick(R.id.mainscr_btnDevices)
+    public void devicesClicked (Button devicesButton){
+        new moveToDevices().execute();
+    }
+
+    private class moveToDevices extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Intent intent = new Intent(MainScreen.this, DeviceScreen.class);
+            MainScreen.this.startActivity(intent);
             return null;
         }
     }

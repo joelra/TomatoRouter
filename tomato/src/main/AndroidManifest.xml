@@ -34,6 +34,7 @@
             android:name=".RouterOverviewActivity"
             android:label="@string/title_activity_device_screen" >
         </activity>
+
     </application>
 
 </manifest>
