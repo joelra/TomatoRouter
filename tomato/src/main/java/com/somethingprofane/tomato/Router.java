@@ -183,7 +183,7 @@ public class Router {
         }
     }
 
-    public ArrayList getDeviceList() {
+    public ArrayList<Device> getDeviceList() {
         return deviceList;
     }
 
@@ -210,6 +210,26 @@ public class Router {
                 this.deviceList.add(device);
             }
         }
+    }
+
+    public ArrayList getDeviceListNames() {
+        ArrayList<String> deviceListName = new ArrayList<String>();
+
+        for (int x=0; x<this.getDeviceList().size(); x++){
+            deviceListName.add(this.getDeviceList().get(x).getDeviceName());
+        }
+        return deviceListName;
+
+    }
+
+    public ArrayList getDeviceListIPs(){
+
+        ArrayList<String> deviceListIp = new ArrayList<String>();
+
+        for (int x=0; x<this.getDeviceList().size(); x++){
+            deviceListIp.add( "IP: "+this.getDeviceList().get(x).getDeviceIPAddr());
+        }
+        return deviceListIp;
     }
 
 
