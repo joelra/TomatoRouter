@@ -58,7 +58,6 @@ public class MainScreen extends ActionBarActivity {
             Intent intent = new Intent(MainScreen.this, RouterOverviewActivity.class);
             MainScreen.this.startActivity(intent);
             // Finish the activity;
-            finish();
             return null;
         }
     }
