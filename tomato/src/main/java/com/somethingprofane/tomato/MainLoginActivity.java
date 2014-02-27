@@ -93,6 +93,7 @@ public class MainLoginActivity extends ActionBarActivity {
                 finish();
             } else {
                 Context context = getApplicationContext();
+                dialog.dismiss();
                 CharSequence text = "Something went wrong...";
                 int duration = Toast.LENGTH_SHORT;
                 Toast.makeText(context, text, duration).show();
