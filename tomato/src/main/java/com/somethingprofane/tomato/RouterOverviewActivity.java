@@ -1,6 +1,7 @@
 package com.somethingprofane.tomato;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -82,6 +83,14 @@ public class RouterOverviewActivity extends Activity {
         TextView routerUptimeTxt;
         TextView routerRamTxt;
 
+        private ProgressDialog dialog = new ProgressDialog(RouterOverviewActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            this.dialog.setMessage("Updating...");
+            this.dialog.show();
+        }
+
         @Override
         protected Router doInBackground(TextView... textViews) {
 
@@ -106,6 +115,10 @@ public class RouterOverviewActivity extends Activity {
             routerModelTxt.setText(router.getModelName());
             routerUptimeTxt.setText(router.getUptime());
             routerRamTxt.setText(router.getTotalRam());
+
+            if (dialog.isShowing()){
+                dialog.dismiss();
+            }
         }
     }
 }
