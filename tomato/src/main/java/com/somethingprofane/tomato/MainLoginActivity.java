@@ -3,6 +3,7 @@ package com.somethingprofane.tomato;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ public class MainLoginActivity extends ActionBarActivity {
         new LoginValidation().execute(username, passwd, ipAddr);
     }
 
-    private class LoginValidation extends AsyncTask<TextView, Void, String>{
+    private class LoginValidation extends AsyncTask<TextView, Void, Router>{
 
         TextView usrnameTextView;
         TextView pswrdTextView;
@@ -62,6 +63,7 @@ public class MainLoginActivity extends ActionBarActivity {
         int responseCode;
         private Parser parserClass = new Parser();
         private ProgressDialog dialog = new ProgressDialog(MainLoginActivity.this);
+        Boolean correctResponse;
 
         @Override
         protected void onPreExecute(){
@@ -70,7 +72,8 @@ public class MainLoginActivity extends ActionBarActivity {
         }
 
         @Override
-        protected String doInBackground(TextView... textViews) {
+        protected Router doInBackground(TextView... textViews) {
+            Router router = null;
             this.usrnameTextView = textViews[0];
             this.pswrdTextView = textViews[1];
             this.ipTextView = textViews[2];
@@ -80,13 +83,30 @@ public class MainLoginActivity extends ActionBarActivity {
             String base64login = parserClass.GetBase64Login(username,password);
             responseCode = parserClass.GetResponseCodeFromAddress(ip,base64login);
             response = Integer.toString(responseCode);
-            return response;
+
+            if(response.equals("200")){
+                correctResponse = true;
+                router = new Router("http://"+ip, username, password);
+            } else {
+                correctResponse = false;
+            }
+
+            return router;
+
         }
 
-        protected void onPostExecute(String response) {
+        protected void onPostExecute(Router router) {
             // access the activity thread
-            if(response.equals("200")){
+            if(correctResponse = true){
+                SharedPreferences prefs = getSharedPreferences("user_prefs", MainLoginActivity.this.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("username", usrnameTextView.getText().toString());
+                editor.putString("password", pswrdTextView.getText().toString());
+                editor.putString("IPAddress", ipTextView.getText().toString());
+                editor.commit();
+
                 Intent intent = new Intent(MainLoginActivity.this, MainScreen.class);
+                intent.putExtra("passed_router", router);
                 MainLoginActivity.this.startActivity(intent);
                 dialog.dismiss();
                 // Finish the activity;
