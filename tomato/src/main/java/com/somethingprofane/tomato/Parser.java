@@ -217,4 +217,93 @@ public class Parser {
 
         return response;
     }
+
+    public String parserRouterName(String html){
+        String pattern = "router_name: '(.*?)'";
+        String routerName = null;
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            routerName = m.group(1);
+        }
+        return routerName;
+    }
+
+    public String parseWanHwAddr(String html){
+        String wanHwAddr = null;
+        String pattern = "wan_hwaddr: '(.*?)'";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            wanHwAddr = m.group(1);
+        }
+        return wanHwAddr;
+    }
+
+    public String parseLanIpAddr(String html){
+        String lanIpAddr = null;
+        String pattern = "lan_ipaddr: '(.*?)'";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            lanIpAddr = m.group(1);
+        }
+        return lanIpAddr;
+    }
+
+    public String parseModelName(String html){
+        String modelName = null;
+        String pattern = "t_model_name: '(.*?)'";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            modelName = m.group(1);
+        }
+        return modelName;
+    }
+
+    public String parseUptime(String html){
+        String uptime = null;
+        String pattern = "uptime_s: '(.*?)'";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            uptime = m.group(1);
+        }
+        return uptime;
+    }
+
+    public String parseTotalRam(String html){
+        String totalRam = null;
+        String pattern = "freeram: (.*?),";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            double totalRamNum = Integer.parseInt(m.group(1));
+            totalRamNum = totalRamNum / 1000;
+            totalRam = totalRamNum + "kb";
+        }
+        return totalRam;
+    }
+
+    public String parseFreeRam(String html){
+        String freeRam = null;
+        String pattern = "\\sfreeram: (.*?),";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println(m.group(1));
+            double freeRamNum = Integer.parseInt(m.group(1));
+            freeRamNum = freeRamNum / 1000;
+            freeRam = freeRamNum + "kb";
+        }
+        return freeRam;
+    }
+
 }

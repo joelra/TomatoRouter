@@ -24,6 +24,10 @@ public class Router {
     String modelName;
     String uptime;
     String totalRam;
+    String usrname;
+    String url;
+    String pswrd;
+    Parser parser;
 
     public String getHttpId() {
         return httpId;
@@ -34,7 +38,7 @@ public class Router {
     }
 
     String httpId;
-    int freeRam;
+    String freeRam;
     ArrayList<Device> deviceList = new ArrayList<Device>();
 
     /**
@@ -44,13 +48,17 @@ public class Router {
      * @param pswrd
      */
     public Router (String url, String usrname, String pswrd){
-        Parser tempParser = new Parser();
+
+        this.url = url;
+        this.usrname = usrname;
+        this.pswrd = pswrd;
+        parser = new Parser();
         String returnedHtml = null;
-        setHttpId(tempParser.GetRouterHTTPId());
-        HashMap <String, String> tempHashMap = tempParser.buildParamsMap("_http_id", getHttpId());
+        setHttpId(parser.GetRouterHTTPId());
+        HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
 
         try {
-            returnedHtml = tempParser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            returnedHtml = parser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
             //Set all the values with the returned HTML
             setRouterName(returnedHtml);
             setFreeRam(returnedHtml);
@@ -78,13 +86,8 @@ public class Router {
      */
     public void setRouterName(String html) {
 
-        String pattern = "router_name: '(.*?)'";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            routerName = m.group(1);
-        }
+       routerName = parser.parserRouterName(html);
+
     }
 
     public String getWanHwAddr() {
@@ -96,13 +99,9 @@ public class Router {
      * @param html string of html regex is run on to extract wanAddress
      */
     public void setWanHwAddr(String html) {
-        String pattern = "wan_hwaddr: '(.*?)'";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            wanHwAddr = m.group(1);
-        }
+
+     wanHwAddr = parser.parseWanHwAddr(html);
+
     }
 
     public String getLanIpAddr() {
@@ -114,13 +113,9 @@ public class Router {
      * @param html string of html regex is run on to extract lan ip address
      */
     public void setLanIpAddr(String html) {
-        String pattern = "lan_ipaddr: '(.*?)'";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            lanIpAddr = m.group(1);
-        }
+
+        lanIpAddr = parser.parseLanIpAddr(html);
+
     }
 
 
@@ -133,13 +128,9 @@ public class Router {
      * @param html - string of html regex is run on to extract modelName
      */
     public void setModelName(String html) {
-        String pattern = "t_model_name: '(.*?)'";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            modelName = m.group(1);
-        }
+
+        modelName = parser.parseModelName(html);
+
     }
 
     public String getUptime() {
@@ -151,13 +142,9 @@ public class Router {
      * @param html string of html regex is run on to extract setuptime
      */
     public void setUptime(String html) {
-        String pattern = "uptime_s: '(.*?)'";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            uptime = m.group(1);
-        }
+
+        uptime = parser.parseUptime(html);
+
     }
 
     public String getTotalRam() {
@@ -169,29 +156,18 @@ public class Router {
      * @param html - string of html regex is run on to extract totalRam
      */
     public void setTotalRam(String html) {
-        String pattern = "freeram: (.*?),";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            double totalRamNum = Integer.parseInt(m.group(1));
-            totalRamNum = totalRamNum / 1000;
-            totalRam = totalRamNum + "kb";
-        }
+
+        totalRam = parser.parseTotalRam(html);
+
     }
 
-    public int getFreeRam() {
+    public String getFreeRam() {
         return freeRam;
     }
 
     public void setFreeRam(String html) {
-        String pattern = "\\sfreeram: (.*?),";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(html);
-        if(m.find()){
-            System.out.println(m.group(1));
-            freeRam = Integer.parseInt(m.group(1));
-        }
+
+        freeRam = parser.parseFreeRam(html);
     }
 
     public ArrayList<Device> getDeviceList() {
@@ -241,6 +217,30 @@ public class Router {
             deviceListIp.add( "IP: "+this.getDeviceList().get(x).getDeviceIPAddr());
         }
         return deviceListIp;
+    }
+
+    /**
+     * Used to refresh router information - namely FreeRam, TotalRam, Uptime, and DeviceList
+     */
+    public void refresh(){
+
+        String returnedHtml = null;
+        setHttpId(parser.GetRouterHTTPId());
+        HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
+
+        try {
+            returnedHtml = parser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            //Set all the values with the returned HTML
+            setFreeRam(returnedHtml);
+            setTotalRam(returnedHtml);
+            setUptime(returnedHtml);
+            setDeviceList();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
