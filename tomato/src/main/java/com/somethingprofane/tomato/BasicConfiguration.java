@@ -5,6 +5,7 @@ package com.somethingprofane.tomato;
  */
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -32,7 +33,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class BasicConfiguration extends ActionBarActivity {
+public class BasicConfiguration extends Activity {
 
     /**
      * This class will include editable username/password, change SSID
