@@ -1,6 +1,7 @@
 package com.somethingprofane.tomato;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -23,6 +24,12 @@ public class MainScreen extends ActionBarActivity {
         setContentView(R.layout.activity_main_screen);
 
         ButterKnife.inject(this);
+
+        SharedPreferences prefs = getSharedPreferences("user_prefs", MainScreen.MODE_PRIVATE);
+        Intent i = getIntent();
+        Router router = (Router) i.getParcelableExtra("passed_router");
+
+
 
     }
 

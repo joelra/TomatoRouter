@@ -1,15 +1,19 @@
 package com.somethingprofane.tomato;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by somethingPr0fane on 2/25/14.
  */
-public class Router {
+public class Router implements Parcelable {
     /**
      * This class with hold all the informaiton about the router:
      * IP address
@@ -27,7 +31,7 @@ public class Router {
     String usrname;
     String url;
     String pswrd;
-    Parser parser;
+
 
     public String getHttpId() {
         return httpId;
@@ -52,7 +56,7 @@ public class Router {
         this.url = url;
         this.usrname = usrname;
         this.pswrd = pswrd;
-        parser = new Parser();
+        Parser parser = new Parser();
         String returnedHtml = null;
         setHttpId(parser.GetRouterHTTPId());
         HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
@@ -86,7 +90,7 @@ public class Router {
      */
     public void setRouterName(String html) {
 
-       routerName = parser.parserRouterName(html);
+       routerName = new Parser().parserRouterName(html);
 
     }
 
@@ -100,7 +104,7 @@ public class Router {
      */
     public void setWanHwAddr(String html) {
 
-     wanHwAddr = parser.parseWanHwAddr(html);
+     wanHwAddr = new Parser().parseWanHwAddr(html);
 
     }
 
@@ -114,7 +118,7 @@ public class Router {
      */
     public void setLanIpAddr(String html) {
 
-        lanIpAddr = parser.parseLanIpAddr(html);
+        lanIpAddr = new Parser().parseLanIpAddr(html);
 
     }
 
@@ -129,7 +133,7 @@ public class Router {
      */
     public void setModelName(String html) {
 
-        modelName = parser.parseModelName(html);
+        modelName = new Parser().parseModelName(html);
 
     }
 
@@ -143,7 +147,7 @@ public class Router {
      */
     public void setUptime(String html) {
 
-        uptime = parser.parseUptime(html);
+        uptime = new Parser().parseUptime(html);
 
     }
 
@@ -157,7 +161,7 @@ public class Router {
      */
     public void setTotalRam(String html) {
 
-        totalRam = parser.parseTotalRam(html);
+        totalRam = new Parser().parseTotalRam(html);
 
     }
 
@@ -167,7 +171,7 @@ public class Router {
 
     public void setFreeRam(String html) {
 
-        freeRam = parser.parseFreeRam(html);
+        freeRam = new Parser().parseFreeRam(html);
     }
 
     public ArrayList<Device> getDeviceList() {
@@ -223,7 +227,7 @@ public class Router {
      * Used to refresh router information - namely FreeRam, TotalRam, Uptime, and DeviceList
      */
     public void refresh(){
-
+        Parser parser = new Parser();
         String returnedHtml = null;
         setHttpId(parser.GetRouterHTTPId());
         HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
@@ -243,7 +247,53 @@ public class Router {
 
     }
 
+    public static final Parcelable.Creator<Router> CREATOR
+            = new Parcelable.Creator<Router>() {
+        public Router createFromParcel(Parcel in) {
+            return new Router(in);
+        }
 
+        public Router[] newArray(int size) {
+            return new Router[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int i) {
+        out.writeString(routerName);
+        out.writeString(wanHwAddr);
+        out.writeString(lanIpAddr);
+        out.writeString(modelName);
+        out.writeString(uptime);
+        out.writeString(totalRam);
+        out.writeString(usrname);
+        out.writeString(url);
+        out.writeString(pswrd);
+        out.writeString(httpId);
+        out.writeList(deviceList);
+
+    }
+
+    private Router (Parcel in){
+        deviceList = new ArrayList<Device>();
+        routerName = in.readString();
+        wanHwAddr = in.readString();
+        lanIpAddr = in.readString();
+        modelName = in.readString();
+        uptime = in.readString();
+        totalRam = in.readString();
+        usrname = in.readString();
+        url = in.readString();
+        pswrd = in.readString();
+        httpId = in.readString();
+        in.readList(deviceList,getClass().getClassLoader());
+    }
 
 
 }

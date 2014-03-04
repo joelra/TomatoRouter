@@ -97,7 +97,7 @@ public class MainLoginActivity extends ActionBarActivity {
 
         protected void onPostExecute(Router router) {
             // access the activity thread
-            if(correctResponse = true){
+            if(correctResponse == true){
                 SharedPreferences prefs = getSharedPreferences("user_prefs", MainLoginActivity.this.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("username", usrnameTextView.getText().toString());
