@@ -61,7 +61,7 @@ public class MainLoginActivity extends ActionBarActivity {
         TextView ipTextView;
         String response = "N/A";
         int responseCode;
-        private Parser parserClass = new Parser();
+        private Connection conn = new Connection();
         private ProgressDialog dialog = new ProgressDialog(MainLoginActivity.this);
         Boolean correctResponse;
 
@@ -80,8 +80,8 @@ public class MainLoginActivity extends ActionBarActivity {
             String ip = ipTextView.getText().toString();
             String username = usrnameTextView.getText().toString();
             String password = pswrdTextView.getText().toString();
-            String base64login = parserClass.GetBase64Login(username,password);
-            responseCode = parserClass.GetResponseCodeFromAddress(ip,base64login);
+            String base64login = conn.GetBase64Login(username,password);
+            responseCode = conn.GetResponseCodeFromAddress(ip, base64login);
             response = Integer.toString(responseCode);
 
             if(response.equals("200")){

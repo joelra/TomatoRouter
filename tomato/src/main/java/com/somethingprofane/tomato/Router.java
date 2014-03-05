@@ -56,13 +56,13 @@ public class Router implements Parcelable {
         this.url = url;
         this.usrname = usrname;
         this.pswrd = pswrd;
-        Parser parser = new Parser();
+        Connection conn = new Connection();
         String returnedHtml = null;
-        setHttpId(parser.GetRouterHTTPId());
-        HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
+        setHttpId(conn.GetRouterHTTPId());
+        HashMap <String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            returnedHtml = parser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
             //Set all the values with the returned HTML
             setRouterName(returnedHtml);
             setFreeRam(returnedHtml);
@@ -179,11 +179,11 @@ public class Router implements Parcelable {
     }
 
     public void setDeviceList() {
-        Parser parser = new Parser();
+        Connection conn = new Connection();
         String[] deviceInfoArray;
 
         String deviceHTML = "";
-        deviceHTML = parser.ParseHTMLFromURL("http://192.168.1.1/status-devices.asp", "root", "admin");
+        deviceHTML = conn.GetHTMLFromURL("http://192.168.1.1/status-devices.asp", "root", "admin");
         String pattern = "dhcpd_lease([^;]*)";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
         Matcher m = r.matcher(deviceHTML);
@@ -227,13 +227,13 @@ public class Router implements Parcelable {
      * Used to refresh router information - namely FreeRam, TotalRam, Uptime, and DeviceList
      */
     public void refresh(){
-        Parser parser = new Parser();
+        Connection conn = new Connection();
         String returnedHtml = null;
-        setHttpId(parser.GetRouterHTTPId());
-        HashMap <String, String> tempHashMap = parser.buildParamsMap("_http_id", getHttpId());
+        setHttpId(conn.GetRouterHTTPId());
+        HashMap <String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            returnedHtml = parser.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
             //Set all the values with the returned HTML
             setFreeRam(returnedHtml);
             setTotalRam(returnedHtml);

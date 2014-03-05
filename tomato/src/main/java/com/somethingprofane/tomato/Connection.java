@@ -5,8 +5,11 @@ import android.util.Base64;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by somethingPr0fane on 3/4/14.
@@ -30,6 +33,18 @@ public class Connection {
         return responseHTML;
     }
 
+    public HashMap buildParamsMap(String ... param){
+        HashMap <String, String> paramsMap = new HashMap<String, String>();
+
+        for ( int i = 0; i<param.length-1; i++){
+            if (i%2==0){
+                paramsMap.put(param[i],param[i+1]);
+            }
+        }
+
+        return paramsMap;
+    }
+
     public String GetHTMLFromURL(String website, String username, String password){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
@@ -39,6 +54,23 @@ public class Connection {
             doc = GetDocumentFromAddress(properSite, base64login);
         }
         returnHTML = doc.html();
+        return returnHTML;
+    }
+
+    /**
+     * Grab the HTML from a web address with a given CSS Query. This will allow elements to be found by their names, or even class
+     * names. For example, to get all the 'p' elements with ID of 'content', the cssQuery would be "p#content".
+     * @param website The web address to grab the select HTML from.
+     * @param cssQuery The cssQuery that is to be applied. For more information on valid CSS queries, see http://jsoup.org/cookbook/extracting-data/selector-syntax.
+     * @return The string of all the selected elements that were passed in as the cssQuery.
+     */
+    public String GetHTMLFromURL(String website, String username, String password, String cssQuery){
+        String returnHTML = "";
+        String properSite = ValidateWebAddress(website);
+        String base64login = GetBase64Login(username, password);
+        Document doc = GetDocumentFromAddress(properSite, base64login);
+        Elements elements = doc.select(cssQuery);
+        returnHTML = elements.text();
         return returnHTML;
     }
 
@@ -104,6 +136,22 @@ public class Connection {
             base64login += "==";
         }
         return base64login;
+    }
+
+    public String GetRouterHTTPId() {
+        String http_id = "";
+        String website = "http://192.168.1.1";
+        String basic64login = GetBase64Login("root", "admin");
+        Document doc = GetDocumentFromAddress(website, basic64login);
+        String scriptTag = doc.getElementsByTag("head").html();
+        String pattern = "http_id=(.*?)\"";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(scriptTag);
+        if(m.find()){
+            System.out.println(m.group(1));
+            http_id = m.group(1);
+        }
+        return http_id;
     }
 
 }

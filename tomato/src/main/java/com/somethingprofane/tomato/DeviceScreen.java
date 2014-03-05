@@ -138,12 +138,12 @@ public class DeviceScreen extends ActionBarActivity {
             key = integers[0];
             Router tempRouter = new Router("http://192.168.1.1","root","admin");
             String html;
-            Parser parser = new Parser();
+            Connection conn = new Connection();
             HashMap<String, String> hashmap = new HashMap<String, String>();
             String htmlId = tempRouter.getHttpId();
             try {
-                hashmap = parser.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+tempRouter.getDeviceList().get(key).getDeviceMacAddr()+"|||0|Rule Description","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
-                html = parser.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+                hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+tempRouter.getDeviceList().get(key).getDeviceMacAddr()+"|||0|Rule Description","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
+                html = conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 isFailed=true;
