@@ -1,6 +1,8 @@
 package com.somethingprofane.tomato;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -29,7 +32,7 @@ import butterknife.OnClick;
 public class DeviceScreen extends ActionBarActivity {
 
     private ListView lv;
-
+    final Context context = this;
 
     @InjectView(R.id.device_screen_updateButton) Button updateButton;
 
@@ -45,7 +48,21 @@ public class DeviceScreen extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                new disableClickedDevice().execute(i);
+                //new disableClickedDevice().execute(i);
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_device);
+                dialog.setTitle("Device Information");
+
+                Button dialogCancelButton = (Button) dialog.findViewById(R.id.dialog_device_btnCancel);
+                // If button is clicked, close dialog:
+                dialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+
             }
         });
 
@@ -160,7 +177,7 @@ public class DeviceScreen extends ActionBarActivity {
             }else{
 
             Toast.makeText(DeviceScreen.this, "" + router.getDeviceList().get(key).getDeviceName()+" has been blacklisted.", Toast.LENGTH_SHORT).show();
-            
+
             }
         }
     }

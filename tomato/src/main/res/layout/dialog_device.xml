@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/dialog_device_labelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device Name:"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/dialog_device_txtName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/dialog_device_labelName"
+        android:text="Device Test" />
+
+    <TextView
+        android:id="@+id/dialog_device_labelIPAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP Address:"
+        android:layout_below="@+id/dialog_device_labelName"
+        android:layout_alignRight="@+id/dialog_device_labelName"
+        android:layout_alignEnd="@+id/dialog_device_labelName"
+        android:layout_alignLeft="@+id/dialog_device_labelName"
+        android:layout_alignStart="@+id/dialog_device_labelName" />
+
+    <TextView
+        android:id="@+id/dialog_device_txtIPAddress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_device_txtName"
+        android:text="Device Test"
+        android:layout_alignLeft="@+id/dialog_device_txtName"
+        android:layout_alignStart="@+id/dialog_device_txtName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group:"
+        android:id="@+id/dialog_device_labelGroup"
+        android:layout_below="@+id/dialog_device_labelIPAddress"
+        android:layout_alignLeft="@+id/dialog_device_labelIPAddress"
+        android:layout_alignStart="@+id/dialog_device_labelIPAddress"
+        android:layout_alignRight="@+id/dialog_device_labelIPAddress"
+        android:layout_alignEnd="@+id/dialog_device_labelIPAddress" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_device_spinnerGroups"
+        android:layout_below="@+id/dialog_device_txtIPAddress"
+        android:layout_alignLeft="@+id/dialog_device_txtIPAddress"
+        android:layout_alignStart="@+id/dialog_device_txtIPAddress"
+        android:layout_alignBottom="@+id/dialog_device_labelGroup"
+        android:spinnerMode="dropdown" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Disable WiFi"
+        android:id="@+id/dialog_device_chkbxWiFi"
+        android:layout_below="@+id/dialog_device_labelGroup"
+        android:layout_alignLeft="@+id/dialog_device_labelGroup"
+        android:layout_alignStart="@+id/dialog_device_labelGroup"
+        android:checked="false" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_ok"
+        android:id="@+id/dialog_device_btnOK"
+        android:layout_below="@+id/dialog_device_chkbxWiFi"
+        android:layout_alignLeft="@+id/dialog_device_chkbxWiFi"
+        android:layout_alignStart="@+id/dialog_device_chkbxWiFi" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_cancel"
+        android:id="@+id/dialog_device_btnCancel"
+        android:layout_below="@+id/dialog_device_chkbxWiFi"
+        android:layout_toRightOf="@+id/dialog_device_labelName" />
+
+</RelativeLayout>
