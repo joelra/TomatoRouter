@@ -62,6 +62,7 @@ public class DeviceScreen extends ActionBarActivity {
                     }
                 });
                 dialog.show();
+
             }
         });
 
@@ -176,7 +177,7 @@ public class DeviceScreen extends ActionBarActivity {
             }else{
 
             Toast.makeText(DeviceScreen.this, "" + router.getDeviceList().get(key).getDeviceName()+" has been blacklisted.", Toast.LENGTH_SHORT).show();
-            
+
             }
         }
     }
