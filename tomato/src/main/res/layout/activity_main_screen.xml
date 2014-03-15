@@ -1,73 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:orientation="vertical"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:background="@drawable/background_grad"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.somethingprofane.tomato.MainScreen">
+    android:layout_height="match_parent">
+
     <TextView
-        android:text="Select an option to interact with the router."
-        android:id="@+id/textView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:text="Tomato Router Mobile"
+        android:textColor="#565656"
+        android:id="@+id/mainscr_Title"
         android:textStyle="bold"
-        android:textSize="10pt"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:layout_alignParentTop="true"
-        android:gravity="center">
-    </TextView>
+        android:textSize="32dp"
+        android:padding="50px" />
 
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true">
+        android:layout_height="fill_parent"
+        android:layout_weight=".2">
 
-        <Button
-            android:text="Router"
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/mainscr_btnRouter"
-            android:background="@drawable/gradient"
+            android:clickable="true"
+            android:background="@drawable/router_icon_flat"
+            android:layout_marginLeft="90dp"
+            android:contentDescription="@string/router_imagebutton_contentdescription" />
 
-            style="@style/ButtonText"/>
-
-        <Button android:text="Basic"
-            android:id="@+id/button2"
-            android:background="@drawable/gradient"
-            style="@style/ButtonText"/>
-
-        <Button
-            android:text="Devices"
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/mainscr_btnDevices"
-            android:background="@drawable/gradient"
+            android:clickable="true"
+            android:background="@drawable/devices_icon_flat"
+            android:layout_toRightOf="@+id/mainscr_btnRouter"
+            android:focusable="true"
+            android:contentDescription="@string/devices_imagebutton_contentdescription" />
+    </RelativeLayout>
 
-            style="@style/ButtonText"/>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight=".2">
 
-        <Button android:text="Advanced"
-            android:id="@+id/button3"
-            android:background="@drawable/gradient"
-            style="@style/ButtonText"/>
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="90dp"
+            android:background="@drawable/basic_icon_flat"
+            android:id="@+id/basicImgBtn"
+            android:contentDescription="@string/basic_imagebutton_contentdescription" />
 
-        <Button
-            android:text="Help"
-            android:id="@+id/button5"
-            android:background="@drawable/gradient"
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/advImgBtn"
+            android:background="@drawable/advanced_icon_flat"
+            android:layout_toRightOf="@id/basicImgBtn"
+            android:focusableInTouchMode="false"
+            android:contentDescription="@string/advconfig_imagebutton_contentdescription" />
+    </RelativeLayout>
 
-            style="@style/ButtonText"/>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight=".2">
 
-        <Button android:text="Logout"
-            android:id="@+id/button6"
-            android:background="@drawable/gradient"
-            style="@style/ButtonText"/>
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="90dp"
+            android:background="@drawable/groups_icon_flat"
+            android:id="@+id/groupsImgBtn"
+            android:contentDescription="@string/groups_imagebutton_contentdescription" />
 
-    </LinearLayout>
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/profilesImgBtn"
+            android:background="@drawable/profiles_icon_flat"
+            android:layout_toRightOf="@+id/groupsImgBtn"/>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight=".2">
 
-</RelativeLayout>
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:id="@+id/logoutImgBtn"
+            android:background="@drawable/logout_icon_flat"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</LinearLayout>
