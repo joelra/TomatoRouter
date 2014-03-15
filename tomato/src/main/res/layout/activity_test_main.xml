@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:text="Tomato Router Mobile"
         android:textColor="#565656"
-        android:id="@+id/textView"
+        android:id="@+id/mainscr_Title"
         android:textStyle="bold"
         android:textSize="32dp"
         android:padding="50px" />
@@ -24,7 +24,7 @@
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/routerImgBtn"
+            android:id="@+id/mainscr_btnRouter"
             android:clickable="true"
             android:background="@drawable/router_icon_flat"
             android:layout_marginLeft="90dp"
@@ -33,10 +33,10 @@
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/deviceImgBtn"
+            android:id="@+id/mainscr_btnDevices"
             android:clickable="true"
             android:background="@drawable/devices_icon_flat"
-            android:layout_toRightOf="@+id/routerImgBtn"
+            android:layout_toRightOf="@+id/mainscr_btnRouter"
             android:focusable="true"
             android:contentDescription="@string/devices_imagebutton_contentdescription" />
     </RelativeLayout>
