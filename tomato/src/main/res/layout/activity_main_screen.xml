@@ -38,7 +38,8 @@
             android:background="@drawable/devices_icon_flat"
             android:layout_toRightOf="@+id/mainscr_btnRouter"
             android:focusable="true"
-            android:contentDescription="@string/devices_imagebutton_contentdescription" />
+            android:contentDescription="@string/devices_imagebutton_contentdescription"
+            android:adjustViewBounds="false" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,15 +53,15 @@
             android:layout_height="100dp"
             android:layout_marginLeft="90dp"
             android:background="@drawable/basic_icon_flat"
-            android:id="@+id/basicImgBtn"
+            android:id="@+id/mainscr_btnBasic"
             android:contentDescription="@string/basic_imagebutton_contentdescription" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/advImgBtn"
+            android:id="@+id/mainscr_btnAdvanced"
             android:background="@drawable/advanced_icon_flat"
-            android:layout_toRightOf="@id/basicImgBtn"
+            android:layout_toRightOf="@id/mainscr_btnBasic"
             android:focusableInTouchMode="false"
             android:contentDescription="@string/advconfig_imagebutton_contentdescription" />
     </RelativeLayout>
@@ -76,15 +77,15 @@
             android:layout_height="100dp"
             android:layout_marginLeft="90dp"
             android:background="@drawable/groups_icon_flat"
-            android:id="@+id/groupsImgBtn"
+            android:id="@+id/mainscr_btnGroups"
             android:contentDescription="@string/groups_imagebutton_contentdescription" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/profilesImgBtn"
+            android:id="@+id/mainscr_btnProfiles"
             android:background="@drawable/profiles_icon_flat"
-            android:layout_toRightOf="@+id/groupsImgBtn"/>
+            android:layout_toRightOf="@+id/mainscr_btnGroups"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -96,7 +97,7 @@
         <ImageButton
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:id="@+id/logoutImgBtn"
+            android:id="@+id/mainscr_btnLogout"
             android:background="@drawable/logout_icon_flat"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />

@@ -6,8 +6,11 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,6 +22,12 @@ public class MainScreen extends ActionBarActivity {
 
     @InjectView(R.id.mainscr_btnRouter)ImageButton routerButton;
     @InjectView(R.id.mainscr_btnDevices)ImageButton devicesButton;
+    @InjectView(R.id.mainscr_btnBasic)ImageButton basicButton;
+    @InjectView(R.id.mainscr_btnAdvanced)ImageButton advancedButton;
+    @InjectView(R.id.mainscr_btnGroups)ImageButton groupsButton;
+    @InjectView(R.id.mainscr_btnProfiles)ImageButton profilesButton;
+    @InjectView(R.id.mainscr_btnLogout)ImageButton logoutButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +44,90 @@ public class MainScreen extends ActionBarActivity {
         TextView title = (TextView) findViewById(R.id.mainscr_Title);
         title.setTypeface(sensationFont);
 
+        // On touch listener for Router ImageButton
+        routerButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    routerButton.setBackgroundResource(R.drawable.router_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    routerButton.setBackgroundResource(R.drawable.router_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        devicesButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    devicesButton.setBackgroundResource(R.drawable.devices_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    devicesButton.setBackgroundResource(R.drawable.devices_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        basicButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    basicButton.setBackgroundResource(R.drawable.basic_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    basicButton.setBackgroundResource(R.drawable.basic_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        advancedButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        groupsButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        profilesButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    profilesButton.setBackgroundResource(R.drawable.profiles_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    profilesButton.setBackgroundResource(R.drawable.profiles_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
+
+        logoutButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    logoutButton.setBackgroundResource(R.drawable.logout_icon_flat_pressed);
+                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+                    logoutButton.setBackgroundResource(R.drawable.logout_icon_flat_pressed);
+                }
+                return false;
+            }
+        });
 
     }
 
