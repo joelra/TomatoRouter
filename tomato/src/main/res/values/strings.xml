@@ -33,7 +33,7 @@
     <string name="router_imagebutton_contentdescription">Router Image Button for Router Information.</string>
     <string name="devices_imagebutton_contentdescription">Button Image for Devices</string>
     <string name="groups_imagebutton_contentdescription">Button Image for Groups</string>
-    <string name="basic_imagebutton_contentdescription">Button Image for Basic Configuration</string><string name="advconfig_imagebutton_contentdescription">Button Image for Advanced Configuration</string>
+    <string name="basic_imagebutton_contentdescription">Button Image for Basic Configuration</string><string name="advconfig_imagebutton_contentdescription">Button Image for Advanced Configuration</string><string name="mainscr_AppTitle">Tomato Router Mobile</string>
 
 </resources>
 

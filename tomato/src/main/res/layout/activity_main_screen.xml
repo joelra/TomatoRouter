@@ -9,17 +9,21 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight=".2">
+        android:layout_weight=".2"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:gravity="fill_horizontal|fill_vertical">
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:text="Tomato Router Mobile"
+            android:layout_height="match_parent"
+            android:text="@string/mainscr_AppTitle"
             android:textColor="#565656"
             android:id="@+id/mainscr_Title"
             android:textStyle="bold"
             android:textSize="32dp"
-            android:padding="50px" />
+            android:padding="50px"
+            android:gravity="center" />
     </LinearLayout>
 
     <RelativeLayout
@@ -35,7 +39,9 @@
             android:clickable="true"
             android:background="@drawable/router_icon_flat"
             android:layout_marginLeft="90dp"
-            android:contentDescription="@string/router_imagebutton_contentdescription" />
+            android:contentDescription="@string/router_imagebutton_contentdescription"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" />
 
         <ImageButton
             android:layout_width="100dp"
@@ -46,7 +52,8 @@
             android:layout_toRightOf="@+id/mainscr_btnRouter"
             android:focusable="true"
             android:contentDescription="@string/devices_imagebutton_contentdescription"
-            android:adjustViewBounds="false" />
+            android:adjustViewBounds="false"
+            android:layout_alignParentEnd="false" />
     </RelativeLayout>
 
     <RelativeLayout
