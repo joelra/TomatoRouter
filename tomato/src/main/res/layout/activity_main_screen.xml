@@ -40,8 +40,14 @@
             android:background="@drawable/router_icon_flat"
             android:layout_marginLeft="90dp"
             android:contentDescription="@string/router_imagebutton_contentdescription"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentStart="false" />
+            android:layout_toLeftOf="@+id/mainscr_centerPointRouterDevices"/>
+
+        <TextView
+            android:layout_width="0dip"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainscr_centerPointRouterDevices" />
 
         <ImageButton
             android:layout_width="100dp"
@@ -49,11 +55,9 @@
             android:id="@+id/mainscr_btnDevices"
             android:clickable="true"
             android:background="@drawable/devices_icon_flat"
-            android:layout_toRightOf="@+id/mainscr_btnRouter"
+            android:layout_toRightOf="@+id/mainscr_centerPointRouterDevices"
             android:focusable="true"
-            android:contentDescription="@string/devices_imagebutton_contentdescription"
-            android:adjustViewBounds="false"
-            android:layout_alignParentEnd="false" />
+            android:contentDescription="@string/devices_imagebutton_contentdescription" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,15 +71,23 @@
             android:layout_height="100dp"
             android:layout_marginLeft="90dp"
             android:background="@drawable/basic_icon_flat"
+            android:layout_toLeftOf="@+id/mainscr_centerPointBasicAdv"
             android:id="@+id/mainscr_btnBasic"
             android:contentDescription="@string/basic_imagebutton_contentdescription" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainscr_centerPointBasicAdv" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/mainscr_btnAdvanced"
             android:background="@drawable/advanced_icon_flat"
-            android:layout_toRightOf="@id/mainscr_btnBasic"
+            android:layout_toRightOf="@id/mainscr_centerPointBasicAdv"
             android:focusableInTouchMode="false"
             android:contentDescription="@string/advconfig_imagebutton_contentdescription" />
     </RelativeLayout>
@@ -91,15 +103,23 @@
             android:layout_height="100dp"
             android:layout_marginLeft="90dp"
             android:background="@drawable/groups_icon_flat"
+            android:layout_toLeftOf="@+id/mainscr_centerPointGroupsProfiles"
             android:id="@+id/mainscr_btnGroups"
             android:contentDescription="@string/groups_imagebutton_contentdescription" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainscr_centerPointGroupsProfiles" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/mainscr_btnProfiles"
             android:background="@drawable/profiles_icon_flat"
-            android:layout_toRightOf="@+id/mainscr_btnGroups"/>
+            android:layout_toRightOf="@+id/mainscr_centerPointGroupsProfiles"/>
     </RelativeLayout>
 
     <RelativeLayout
