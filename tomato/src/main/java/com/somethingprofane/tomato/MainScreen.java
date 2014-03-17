@@ -40,7 +40,7 @@ public class MainScreen extends ActionBarActivity {
         Router router = (Router) i.getParcelableExtra("passed_router");
 
         // Resetting the font of the Title in the main screen. May not be working...
-        Typeface sensationFont = Typeface.createFromAsset(getAssets(), "SourceSansPro-Regular.otf");
+        Typeface sensationFont = Typeface.createFromAsset(getAssets(), "Lato-BlaIta.ttf");
         TextView title = (TextView) findViewById(R.id.mainscr_Title);
         title.setTypeface(sensationFont);
 
