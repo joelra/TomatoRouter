@@ -14,30 +14,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android Phone"
-            android:id="@+id/textView"
+            android:id="@+id/deviceRowName"
             android:textSize="25dp"
-            android:textIsSelectable="false" />
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="192.168.1.12"
-            android:id="@+id/textView2"
-            android:textSize="12dp" />
+            android:id="@+id/deviceRowIP"
+            android:textSize="12dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <ImageButton
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:background="@drawable/devices_wifi_off"
-        android:id="@+id/imageButton"
+        android:id="@+id/deviceRowWifiImg"
         android:layout_marginRight="10dp" />
 
     <ToggleButton
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:text="Wifi"
-        android:id="@+id/toggleButton"
+        android:id="@+id/deviceRowToggleBtn"
         android:checked="false"
         android:layout_weight=".1" />
 
