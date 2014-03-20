@@ -28,8 +28,6 @@ public class MainScreen extends ActionBarActivity {
     @InjectView(R.id.mainscr_btnProfiles)ImageButton profilesButton;
     @InjectView(R.id.mainscr_btnLogout)ImageButton logoutButton;
 
-    Router router;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +37,7 @@ public class MainScreen extends ActionBarActivity {
 
         SharedPreferences prefs = getSharedPreferences("user_prefs", MainScreen.MODE_PRIVATE);
         Intent i = getIntent();
-        router = (Router) i.getParcelableExtra("passed_router");
+        Router router = (Router) i.getParcelableExtra("passed_router");
 
         // Resetting the font of the Title in the main screen. May not be working...
         Typeface sensationFont = Typeface.createFromAsset(getAssets(), "Lato-BlaIta.ttf");
@@ -156,16 +154,15 @@ public class MainScreen extends ActionBarActivity {
 
     @OnClick(R.id.mainscr_btnRouter)
     public void LoginClicked(ImageButton routerButton){
-        new moveToRouter().execute(router);
+        new moveToRouter().execute();
     }
 
 
-    private class moveToRouter extends AsyncTask<Router, Void, Void> {
+    private class moveToRouter extends AsyncTask<TextView, Void, String> {
 
         @Override
-        protected Void doInBackground(Router... routers) {
+        protected String doInBackground(TextView... textViews) {
             Intent intent = new Intent(MainScreen.this, RouterOverviewActivity.class);
-            intent.putExtra("passed_router", routers[0]);
             MainScreen.this.startActivity(intent);
             // Finish the activity;
             return null;

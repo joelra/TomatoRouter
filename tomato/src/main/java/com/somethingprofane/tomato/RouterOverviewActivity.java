@@ -5,18 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -34,33 +29,20 @@ public class RouterOverviewActivity extends Activity {
     TextView routerUptimeTxt;
     TextView routerRamTxt;
 
-    Router router;
-    ProgressDialog dialog;
-
     @InjectView(R.id.router_overview_retrieveRouter) Button routerButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        dialog = new ProgressDialog(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_router_overview);
-        routerNameTxt = (TextView)findViewById(R.id.router_main_txtRouter);
-        routerMacTxt = (TextView)findViewById(R.id.router_main_txtMAC);
-        routerIPTxt = (TextView)findViewById(R.id.trouter_main_txtIP);
-        routerModelTxt = (TextView)findViewById(R.id.router_main_txtModel);
-        routerUptimeTxt = (TextView) findViewById(R.id.router_main_txtUptime);
-        routerRamTxt = (TextView) findViewById(R.id.router_main_txtRAM);
-        Intent i = getIntent();
-        router = (Router) i.getParcelableExtra("passed_router");
-        new refreshRouterInfo().execute(router);
-        System.out.println(router.getRouterName() + "OnCreate");
+
         ButterKnife.inject(this);
-
-
-
-
-
-
-       // new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
+         routerNameTxt = (TextView)findViewById(R.id.router_main_txtRouter);
+         routerMacTxt = (TextView)findViewById(R.id.router_main_txtMAC);
+         routerIPTxt = (TextView)findViewById(R.id.trouter_main_txtIP);
+         routerModelTxt = (TextView)findViewById(R.id.router_main_txtModel);
+         routerUptimeTxt = (TextView) findViewById(R.id.router_main_txtUptime);
+         routerRamTxt = (TextView) findViewById(R.id.router_main_txtRAM);
+        new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
 
     }
 
@@ -88,42 +70,45 @@ public class RouterOverviewActivity extends Activity {
     @OnClick(R.id.router_overview_retrieveRouter)
     public void refreshClicked(Button routerButton){
 
-        if (!routerNameTxt.getText().toString().equals(router.getRouterName())){
-            dialog.setMessage("Updating router...");
-            dialog.show();
-            new updateRouterInfo().execute(routerNameTxt.getText().toString());
-        }
-        else{
-            dialog.setMessage("Refreshing router...");
-            dialog.show();
-            new refreshRouterInfo().execute(router);
-        }
+        new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
 
     }
 
-    private class refreshRouterInfo extends AsyncTask<Router, Void, Router> {
+    private class retrieveRouterInfo extends AsyncTask<TextView, Void, Router> {
 
+        TextView routerNameTxt;
+        TextView routerMacTxt;
+        TextView routerIPTxt;
+        TextView routerModelTxt;
+        TextView routerUptimeTxt;
+        TextView routerRamTxt;
 
-
+        private ProgressDialog dialog = new ProgressDialog(RouterOverviewActivity.this);
 
         @Override
         protected void onPreExecute(){
-
+            this.dialog.setMessage("Updating...");
+            this.dialog.show();
         }
 
         @Override
-        protected Router doInBackground(Router... routers) {
+        protected Router doInBackground(TextView... textViews) {
 
-            routers[0].refresh();
 
-            return routers[0];
+            Router tempRouter = new Router("http://192.168.1.1", "root", "admin");
+
+            routerNameTxt = textViews[0];
+            routerMacTxt = textViews[1];
+            routerIPTxt = textViews[2];
+            routerModelTxt = textViews[3];
+            routerUptimeTxt = textViews[4];
+            routerRamTxt = textViews[5];
+
+            return tempRouter;
         }
 
         @Override
         protected void onPostExecute(Router router){
-
-
-            RouterOverviewActivity.this.router = router;
             routerNameTxt.setText(router.getRouterName());
             routerMacTxt.setText(router.getWanHwAddr());
             routerIPTxt.setText(router.getLanIpAddr());
@@ -134,46 +119,6 @@ public class RouterOverviewActivity extends Activity {
             if (dialog.isShowing()){
                 dialog.dismiss();
             }
-
-        }
-    }
-
-    private class updateRouterInfo extends AsyncTask<String,Void,String>{
-
-
-        boolean isFailed = false;
-
-        @Override
-        protected void onPreExecute(){
-
-
-    }
-        @Override
-        protected String doInBackground(String... strings) {
-            Connection conn = new Connection();
-            String returnedHTML = null;
-            HashMap <String, String> tempHashMap = conn.buildParamsMap("_http_id", RouterOverviewActivity.this.router.getHttpId(), "router_name", strings[0]);
-            try {
-                returnedHTML = conn.PostToWebadress(RouterOverviewActivity.this.router.getUrl()+"/tomato.cgi", RouterOverviewActivity.this.router.getUsrname(),RouterOverviewActivity.this.router.getPswrd(),tempHashMap);
-            } catch (IOException e) {
-                isFailed = true;
-                e.printStackTrace();
-            }
-            return returnedHTML;
-        }
-
-        protected void onPostExecute(String string){
-            if(isFailed){
-                Toast.makeText(RouterOverviewActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
-            }else{
-
-                Toast.makeText(RouterOverviewActivity.this, "Router has been updated.", Toast.LENGTH_SHORT).show();
-
-            }
-
-
-            new RouterOverviewActivity.refreshRouterInfo().execute(RouterOverviewActivity.this.router);
-
         }
     }
 }

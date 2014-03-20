@@ -79,11 +79,6 @@ public class Router implements Parcelable {
 
     }
 
-    public String getUrl() {return url; }
-
-    public String getPswrd () {return pswrd;}
-
-    public String getUsrname () {return usrname;}
 
     public String getRouterName() {
         return routerName;
@@ -240,7 +235,6 @@ public class Router implements Parcelable {
         try {
             returnedHtml = conn.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
             //Set all the values with the returned HTML
-            setRouterName(returnedHtml);
             setFreeRam(returnedHtml);
             setTotalRam(returnedHtml);
             setUptime(returnedHtml);
