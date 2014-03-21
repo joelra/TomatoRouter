@@ -24,6 +24,7 @@ import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -43,6 +44,7 @@ public class DeviceScreen extends ActionBarActivity {
         setContentView(R.layout.activity_device_screen);
 
         lv = (ListView) findViewById(R.id.devicescrn_listviewDevices);
+        new populateListView().execute();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,7 +70,7 @@ public class DeviceScreen extends ActionBarActivity {
 
         ButterKnife.inject(this);
 
-        new populateDeviceList().execute(lv);
+        //new populateDeviceList().execute(lv);
     }
 
 
@@ -179,6 +181,13 @@ public class DeviceScreen extends ActionBarActivity {
             Toast.makeText(DeviceScreen.this, "" + router.getDeviceList().get(key).getDeviceName()+" has been blacklisted.", Toast.LENGTH_SHORT).show();
 
             }
+        }
+    }
+
+    public class populateListView extends AsyncTask<ListView, Void, List<Device>> {
+        @Override
+        protected List<Device> doInBackground(ListView... listViews) {
+            return null;
         }
     }
 }
