@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ import java.util.List;
 public class DeviceListBaseAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Device> deviceList;
+    private ArrayList<Device> deviceList;
 
-    public DeviceListBaseAdapter(Context context, List<Device> devices){
+    public DeviceListBaseAdapter(Context context, ArrayList<Device> devices){
         this.context = context;
         this.deviceList = devices;
     }
