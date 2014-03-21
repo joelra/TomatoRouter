@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Connected Devices"
-            android:id="@+id/devicescrn_lableDevices"
+            android:id="@+id/devicescrn_mainLabel"
             android:layout_gravity="center"
             android:textSize="38dp" />
         <TextView
