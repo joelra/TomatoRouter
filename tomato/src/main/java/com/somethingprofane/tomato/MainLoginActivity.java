@@ -1,16 +1,25 @@
 package com.somethingprofane.tomato;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.os.Build;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.NetworkInterface;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -33,18 +42,14 @@ public class MainLoginActivity extends ActionBarActivity {
         // Inject Button
         ButterKnife.inject(this);
 
-        // get the view by Id from the layout that you just inflated
-        //TextView textview = (TextView) findViewById(R.id.textView);
-
-        // now that you have the object you can access different methods on it, like setText("").
-        //textview.setText("Joel this is how you set text");
-
-        // Check to see if on Honeycomb for ActionBar API. Not sure why...
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             //Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        new checkWirelessConnection().execute();
     }
+
 
     @OnClick(R.id.login_main_loginbtn)
     public void LoginClicked(Button button){
@@ -52,6 +57,57 @@ public class MainLoginActivity extends ActionBarActivity {
         TextView passwd = (TextView) findViewById(R.id.login_main_passwd_text);
         TextView ipAddr = (TextView) findViewById(R.id.login_main_ip_text);
         new LoginValidation().execute(username, passwd, ipAddr);
+    }
+
+    private class checkWirelessConnection extends AsyncTask<Void, Void, Boolean>{
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            boolean wifiConnected = false;
+                wifiConnected = checkWifi();
+            return wifiConnected;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(!aBoolean){
+                final AlertDialog.Builder alertBox = new AlertDialog.Builder(MainLoginActivity.this);
+                alertBox.setMessage("Wifi doesn't seem enabled. Turn on wifi?");
+                alertBox.setPositiveButton("Wifi Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                });
+                alertBox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Do nothing and close the alert window
+                    }
+                });
+                alertBox.show();
+            }
+        }
+
+        boolean checkWifi() {
+            boolean wifiState = false;
+            // Returns network related information
+            ConnectivityManager connectivity = (ConnectivityManager) MainLoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if(connectivity != null){
+                // Network information related to wifi
+                try {
+                    NetworkInfo networkInfo = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        wifiState = true;
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return wifiState;
+        }
     }
 
     private class LoginValidation extends AsyncTask<TextView, Void, Router>{
@@ -114,10 +170,50 @@ public class MainLoginActivity extends ActionBarActivity {
             } else {
                 Context context = getApplicationContext();
                 dialog.dismiss();
-                CharSequence text = "Something went wrong...";
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, text, duration).show();
+
+                if(checkWifi()){
+                    CharSequence text;
+                    text = "Could not authenticate to router. Check credentials and try again.";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                } else {
+                    final AlertDialog.Builder alertBox = new AlertDialog.Builder(MainLoginActivity.this);
+                    alertBox.setMessage("Wifi doesn't seem enabled. Turn on wifi?");
+                    alertBox.setPositiveButton("Wifi Settings", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    });
+                    alertBox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Do nothing and close the alert window
+                        }
+                    });
+                    alertBox.show();
+                }
             }
+        }
+
+        boolean checkWifi() {
+            boolean wifiState = false;
+            // Returns network related information
+            ConnectivityManager connectivity = (ConnectivityManager) MainLoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if(connectivity != null){
+                // Network information related to wifi
+                try {
+                    NetworkInfo networkInfo = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        wifiState = true;
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return wifiState;
         }
 
 
