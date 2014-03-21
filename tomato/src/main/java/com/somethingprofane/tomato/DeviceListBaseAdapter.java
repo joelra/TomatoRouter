@@ -52,7 +52,7 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         holder.txtDeviceName.setText(device.getDeviceName());
         holder.txtDeviceIP.setText(device.getDeviceIPAddr());
         // THIS IS FOR TESTING:
-        holder.imgDeviceIcon.setImageResource(R.drawable.devices_wifi_on);
+        //holder.imgDeviceIcon.setImageResource(R.drawable.devices_wifi_on);
         holder.wifiToggle.setChecked(false);
         //TODO Check to see if the device is currently connected via wifi and display the appropriate icon
 
