@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ import java.util.List;
 public class DeviceListBaseAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Device> deviceList;
+    private ArrayList<Device> deviceList;
 
-    public DeviceListBaseAdapter(Context context, List<Device> devices){
+    public DeviceListBaseAdapter(Context context, ArrayList<Device> devices){
         this.context = context;
         this.deviceList = devices;
     }
@@ -51,7 +52,7 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         holder.txtDeviceName.setText(device.getDeviceName());
         holder.txtDeviceIP.setText(device.getDeviceIPAddr());
         // THIS IS FOR TESTING:
-        holder.imgDeviceIcon.setImageResource(R.drawable.devices_wifi_on);
+        //holder.imgDeviceIcon.setImageResource(R.drawable.devices_wifi_on);
         holder.wifiToggle.setChecked(false);
         //TODO Check to see if the device is currently connected via wifi and display the appropriate icon
 
