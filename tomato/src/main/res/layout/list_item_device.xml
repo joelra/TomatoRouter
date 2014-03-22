@@ -31,7 +31,6 @@
     <ImageButton
         android:layout_width="65dp"
         android:layout_height="50dp"
-        android:background="@drawable/devices_wifi_off"
         android:id="@+id/deviceRowWifiImg"
         android:layout_marginRight="10dp" />
 
