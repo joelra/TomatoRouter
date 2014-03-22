@@ -124,7 +124,7 @@ public class Parser {
             while(m2.find()){
                 deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
                 for(Device device : deviceList){
-                    if(device.getDeviceMacAddr() == deviceInfoArray[1]){
+                    if(device.getDeviceMacAddr().equals(deviceInfoArray[1])){
                         device.setDeviceType("wireless");
                         device.setDeviceWifiConnected(true);
                     }
@@ -153,8 +153,10 @@ public class Parser {
 
                 // Set these as assuming the device is not wireless.
                 //
-                device.setDeviceWifiConnected(false);
-                device.setDeviceType("wired");
+                if(device.getDeviceType().equals("") && !device.getDeviceType().equals("wireless")) {
+                    device.setDeviceWifiConnected(false);
+                    device.setDeviceType("wired");
+                }
                 deviceList.add(device);
             }
         }

@@ -21,7 +21,7 @@ public class Device implements Parcelable {
     String deviceName;
     String deviceIPAddr;
     String deviceConnTime;
-    String deviceType;
+    String deviceType = "";
     boolean deviceWifiConnected;
 
     /**
