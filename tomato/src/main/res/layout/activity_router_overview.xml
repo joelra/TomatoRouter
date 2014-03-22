@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@drawable/background_grad"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.somethingprofane.tomato.MainScreen">
+
     <TextView
         android:text="Router details. Click the button to update."
         android:id="@+id/TextView"
@@ -19,6 +21,11 @@
         android:gravity="center">
     </TextView>
 
+    <ScrollView
+
+        android:layout_height="fill_parent"
+
+        android:layout_width="fill_parent">
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -31,6 +38,7 @@
         android:layout_below="@id/TextView">
 
         <TableLayout
+            android:id="@+id/router_main_table1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:stretchColumns="1">
@@ -174,6 +182,174 @@
 
             </TableRow>
 
+        </TableLayout>
+       <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="*"
+        android:layout_below="@+id/router_main_table1">
+            <TableRow>
+                <TextView
+                    android:text="RX:"
+                    android:id="@+id/router_main_labelRx"
+                    android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_below="@+id/router_main_labelRAM"/>
+
+                <TextView
+                    android:text="RX"
+                    android:id="@+id/router_main_txtRx"
+                    android:layout_width="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRx"/>
+
+                <TextView
+                    android:text="Avg:"
+                    android:id="@+id/router_main_labelAvg"
+                    android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_txtRx"/>
+
+                <TextView
+                    android:text="Avg"
+                    android:id="@+id/router_main_txtAvg"
+                    android:layout_width="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelAvg"/>
+
+                <TextView
+                    android:text="Peak:"
+                    android:id="@+id/router_main_labelPeak"
+                    android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_txtAvg"/>
+
+                <TextView
+                    android:text="Peak"
+                    android:id="@+id/router_main_txtPeak"
+                    android:layout_width="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelPeak"/>
+                <TextView
+                    android:text="Total:"
+                    android:id="@+id/router_main_labelTotal"
+                    android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_txtPeak"/>
+
+                <TextView
+                    android:text="Total"
+                    android:id="@+id/router_main_txtTotal"
+                    android:layout_width="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelTotal"/>
+
+            </TableRow>
+           <TableRow>
+               <TextView
+                   android:text="Tx:"
+                   android:id="@+id/router_main_labelTx"
+                   android:layout_width="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="7pt"
+                   android:paddingLeft="@dimen/activity_horizontal_margin"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_below="@+id/router_main_labelRAM"/>
+
+               <TextView
+                   android:text="Tx"
+                   android:id="@+id/router_main_txtTx"
+                   android:layout_width="wrap_content"
+                   android:textSize="7pt"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_labelRx"/>
+
+               <TextView
+                   android:text="Avg:"
+                   android:id="@+id/router_main_labelTxAvg"
+                   android:layout_width="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="7pt"
+                   android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_txtRx"/>
+
+               <TextView
+                   android:text="Avg"
+                   android:id="@+id/router_main_txtTxAvg"
+                   android:layout_width="wrap_content"
+                   android:textSize="7pt"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_labelAvg"/>
+
+               <TextView
+                   android:text="Peak:"
+                   android:id="@+id/router_main_labelTxPeak"
+                   android:layout_width="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="7pt"
+                   android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_txtAvg"/>
+
+               <TextView
+                   android:text="Peak"
+                   android:id="@+id/router_main_txtTxPeak"
+                   android:layout_width="wrap_content"
+                   android:textSize="7pt"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_labelPeak"/>
+               <TextView
+                   android:text="Total:"
+                   android:id="@+id/router_main_labelTxTotal"
+                   android:layout_width="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="7pt"
+                   android:paddingLeft="@dimen/activity_halfhorizontal_margin"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_txtPeak"/>
+
+               <TextView
+                   android:text="Total"
+                   android:id="@+id/router_main_txtTxTotal"
+                   android:layout_width="wrap_content"
+                   android:textSize="7pt"
+                   android:paddingTop="@dimen/activity_vertical_margin"
+                   android:paddingBottom="@dimen/activity_vertical_margin"
+                   android:layout_toRightOf="@+id/router_main_labelTotal"/>
+
+           </TableRow>
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -188,18 +364,19 @@
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingBottom="@dimen/activity_vertical_margin"
                     android:background="@drawable/gradient"
-                    android:layout_below="@string/router_page_ram"
+                    android:layout_below="@+id/router_main_labelRx"
                     android:layout_alignParentBottom="true"
 
                     style="@style/ButtonText"
-                    android:layout_span="2" />
+                    android:layout_span="8" />
 
             </TableRow>
 
         </TableLayout>
 
-    </RelativeLayout>
 
+    </RelativeLayout>
+</ScrollView>
 
 
 </LinearLayout>
