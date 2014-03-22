@@ -3,6 +3,8 @@ package com.somethingprofane.tomato;
 import android.util.Base64;
 
 import org.json.JSONArray;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -12,10 +14,6 @@ import java.util.regex.Pattern;
  * Created by somethingPr0fane on 2/6/14.
  */
 public class Parser {
-
-    //TODO: Add check in login class for wifi connectivity.
-    //TODO: 1. Clean up parser class
-    //TODO: 3. Modify RouterInformationActivity to display router information and controls
 
     public String parserRouterName(String html){
         String pattern = "router_name: '(.*?)'";
@@ -105,4 +103,56 @@ public class Parser {
         return freeRam;
     }
 
+    public ArrayList<Device> parseDeviceList(String deviceHTML){
+        ArrayList<Device> deviceList = new ArrayList<Device>();
+
+        deviceList = parseDeviceDHCPLeaseInfo(deviceList, deviceHTML);
+        deviceList = parseWIFIConnectivityInfo(deviceList, deviceHTML);
+
+        return deviceList;
+    }
+
+    private ArrayList<Device> parseWIFIConnectivityInfo(ArrayList<Device> deviceList, String deviceHTML) {
+        String[] deviceInfoArray;
+        String pattern = "wldev([^;]*)";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(deviceHTML);
+        if(m.find()){
+            pattern = "(?<=\\[)(.*?)(?=\\])";
+            Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
+            Matcher m2 = r2.matcher(m.group(1));
+            while(m2.find()){
+                deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
+                for(Device device : deviceList){
+                    if(device.getDeviceMacAddr() == deviceInfoArray[1]){
+                        device.setDeviceType("Wireless");
+                        device.setDeviceWifiConnected(true);
+                    }
+                }
+            }
+        }
+        return deviceList;
+    }
+
+    private ArrayList<Device> parseDeviceDHCPLeaseInfo(ArrayList<Device> deviceList, String deviceHTML) {
+        String[] deviceInfoArray;
+        String pattern = "dhcpd_lease([^;]*)";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(deviceHTML);
+        if(m.find()){
+            pattern = "(?<=\\[)(.*?)(?=\\])";
+            Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
+            Matcher m2 = r2.matcher(m.group(1));
+            while(m2.find()){
+                deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
+                Device device = new Device();
+                device.setDeviceName(deviceInfoArray[0]);
+                device.setDeviceIPAddr(deviceInfoArray[1]);
+                device.setDeviceMacAddr(deviceInfoArray[2]);
+                device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
+                deviceList.add(device);
+            }
+        }
+        return deviceList;
+    }
 }

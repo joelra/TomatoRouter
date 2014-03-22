@@ -21,6 +21,8 @@ public class Device implements Parcelable {
     String deviceName;
     String deviceIPAddr;
     String deviceConnTime;
+    String deviceType;
+    boolean deviceWifiConnected;
 
     /**
      * Constructor
@@ -62,6 +64,22 @@ public class Device implements Parcelable {
         this.deviceConnTime = deviceConnTime;
     }
 
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public boolean isDeviceWifiConnected() {
+        return deviceWifiConnected;
+    }
+
+    public void setDeviceWifiConnected(boolean deviceWifiConnected) {
+        this.deviceWifiConnected = deviceWifiConnected;
+    }
+
     public static final Parcelable.Creator<Device> CREATOR
             = new Parcelable.Creator<Device>() {
         public Device createFromParcel(Parcel in) {
@@ -84,6 +102,7 @@ public class Device implements Parcelable {
         out.writeString(deviceName);
         out.writeString(deviceIPAddr);
         out.writeString(deviceConnTime);
+        out.writeString(deviceType);
 
     }
 
@@ -92,6 +111,7 @@ public class Device implements Parcelable {
         deviceName = in.readString();
         deviceIPAddr = in.readString();
         deviceConnTime = in.readString();
+        deviceType = in.readString();
     }
 
 
