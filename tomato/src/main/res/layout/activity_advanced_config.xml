@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Groups:"
+                android:id="@+id/activity_advanced_config_labelGroups"
+                android:textSize="10pt"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/activity_advanced_config_groupsEditButton"
+                android:layout_alignLeft="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_alignStart="@+id/activity_advanced_config_tableLayoutGroups" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="Edit"
+                android:id="@+id/activity_advanced_config_groupsEditButton"
+                android:layout_gravity="right"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/activity_advanced_config_groupsDeleteButton"
+                android:layout_alignBottom="@+id/activity_advanced_config_groupsDeleteButton"
+                android:layout_marginTop="5dp" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="Delete"
+                android:id="@+id/activity_advanced_config_groupsDeleteButton"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_alignEnd="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_marginTop="5dp" />
+
+            <TableLayout
+                android:background="#000000"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:stretchColumns="*"
+                android:layout_below="@+id/activity_advanced_config_groupsEditButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
+                android:id="@+id/activity_advanced_config_tableLayoutGroups">
+
+                <TableRow
+                    android:background="#FFFFFF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Group Name:"
+                        android:id="@+id/activity_advanced_config_labelGroupName"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Number of Devices:"
+                        android:id="@+id/activity_advanced_config_labelNumofDevices"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp" />
+                </TableRow>
+            </TableLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="Add"
+                android:id="@+id/activity_advanced_config_groupsAddButton"
+                android:layout_below="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_alignRight="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_alignEnd="@+id/activity_advanced_config_tableLayoutGroups" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Routing:"
+                android:id="@+id/activity_advanced_config_labelRouting"
+                android:layout_below="@+id/activity_advanced_config_groupsAddButton"
+                android:layout_alignLeft="@+id/activity_advanced_config_tableLayoutGroups"
+                android:layout_alignStart="@+id/activity_advanced_config_tableLayoutGroups"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:textSize="10pt" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="Go"
+                android:id="@+id/activity_advanced_config_routingButton"
+                android:layout_alignTop="@+id/activity_advanced_config_labelRouting"
+                android:layout_alignRight="@+id/activity_advanced_config_groupsAddButton"
+                android:layout_alignEnd="@+id/activity_advanced_config_groupsAddButton" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Routing Schedule:"
+                android:layout_alignLeft="@+id/activity_advanced_config_labelRouting"
+                android:layout_alignStart="@+id/activity_advanced_config_labelRouting"
+                android:layout_below="@+id/activity_advanced_config_routingButton"
+                android:textSize="10pt"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:id="@+id/activity_advanced_config_labelRoutingSchedule" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="Go"
+                android:id="@+id/activity_advanced_config_routingScheduleButton"
+                android:layout_alignRight="@+id/activity_advanced_config_routingButton"
+                android:layout_alignEnd="@+id/activity_advanced_config_routingButton"
+                android:layout_alignTop="@+id/activity_advanced_config_labelRoutingSchedule" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allow ICMP:"
+                android:id="@+id/activity_advanced_config_labelICMP"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/activity_advanced_config_labelRoutingSchedule"
+                android:layout_alignStart="@+id/activity_advanced_config_labelRoutingSchedule"
+                android:textStyle="bold"
+                android:textSize="10pt"
+                android:layout_below="@+id/activity_advanced_config_routingScheduleButton"
+                android:layout_marginTop="15dp" />
+
+            <ToggleButton
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="New ToggleButton"
+                android:id="@+id/activity_advanced_config_ICMPtoggleButton"
+                android:layout_alignStart="@+id/activity_advanced_config_routingScheduleButton"
+                android:layout_alignTop="@+id/activity_advanced_config_labelICMP"
+                android:layout_alignRight="@+id/activity_advanced_config_routingScheduleButton"
+                android:layout_alignEnd="@+id/activity_advanced_config_routingScheduleButton" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

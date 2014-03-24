@@ -187,4 +187,10 @@ public class MainScreen extends ActionBarActivity {
         }
     }
 
+    @OnClick(R.id.mainscr_btnAdvanced)
+    public void advancedClicked (ImageButton advancedButton){
+        Intent intent = new Intent(MainScreen.this, AdvancedConfigActivity.class);
+        MainScreen.this.startActivity(intent);
+    }
+
 }

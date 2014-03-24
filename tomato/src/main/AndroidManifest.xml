@@ -41,6 +41,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainScreen" />
         </activity>
+        <activity
+            android:name="com.somethingprofane.tomato.AdvancedConfigActivity"
+            android:label="@string/title_activity_advanced_config"
+            android:parentActivityName="com.somethingprofane.tomato.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainScreen" />
+        </activity>
 
     </application>
 
