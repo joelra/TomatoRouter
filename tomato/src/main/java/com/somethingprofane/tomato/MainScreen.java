@@ -1,5 +1,6 @@
 package com.somethingprofane.tomato;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -12,7 +13,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -53,7 +58,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     routerButton.setBackgroundResource(R.drawable.router_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    routerButton.setBackgroundResource(R.drawable.router_icon_flat_pressed);
+                    routerButton.setBackgroundResource(R.drawable.router_icon_flat);
                 }
                 return false;
             }
@@ -65,7 +70,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     devicesButton.setBackgroundResource(R.drawable.devices_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    devicesButton.setBackgroundResource(R.drawable.devices_icon_flat_pressed);
+                    devicesButton.setBackgroundResource(R.drawable.devices_icon_flat);
                 }
                 return false;
             }
@@ -77,7 +82,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     basicButton.setBackgroundResource(R.drawable.basic_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    basicButton.setBackgroundResource(R.drawable.basic_icon_flat_pressed);
+                    basicButton.setBackgroundResource(R.drawable.basic_icon_flat);
                 }
                 return false;
             }
@@ -89,7 +94,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
+                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat);
                 }
                 return false;
             }
@@ -101,7 +106,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
+                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat);
                 }
                 return false;
             }
@@ -113,7 +118,7 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     profilesButton.setBackgroundResource(R.drawable.profiles_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    profilesButton.setBackgroundResource(R.drawable.profiles_icon_flat_pressed);
+                    profilesButton.setBackgroundResource(R.drawable.profiles_icon_flat);
                 }
                 return false;
             }
@@ -125,12 +130,11 @@ public class MainScreen extends ActionBarActivity {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     logoutButton.setBackgroundResource(R.drawable.logout_icon_flat_pressed);
                 } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    logoutButton.setBackgroundResource(R.drawable.logout_icon_flat_pressed);
+                    logoutButton.setBackgroundResource(R.drawable.logout_icon_flat);
                 }
                 return false;
             }
         });
-
     }
 
 
@@ -158,7 +162,6 @@ public class MainScreen extends ActionBarActivity {
     public void LoginClicked(ImageButton routerButton){
         new moveToRouter().execute(router);
     }
-
 
     private class moveToRouter extends AsyncTask<Router, Void, String> {
 
@@ -193,4 +196,34 @@ public class MainScreen extends ActionBarActivity {
         MainScreen.this.startActivity(intent);
     }
 
+    @OnClick(R.id.mainscr_btnLogout)
+    public void logoutClicked (ImageButton logoutButton){
+        new logoutApplication().execute();
+    }
+
+    private class logoutApplication extends AsyncTask<Void, Void, Void> {
+        Connection conn = new Connection();
+        private ProgressDialog progressDialog = new ProgressDialog(MainScreen.this);
+
+        @Override
+        protected void onPreExecute(){
+            this.progressDialog.setMessage("Logging out of device and closing application...");
+            this.progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                conn.PostToWebadress("http://192.168.1.1/logout.asp", "root", "admin", conn.buildParamsMap("_http_id",router.getHttpId()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                finish();
+            }
+            if(progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            finish();
+            return null;
+        }
+    }
 }
