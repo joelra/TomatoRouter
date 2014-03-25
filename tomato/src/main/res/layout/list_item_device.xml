@@ -2,20 +2,21 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/device_selector">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_weight=".40">
+        android:layout_weight=".75">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android Phone"
             android:id="@+id/deviceRowName"
-            android:textSize="25dp"
+            android:textSize="18dp"
             android:textIsSelectable="false"
             android:textStyle="bold" />
 
@@ -32,14 +33,13 @@
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:id="@+id/deviceRowWifiImg"
-        android:layout_marginRight="10dp" />
+        android:layout_marginLeft="5dp" />
 
     <ToggleButton
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:text="Wifi"
         android:id="@+id/deviceRowToggleBtn"
-        android:checked="false"
-        android:layout_weight=".1" />
+        android:checked="false" />
 
 </LinearLayout>
