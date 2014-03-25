@@ -4,5 +4,4 @@
 .DS_Store
 /.idea/*
 tomato/tomato.iml
-TomatoRouter.iml
-TomatoRouter.iml
+*.iml
