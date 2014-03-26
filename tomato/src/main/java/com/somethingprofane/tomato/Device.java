@@ -3,9 +3,16 @@ package com.somethingprofane.tomato;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
+
 /**
  * Created by somethingPr0fane on 2/25/14.
  */
+@DatabaseTable
 public class Device implements Parcelable {
     /**
      * Contains all the information about a connected deivce to the router:
@@ -17,12 +24,20 @@ public class Device implements Parcelable {
      */
 
     // Variables
+    @DatabaseField(id=true)
     String deviceMacAddr;
+    @DatabaseField
     String deviceName;
+    @DatabaseField
     String deviceIPAddr;
+    @DatabaseField
     String deviceConnTime;
+    @DatabaseField
     String deviceType = "";
+    @DatabaseField
     boolean deviceWifiConnected;
+    @DatabaseField(foreign=true,foreignAutoRefresh=true)
+    DeviceGroup deviceGroup;
 
     /**
      * Constructor
@@ -78,6 +93,12 @@ public class Device implements Parcelable {
 
     public void setDeviceWifiConnected(boolean deviceWifiConnected) {
         this.deviceWifiConnected = deviceWifiConnected;
+    }
+    public DeviceGroup getDeviceGroup(){
+        return deviceGroup;
+    }
+    public void setDeviceGroup(DeviceGroup group){
+        this.deviceGroup = group;
     }
 
     public static final Parcelable.Creator<Device> CREATOR
