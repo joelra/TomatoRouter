@@ -13,6 +13,7 @@
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_activity_device_screen">DeviceScreen</string>
     <string name="title_activity_advanced_config">Advanced Configuration</string>
+    <string name="title_activity_basic_configuration">Basic Configuration</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="action_settings">Settings</string>

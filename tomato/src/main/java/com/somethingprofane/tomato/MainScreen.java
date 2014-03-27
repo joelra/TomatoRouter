@@ -196,6 +196,12 @@ public class MainScreen extends ActionBarActivity {
         MainScreen.this.startActivity(intent);
     }
 
+    @OnClick(R.id.mainscr_btnBasic)
+    public void basicClicked (ImageButton basicButton){
+        Intent intent = new Intent(MainScreen.this, BasicConfiguration.class);
+        MainScreen.this.startActivity(intent);
+    }
+
     @OnClick(R.id.mainscr_btnGroups)
     public void groupsClicked (ImageButton groupsButton){
         Intent intent = new Intent (MainScreen.this, GroupsActivity.class);

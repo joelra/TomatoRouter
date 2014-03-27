@@ -50,6 +50,14 @@
                 android:value="MainScreen" />
         </activity>
         <activity
+            android:name="com.somethingprofane.tomato.BasicConfiguration"
+            android:label="@string/title_activity_basic_configuration"
+            android:parentActivityName="com.somethingprofane.tomato.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainScreen" />
+        </activity>
+        <activity
             android:name="com.somethingprofane.tomato.GroupsActivity"
             android:label="@string/title_activity_groups"
             android:parentActivityName="com.somethingprofane.tomato.MainScreen" >
