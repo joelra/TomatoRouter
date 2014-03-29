@@ -26,6 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "tomatoDB.sqlite";
 
     private static final int DATABASE_VERSION = 4;
+    // DB version 4: Added device table. Hope it works
 
     //DAO objects used to access the table
     private Dao<DeviceGroup, Integer> deviceGroupDao = null;
