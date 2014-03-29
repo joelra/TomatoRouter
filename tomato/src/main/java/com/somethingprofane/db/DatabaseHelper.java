@@ -37,8 +37,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource){
         try{
-
             TableUtils.createTable(connectionSource, DeviceGroup.class);
+            // Create the Device table
+            TableUtils.createTable(connectionSource, Device.class);
         }
         catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
