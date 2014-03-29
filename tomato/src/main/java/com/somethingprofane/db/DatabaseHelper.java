@@ -25,11 +25,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "tomatoDB.sqlite";
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     //DAO objects used to access the table
     private Dao<DeviceGroup, Integer> deviceGroupDao = null;
-    private Dao<Device, Integer> deviceDao = null;
+    private Dao<Device, String> deviceDao = null;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -78,7 +78,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return deviceGroupDao;
     }
 
-    public Dao<Device, Integer> getDeviceDao(){
+    public Dao<Device, String> getDeviceDao(){
         if(null == deviceDao){
             try {
                 deviceDao = getDao(Device.class);
