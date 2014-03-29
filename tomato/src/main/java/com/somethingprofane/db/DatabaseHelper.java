@@ -29,6 +29,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     //DAO objects used to access the table
     private Dao<DeviceGroup, Integer> deviceGroupDao = null;
+    private Dao<Device, Integer> deviceDao = null;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -56,6 +57,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try{
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, DeviceGroup.class, true);
+
+            // Will update the Device table
+            TableUtils.dropTable(connectionSource, Device.class, true);
             onCreate(db, connectionSource);
             }catch (java.sql.SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
@@ -74,6 +78,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return deviceGroupDao;
     }
 
+    public Dao<Device, Integer> getDeviceDao(){
+        if(null == deviceDao){
+            try {
+                deviceDao = getDao(Device.class);
+            } catch (java.sql.SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return deviceDao;
+    }
 
 
 }
