@@ -118,6 +118,9 @@ public class Parser {
 
         deviceListDHCP = compareWiredWirelessDevices(deviceListDHCP, deviceListWIFI);
 
+        // ---- This is where the error takes place. The instance is null! ---- //
+        //TODO fix this error. For some reason the instance is null!
+        //DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
         return deviceListDHCP;
     }
 
@@ -165,8 +168,13 @@ public class Parser {
     }
 
     private boolean verifyWifiToDB(Device device) {
-        //DatabaseManager dbManager = new DatabaseManager();
-        Device device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
+        Device device2;
+        if(DatabaseManager.getInstance() != null) {
+            device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
+            if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
+                return true;
+            }
+        }
         return false;
     }
 

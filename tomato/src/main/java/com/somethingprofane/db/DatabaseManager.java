@@ -4,6 +4,7 @@ package com.somethingprofane.db;
  * Created by garrett on 3/25/2014.
  */
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -149,6 +150,16 @@ public class DatabaseManager {
         } catch (SQLException e){
             Log.d("SQL Error", "There was an error deleting a device from the database");
             e.printStackTrace();
+        }
+    }
+
+    public void addDeviceList(ArrayList<Device> deviceList){
+        try{
+            for(Device device : deviceList){
+                addDevice(device);
+            }
+        } catch (Exception e){
+            Log.d("SQL Error", "There was an error adding a device list to the database");
         }
     }
 }
