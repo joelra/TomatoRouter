@@ -103,6 +103,50 @@ public class Parser {
         return freeRam;
     }
 
+    public String parseSsid(String html){
+        String ssid = null;
+        String brian = "Brian";
+        String regex = "wl_ssid: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            System.out.println("HEY! SSID! " + m.group(1));
+            ssid = m.group(1);
+        }
+        return brian;
+    }
+    public String parseSubnet(String html){
+        String subnet = null;
+        return subnet;
+    }
+    public String parseDhcpPool(String html){
+        String dPool = null;
+        return dPool;
+    }
+    public String parseDhcpLeaseTime(String html){
+        String dTime = null;
+        return dTime;
+    }
+    public String parseSharedKey(String html){
+        String sKey = null;
+        return sKey;
+    }
+    public String parseEncryption(String html){
+        String encrypt = null;
+        return encrypt;
+    }
+    public String parseSecurity(String html){
+        String security = null;
+        return security;
+    }
+    public String parseWireless(String html){
+        String wireLess = null;
+        return wireLess;
+    }
+
+
+
+
     public ArrayList<Device> parseDeviceList(String deviceHTML){
         ArrayList<Device> deviceList = new ArrayList<Device>();
 

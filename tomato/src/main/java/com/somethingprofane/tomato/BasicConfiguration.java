@@ -40,29 +40,41 @@ public class BasicConfiguration extends Activity {
     /**
      * This class will include editable username/password, change SSID
      * set static DNS, change DHCP server lease time and ip address range,
-     * assigning a static ip to a MAC address, and possibly port forwarding
+     * assigning a static ip to a MAC address
      */
-    Router router;
 
-    String routerName;
-    String routerUsername;
-    String routerPassword;
+    Router router;
+    Basic basic;
+    Device device;
 
     TextView routerNameView;
+    TextView routerMacView;
+    TextView routerIPView;
+
+    ArrayList<String> wireLessList = new ArrayList<String>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_configuration);
 
         routerNameView = (TextView)findViewById(R.id.router_name_view);
-        Intent i = getIntent();
-        router = (Router) i.getParcelableExtra("passed_router");
-//        new refreshRouterName().execute(router);
+//        routerMacView = (TextView)findViewById(R.id.router_mac_view);
+//        routerIPView = (TextView)findViewById(R.id.router_ip_view);
+//        routerUsrView = (TextView)findViewById(R.id.router_usr_view);
+//        routerPwdView = (TextView)findViewById(R.id.router_pwd_view);
 
-       // System.out.println(router.getRouterName() + "Router Name");
+        Intent b = getIntent();
+        router = (Router) b.getParcelableExtra("basic_router");
+
+
+        new routerInfo().execute(router);
+        System.out.println(router.getRouterName() + "ROUTER NAME HERE!");
+
         ButterKnife.inject(this);
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_screen, menu);
@@ -80,4 +92,44 @@ public class BasicConfiguration extends Activity {
         return super.onOptionsItemSelected(basicItem);
     }
 
-}
+
+//    public String getWireLessInfo() {
+//    //Get the html from the basic page
+//    String wireLessHtml = null;
+//    Connection conn = new Connection();
+//    String basicHtml = "";
+//    basicHtml = conn.GetHTMLFromURL("http://192.168.1.1/basic-network.asp", "root", "admin");
+//    wireLessHtml = new Parser().parseWireless(basicHtml);
+//    System.out.println("Basic HTML " + basicHtml);
+//        return basicHtml;
+//}
+
+    private class routerInfo extends AsyncTask<Router, Void, Router> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Router doInBackground(Router... routers) {
+//            getWireLessInfo();
+
+            routers[0].refresh();
+            return routers[0];
+        }
+
+        @Override
+        protected void onPostExecute(Router router) {
+            BasicConfiguration.this.router = router;
+            routerNameView.setText(router.getRouterName());
+//            routerMacView.setText(router.getWanHwAddr());
+//            routerIPView.setText(router.getLanIpAddr());
+//            routerUsrView.setText(router.getUsrname());
+//            routerPwdView.setText(router.getPswrd());
+
+
+            }
+        }
+
+    }

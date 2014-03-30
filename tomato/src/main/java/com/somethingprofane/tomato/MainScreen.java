@@ -197,10 +197,19 @@ public class MainScreen extends ActionBarActivity {
     }
 
     @OnClick(R.id.mainscr_btnBasic)
-    public void basicClicked (ImageButton basicButton){
-        Intent intent = new Intent(MainScreen.this, BasicConfiguration.class);
-        MainScreen.this.startActivity(intent);
+    public void basicClicked (ImageButton basicButton){ new moveToBasic().execute(router);
     }
+        private class moveToBasic extends AsyncTask<Router, Void, String> {
+
+            @Override
+            protected String doInBackground(Router... routers) {
+                Intent intent = new Intent(MainScreen.this, BasicConfiguration.class);
+                intent.putExtra("basic_router", routers[0]);
+                MainScreen.this.startActivity(intent);
+                return null;
+            }
+    }
+
 
     @OnClick(R.id.mainscr_btnGroups)
     public void groupsClicked (ImageButton groupsButton){

@@ -72,6 +72,7 @@ public class Router implements Parcelable {
             setUptime(returnedHtml);
             setWanHwAddr(returnedHtml);
             setDeviceList();
+            System.out.println("Returned Html " + returnedHtml);
 
         } catch (IOException e) {
             e.printStackTrace();
