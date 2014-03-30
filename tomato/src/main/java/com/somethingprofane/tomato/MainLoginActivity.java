@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.somethingprofane.db.DatabaseManager;
+
 import java.net.NetworkInterface;
 
 import butterknife.ButterKnife;
@@ -125,6 +127,7 @@ public class MainLoginActivity extends ActionBarActivity {
         protected void onPreExecute(){
             this.dialog.setMessage("Logging in...");
             this.dialog.show();
+            DatabaseManager.init(MainLoginActivity.this);
         }
 
         @Override

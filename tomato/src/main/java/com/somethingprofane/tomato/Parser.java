@@ -164,7 +164,8 @@ public class Parser {
 
         // ---- This is where the error takes place. The instance is null! ---- //
         //TODO fix this error. For some reason the instance is null!
-        //DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
+
+        DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
         return deviceListDHCP;
     }
 
