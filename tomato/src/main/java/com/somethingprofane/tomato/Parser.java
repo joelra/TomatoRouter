@@ -1,6 +1,12 @@
 package com.somethingprofane.tomato;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Base64;
+
+import com.j256.ormlite.dao.DaoManager;
+import com.somethingprofane.db.DatabaseHelper;
+import com.somethingprofane.db.DatabaseManager;
 
 import org.json.JSONArray;
 
@@ -148,38 +154,35 @@ public class Parser {
 
 
     public ArrayList<Device> parseDeviceList(String deviceHTML){
-        ArrayList<Device> deviceList = new ArrayList<Device>();
+        ArrayList<Device> deviceListDHCP = new ArrayList<Device>();
+        ArrayList<Device> deviceListWIFI = new ArrayList<Device>();
 
-        deviceList = parseDeviceDHCPLeaseInfo(deviceList, deviceHTML);
-        deviceList = parseWIFIConnectivityInfo(deviceList, deviceHTML);
+        deviceListDHCP = parseDeviceDHCPLeaseInfo(deviceHTML);
+        deviceListWIFI = parseWIFIConnectivityInfo(deviceHTML);
 
-        return deviceList;
+        deviceListDHCP = compareWiredWirelessDevices(deviceListDHCP, deviceListWIFI);
+
+        // ---- This is where the error takes place. The instance is null! ---- //
+        //TODO fix this error. For some reason the instance is null!
+        //DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
+        return deviceListDHCP;
     }
 
-    private ArrayList<Device> parseWIFIConnectivityInfo(ArrayList<Device> deviceList, String deviceHTML) {
-        String[] deviceInfoArray;
-        String pattern = "wldev([^;]*)";
-        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
-        Matcher m = r.matcher(deviceHTML);
-        if(m.find()){
-            pattern = "(?<=\\[)(.*?)(?=\\])";
-            Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
-            Matcher m2 = r2.matcher(m.group(1));
-            while(m2.find()){
-                deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
-                for(Device device : deviceList){
-                    if(device.getDeviceMacAddr().equals(deviceInfoArray[1])){
-                        device.setDeviceType("wireless");
-                        device.setDeviceWifiConnected(true);
-                    }
+    private ArrayList<Device> compareWiredWirelessDevices(ArrayList<Device> deviceListDHCP, ArrayList<Device> deviceListWIFI) {
+        for(Device device : deviceListDHCP){
+            for(Device deviceWifi: deviceListWIFI){
+                if(deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
+                    device.setDeviceType("wireless");
+                    device.setDeviceWifiConnected(true);
                 }
             }
         }
-        return deviceList;
+        return deviceListDHCP;
     }
 
-    private ArrayList<Device> parseDeviceDHCPLeaseInfo(ArrayList<Device> deviceList, String deviceHTML) {
+    private ArrayList<Device> parseDeviceDHCPLeaseInfo(String deviceHTML) {
         String[] deviceInfoArray;
+        ArrayList<Device> deviceList = new ArrayList<Device>();
         String pattern = "dhcpd_lease([^;]*)";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
         Matcher m = r.matcher(deviceHTML);
@@ -194,13 +197,45 @@ public class Parser {
                 device.setDeviceIPAddr(deviceInfoArray[1]);
                 device.setDeviceMacAddr(deviceInfoArray[2]);
                 device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
-
-                // Set these as assuming the device is not wireless.
-                //
-                if(device.getDeviceType().equals("") && !device.getDeviceType().equals("wireless")) {
+                //TODO check the database and see if the device is in the db to set the device type.
+                if(verifyWifiToDB(device)){
+                    device.setDeviceType("wireless");
                     device.setDeviceWifiConnected(false);
+                }else{
                     device.setDeviceType("wired");
+                    device.setDeviceWifiConnected(false);
                 }
+                deviceList.add(device);
+            }
+        }
+        return deviceList;
+    }
+
+    private boolean verifyWifiToDB(Device device) {
+        Device device2;
+        if(DatabaseManager.getInstance() != null) {
+            device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
+            if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private ArrayList<Device> parseWIFIConnectivityInfo(String deviceHTML) {
+        String[] deviceInfoArray;
+        ArrayList<Device> deviceList = new ArrayList<Device>();
+        String pattern = "wldev([^;]*)";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(deviceHTML);
+        if(m.find()){
+            pattern = "(?<=\\[)(.*?)(?=\\])";
+            Pattern r2 = Pattern.compile(pattern, Pattern.DOTALL);
+            Matcher m2 = r2.matcher(m.group(1));
+            while(m2.find()){
+                deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
+                Device device = new Device();
+                device.setDeviceMacAddr(deviceInfoArray[1]);
                 deviceList.add(device);
             }
         }

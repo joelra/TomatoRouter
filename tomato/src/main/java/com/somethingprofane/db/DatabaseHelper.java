@@ -25,10 +25,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "tomatoDB.sqlite";
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
+    // DB version 4: Added device table. Hope it works
 
     //DAO objects used to access the table
     private Dao<DeviceGroup, Integer> deviceGroupDao = null;
+    private Dao<Device, String> deviceDao = null;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,8 +39,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource){
         try{
-
             TableUtils.createTable(connectionSource, DeviceGroup.class);
+            // Create the Device table
+            TableUtils.createTable(connectionSource, Device.class);
         }
         catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
@@ -55,6 +58,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try{
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, DeviceGroup.class, true);
+
+            // Will update the Device table
+            TableUtils.dropTable(connectionSource, Device.class, true);
             onCreate(db, connectionSource);
             }catch (java.sql.SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
@@ -73,6 +79,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return deviceGroupDao;
     }
 
+    public Dao<Device, String> getDeviceDao(){
+        if(null == deviceDao){
+            try {
+                deviceDao = getDao(Device.class);
+            } catch (java.sql.SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return deviceDao;
+    }
 
 
 }

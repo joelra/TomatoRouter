@@ -1,5 +1,6 @@
 package com.somethingprofane.tomato;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,16 +32,6 @@ public class Router implements Parcelable {
     String usrname;
     String url;
     String pswrd;
-
-
-    public String getHttpId() {
-        return httpId;
-    }
-
-    public void setHttpId(String httpId) {
-        this.httpId = httpId;
-    }
-
     String httpId;
     String freeRam;
     ArrayList<Device> deviceList = new ArrayList<Device>();
@@ -78,6 +69,14 @@ public class Router implements Parcelable {
             e.printStackTrace();
         }
 
+    }
+
+    public String getHttpId() {
+        return httpId;
+    }
+
+    public void setHttpId(String httpId) {
+        this.httpId = httpId;
     }
 
     public String getUrl() {
