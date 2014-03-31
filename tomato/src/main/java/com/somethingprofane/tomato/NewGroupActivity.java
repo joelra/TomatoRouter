@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.somethingprofane.db.DatabaseManager;
@@ -40,6 +42,8 @@ public class NewGroupActivity extends ActionBarActivity {
         deleteButton.setVisibility(View.INVISIBLE);
 
         setupDeviceGroup();
+        setupSpinners();
+
 
 
     }
@@ -74,6 +78,21 @@ public class NewGroupActivity extends ActionBarActivity {
             deleteButton.setVisibility(View.VISIBLE);
             groupNameTxtView.setText("Group Name:");
         }
+    }
+
+    private void setupSpinners(){
+        Spinner beginSpinner = (Spinner) findViewById(R.id.activity_group_new_beginTimeSpinner);
+        ArrayAdapter<CharSequence> beginAdapter = ArrayAdapter.createFromResource(this,
+                R.array.time_array, android.R.layout.simple_spinner_item);
+        beginAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        beginSpinner.setAdapter(beginAdapter);
+        beginSpinner.setSelection(beginAdapter.getPosition("10:00 PM"));
+        Spinner endSpinner = (Spinner) findViewById(R.id.activity_group_new_endTimeSpinner);
+        ArrayAdapter<CharSequence> endAdapter = ArrayAdapter.createFromResource(this,
+                R.array.time_array, android.R.layout.simple_spinner_item);
+        endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endSpinner.setAdapter(endAdapter);
+        endSpinner.setSelection(endAdapter.getPosition("5:00 AM"));
     }
 
     @OnClick(R.id.activity_new_group_saveGroupButton)
