@@ -48,8 +48,15 @@ public class BasicConfiguration extends Activity {
     Device device;
 
     TextView routerNameView;
-    TextView routerMacView;
+    TextView wirelessMacView;
     TextView routerIPView;
+    TextView routerUsrView;
+    TextView routerPwdView;
+    TextView wirelessSubnetView;
+    TextView dhcpStartView;
+    TextView dhcpEndView;
+    TextView securityView;
+    TextView encryptionView;
 
     ArrayList<String> wireLessList = new ArrayList<String>();
 
@@ -58,11 +65,16 @@ public class BasicConfiguration extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_configuration);
 
-        routerNameView = (TextView)findViewById(R.id.router_name_view);
-//        routerMacView = (TextView)findViewById(R.id.router_mac_view);
-//        routerIPView = (TextView)findViewById(R.id.router_ip_view);
-//        routerUsrView = (TextView)findViewById(R.id.router_usr_view);
-//        routerPwdView = (TextView)findViewById(R.id.router_pwd_view);
+          routerNameView = (TextView)findViewById(R.id.router_name_view);
+          wirelessMacView = (TextView)findViewById(R.id.router_wireMac_view);
+          routerIPView = (TextView)findViewById(R.id.router_ip_view);
+          routerUsrView = (TextView)findViewById(R.id.router_username_view);
+          routerPwdView = (TextView)findViewById(R.id.router_password_view);
+          wirelessSubnetView = (TextView)findViewById(R.id.router_subnet_view);
+          dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
+          dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
+          securityView = (TextView)findViewById(R.id.router__security_view);
+          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
@@ -70,6 +82,15 @@ public class BasicConfiguration extends Activity {
 
         new routerInfo().execute(router);
         System.out.println(router.getRouterName() + "ROUTER NAME HERE!");
+
+        System.out.println("SSID " + router.getSsid());
+        System.out.println("Subnet " + router.getSubnet());
+        System.out.println("Start IP " + router.getDhcpPool1());
+        System.out.println("End IP " + router.getDhcpPool2());
+        System.out.println("Lease Time " + router.getDhcpLeaseTime());
+        System.out.println("Shared Key " + router.getSharedKey());
+        System.out.println("Encryption " + router.getEncryption());
+        System.out.println("Security " + router.getSecurity());
 
         ButterKnife.inject(this);
 
@@ -123,11 +144,15 @@ public class BasicConfiguration extends Activity {
         protected void onPostExecute(Router router) {
             BasicConfiguration.this.router = router;
             routerNameView.setText(router.getRouterName());
-//            routerMacView.setText(router.getWanHwAddr());
-//            routerIPView.setText(router.getLanIpAddr());
-//            routerUsrView.setText(router.getUsrname());
-//            routerPwdView.setText(router.getPswrd());
-
+            wirelessMacView.setText(router.getWanHwAddr());
+            routerIPView.setText(router.getLanIpAddr());
+            routerUsrView.setText(router.getUsrname());
+            routerPwdView.setText(router.getPswrd());
+            wirelessSubnetView.setText(router.getSubnet());
+            dhcpStartView.setText(router.getDhcpPool1());
+            dhcpEndView.setText(router.getDhcpPool2());
+            securityView.setText(router.getSecurity());
+            encryptionView.setText(router.getEncryption());
 
             }
         }

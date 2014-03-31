@@ -19,22 +19,20 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="10pt"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:padding="10dp"
         android:layout_alignParentTop="true"
         android:gravity="center">
     </TextView>
+    <ScrollView
 
+        android:layout_height="fill_parent"
+
+        android:layout_width="fill_parent">
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_below="@+id/TextView">
 
@@ -50,11 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="9pt"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:textSize="7pt"
+                    android:padding="10dp"
                     android:layout_alignParentTop="true">
                 </TextView>
 
@@ -62,6 +57,112 @@
                     android:id="@+id/router_name_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Router IP: "
+                    android:id="@+id/router__ip_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/router_ip_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Subnet Mask: "
+                    android:id="@+id/router__subnet_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_subnet_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="DHCP Start: "
+                    android:id="@+id/router__dhcpStart_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_dhcpStart_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="DHCP End: "
+                    android:id="@+id/router__dhcpEnd_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_dhcpEnd_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Wireless MAC: "
+                    android:id="@+id/router__wireMac_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/router_wireMac_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
@@ -73,11 +174,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="9pt"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:textSize="7pt"
+                    android:padding="10dp"
                     android:layout_alignParentTop="true">
                 </TextView>
 
@@ -85,87 +183,107 @@
                     android:id="@+id/router_username_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="7pt"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
 
             <TableRow>
+            <TextView
+                android:text="Password: "
+                android:id="@+id/router__password_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="7pt"
+                android:padding="10dp"
+                android:layout_alignParentTop="true">
+            </TextView>
+
+            <EditText
+                android:id="@+id/router_password_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:layout_toRightOf="@+id/router_main_labelRouter"/>
+        </TableRow>
+            <TableRow>
                 <TextView
-                    android:text="Password: "
-                    android:id="@+id/router__password_label"
+                    android:text="Security: "
+                    android:id="@+id/router__security_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="9pt"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:textSize="7pt"
+                    android:padding="10dp"
                     android:layout_alignParentTop="true">
                 </TextView>
 
                 <EditText
-                    android:id="@+id/router_password_view"
+                    android:id="@+id/router__security_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="7pt"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
 
             <TableRow>
                 <TextView
-                    android:text="Re-enter Password:"
-                    android:id="@+id/router__reenter_label"
+                    android:text="Encryption: "
+                    android:id="@+id/router__encrypt_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="9pt"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
                     android:layout_alignParentTop="true">
                 </TextView>
 
                 <EditText
-                    android:id="@+id/router_reenter_view"
+                    android:id="@+id/router__encrypt_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="7pt"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
+        <TableRow>
+            <TableRow>
+                </TableRow>
+                    <TableRow>
 
-        </TableLayout>
-
-        <Button
-            android:text="Save"
-            android:id="@+id/admin_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/gradient"
-            android:layout_toLeftOf="@+id/admin_cancel_button"
-            android:layout_alignParentBottom="true"
-
-            style="@style/ButtonText"/>
         <Button
             android:text="Cancel"
             android:id="@+id/admin_cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:padding="10dp"
             android:background="@drawable/gradient"
             android:layout_alignParentRight="true"
+            android:textSize="9pt"
             android:layout_alignParentBottom="true"
 
             style="@style/ButtonText"/>
-    </RelativeLayout>
 
+            <Button
+             android:text="Save"
+             android:id="@+id/admin_save_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="10dp"
+             android:background="@drawable/gradient"
+             android:textSize="9pt"
+             android:layout_toLeftOf="@+id/admin_cancel_button"
+             android:layout_alignParentBottom="true"
+             android:minWidth="100dp"
 
+             style="@style/ButtonText"/>
+
+                    </TableRow>
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>
