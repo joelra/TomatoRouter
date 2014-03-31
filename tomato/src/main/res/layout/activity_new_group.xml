@@ -75,9 +75,8 @@
                 android:id="@+id/activity_new_group_deleteGroupButton"
                 android:background="@drawable/gradient"
                 android:text="Delete"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/activity_new_group_saveGroupButton"
-                android:layout_below="@+id/activity_new_group_deviceList" />
+                android:layout_below="@+id/activity_new_group_deviceList"
+                android:layout_toLeftOf="@+id/activity_new_group_saveGroupButton" />
 
             <Button
                 style="@style/ButtonText"
@@ -86,9 +85,198 @@
                 android:text="Save"
                 android:id="@+id/activity_new_group_saveGroupButton"
                 android:background="@drawable/gradient"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/activity_new_group_deviceList"
                 android:layout_alignRight="@+id/activity_new_group_deviceList"
                 android:layout_alignEnd="@+id/activity_new_group_deviceList" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Group Access Restriction:"
+                android:id="@+id/activity_new_group_groupAccessRestTxt"
+                android:layout_below="@+id/activity_new_group_deleteGroupButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:textSize="9pt"
+                android:layout_margin="10dp" />
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_new_group_groupAccessRestTxt"
+                android:layout_alignLeft="@+id/activity_new_group_groupAccessRestTxt"
+                android:layout_alignStart="@+id/activity_new_group_groupAccessRestTxt"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"
+                android:stretchColumns="1"
+                android:id="@+id/tableLayout2">
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enabled:"
+                        android:id="@+id/activity_group_new_enabledTxt"
+                        android:textSize="7pt"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical|left" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_group_new_enabledChkBox"
+                        android:layout_gravity="left" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description:"
+                        android:id="@+id/activity_group_new_descTxt"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="7pt" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_group_new_descTxtView" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Days:"
+                android:id="@+id/activity_group_new_daysLabel"
+                android:layout_below="@+id/tableLayout2"
+                android:layout_alignLeft="@+id/tableLayout2"
+                android:layout_alignStart="@+id/tableLayout2"
+                android:layout_marginLeft="10dp"
+                android:textSize="7pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun"
+                android:id="@+id/activity_group_new_sunCheckBox"
+                android:layout_below="@+id/activity_group_new_daysLabel"
+                android:layout_alignLeft="@+id/activity_group_new_daysLabel"
+                android:layout_alignStart="@+id/activity_group_new_daysLabel"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:id="@+id/activity_group_new_monCheckBox"
+                android:layout_alignTop="@+id/activity_group_new_sunCheckBox"
+                android:layout_toRightOf="@+id/activity_group_new_sunCheckBox"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue"
+                android:id="@+id/activity_group_new_tueCheckBox"
+                android:layout_alignTop="@+id/activity_group_new_monCheckBox"
+                android:layout_toRightOf="@+id/activity_group_new_monCheckBox"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed"
+                android:id="@+id/activity_group_new_wedCheckBox"
+                android:layout_toRightOf="@+id/activity_group_new_tueCheckBox"
+                android:layout_alignTop="@+id/activity_group_new_tueCheckBox"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu"
+                android:id="@+id/activity_group_new_thuCheckBox"
+                android:layout_alignTop="@+id/activity_group_new_wedCheckBox"
+                android:layout_toRightOf="@+id/activity_group_new_wedCheckBox"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fri"
+                android:id="@+id/activity_group_new_friCheckBox"
+                android:layout_alignTop="@+id/activity_group_new_thuCheckBox"
+                android:layout_toRightOf="@+id/activity_group_new_thuCheckBox"
+                android:textSize="4pt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat"
+                android:id="@+id/activity_group_new_satCheckBox"
+                android:layout_below="@+id/activity_group_new_daysLabel"
+                android:layout_toRightOf="@+id/activity_group_new_friCheckBox"
+                android:textSize="4pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time:"
+                android:id="@+id/activity_group_new_timeLabel"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/activity_group_new_sunCheckBox"
+                android:layout_alignLeft="@+id/activity_group_new_daysLabel"
+                android:layout_marginLeft="20dp"
+                android:textSize="7pt" />
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/activity_group_new_timeLabel"
+                android:layout_alignLeft="@+id/activity_group_new_timeLabel"
+                android:layout_alignRight="@+id/activity_new_group_deviceList">
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="All Day"
+                        android:id="@+id/activity_group_new_allDayCheckBox"
+                        android:textSize="7pt" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_group_new_beginTimeSpinner" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" - "
+                        android:id="@+id/textView" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_group_new_endTimeSpinner" />
+
+                </TableRow>
+            </TableLayout>
 
         </RelativeLayout>
     </ScrollView>
