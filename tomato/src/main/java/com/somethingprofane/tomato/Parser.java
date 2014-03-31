@@ -205,7 +205,7 @@ public class Parser {
         // ---- This is where the error takes place. The instance is null! ---- //
         //TODO fix this error. For some reason the instance is null!
 
- //       DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
+        DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
         return deviceListDHCP;
     }
 
@@ -239,8 +239,6 @@ public class Parser {
                 device.setDeviceMacAddr(deviceInfoArray[2]);
                 device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
                 //TODO check the database and see if the device is in the db to set the device type.
-
-
 //                if(verifyWifiToDB(device)){
 //                    device.setDeviceType("wireless");
 //                    device.setDeviceWifiConnected(false);
@@ -248,7 +246,6 @@ public class Parser {
 //                    device.setDeviceType("wired");
 //                    device.setDeviceWifiConnected(false);
 //                }
-
                 deviceList.add(device);
             }
         }
