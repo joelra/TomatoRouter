@@ -50,8 +50,12 @@ public class BasicConfiguration extends Activity {
     TextView routerNameView;
     TextView wirelessMacView;
     TextView routerIPView;
-//    TextView routerUsrView;
-//    TextView routerPwdView;
+    TextView routerUsrView;
+    TextView routerPwdView;
+
+    TextView wirelessSubnetView;
+    TextView dhcpStartView;
+    TextView dhcpEndView;
 
     ArrayList<String> wireLessList = new ArrayList<String>();
 
@@ -60,11 +64,15 @@ public class BasicConfiguration extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_configuration);
 
-        routerNameView = (TextView)findViewById(R.id.router_name_view);
-//        wirelessMacView = (TextView)findViewById(R.id.router_mac_view);
-//        routerIPView = (TextView)findViewById(R.id.router_ip_view);
-//          routerUsrView = (TextView)findViewById(R.id.router_username_view);
-//          routerPwdView = (TextView)findViewById(R.id.router_password_view);
+          routerNameView = (TextView)findViewById(R.id.router_name_view);
+          wirelessMacView = (TextView)findViewById(R.id.router_wireMac_view);
+          routerIPView = (TextView)findViewById(R.id.router_ip_view);
+          routerUsrView = (TextView)findViewById(R.id.router_username_view);
+          routerPwdView = (TextView)findViewById(R.id.router_password_view);
+          wirelessSubnetView = (TextView)findViewById(R.id.router_subnet_view);
+          dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
+          dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
+
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
@@ -134,10 +142,14 @@ public class BasicConfiguration extends Activity {
         protected void onPostExecute(Router router) {
             BasicConfiguration.this.router = router;
             routerNameView.setText(router.getRouterName());
-//            routerMacView.setText(router.getWanHwAddr());
-//            routerIPView.setText(router.getLanIpAddr());
-//              routerUsrView.setText(router.getUsrname());
-//              routerPwdView.setText(router.getPswrd());
+            wirelessMacView.setText(router.getWanHwAddr());
+            routerIPView.setText(router.getLanIpAddr());
+            routerUsrView.setText(router.getUsrname());
+            routerPwdView.setText(router.getPswrd());
+
+            wirelessSubnetView.setText(router.getSubnet());
+            dhcpStartView.setText(router.getDhcpPool1());
+            dhcpEndView.setText(router.getDhcpPool2());
 
 
             }

@@ -239,13 +239,13 @@ public class Parser {
                 device.setDeviceMacAddr(deviceInfoArray[2]);
                 device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
                 //TODO check the database and see if the device is in the db to set the device type.
-                if(verifyWifiToDB(device)){
-                    device.setDeviceType("wireless");
-                    device.setDeviceWifiConnected(false);
-                }else{
-                    device.setDeviceType("wired");
-                    device.setDeviceWifiConnected(false);
-                }
+//                if(verifyWifiToDB(device)){
+//                    device.setDeviceType("wireless");
+//                    device.setDeviceWifiConnected(false);
+//                }else{
+//                    device.setDeviceType("wired");
+//                    device.setDeviceWifiConnected(false);
+//                }
                 deviceList.add(device);
             }
         }

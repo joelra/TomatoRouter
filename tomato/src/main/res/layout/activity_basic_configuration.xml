@@ -68,6 +68,121 @@
 
             <TableRow>
                 <TextView
+                    android:text="Router IP: "
+                    android:id="@+id/router__ip_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_ip_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Subnet Mask: "
+                    android:id="@+id/router__subnet_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_subnet_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="DHCP Start: "
+                    android:id="@+id/router__dhcpStart_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_dhcpStart_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="DHCP End: "
+                    android:id="@+id/router__dhcpEnd_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_dhcpEnd_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Wireless MAC: "
+                    android:id="@+id/router__wireMac_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/router_wireMac_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
                     android:text="Username:"
                     android:id="@+id/router__username_label"
                     android:layout_width="wrap_content"
@@ -106,29 +221,6 @@
 
                 <EditText
                     android:id="@+id/router_password_view"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="Re-enter Password:"
-                    android:id="@+id/router__reenter_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="9pt"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:layout_alignParentTop="true">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/router_reenter_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/activity_vertical_margin"
