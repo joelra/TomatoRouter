@@ -1,18 +1,7 @@
 package com.somethingprofane.tomato;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Base64;
-
-import com.j256.ormlite.dao.DaoManager;
-import com.somethingprofane.db.DatabaseHelper;
 import com.somethingprofane.db.DatabaseManager;
-
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -215,6 +204,7 @@ public class Parser {
                 if(deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
                     device.setDeviceType("wireless");
                     device.setDeviceWifiConnected(true);
+                    break;
                 }
             }
         }
@@ -239,13 +229,13 @@ public class Parser {
                 device.setDeviceMacAddr(deviceInfoArray[2]);
                 device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
                 //TODO check the database and see if the device is in the db to set the device type.
-//                if(verifyWifiToDB(device)){
-//                    device.setDeviceType("wireless");
-//                    device.setDeviceWifiConnected(false);
-//                }else{
-//                    device.setDeviceType("wired");
-//                    device.setDeviceWifiConnected(false);
-//                }
+                if(verifyWifiToDB(device)){
+                    device.setDeviceType("wireless");
+                    device.setDeviceWifiConnected(false);
+                }else{
+                    device.setDeviceType("wired");
+                    device.setDeviceWifiConnected(false);
+                }
                 deviceList.add(device);
             }
         }
@@ -253,14 +243,17 @@ public class Parser {
     }
 
     private boolean verifyWifiToDB(Device device) {
+        boolean toReturn = false;
         Device device2;
         if(DatabaseManager.getInstance() != null) {
             device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
-            if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
-                return true;
+            if(device2 == null){
+                return false;
+            } else if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
+                toReturn = true;
             }
         }
-        return false;
+        return toReturn;
     }
 
     private ArrayList<Device> parseWIFIConnectivityInfo(String deviceHTML) {
