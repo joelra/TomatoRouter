@@ -52,10 +52,11 @@ public class BasicConfiguration extends Activity {
     TextView routerIPView;
     TextView routerUsrView;
     TextView routerPwdView;
-
     TextView wirelessSubnetView;
     TextView dhcpStartView;
     TextView dhcpEndView;
+    TextView securityView;
+    TextView encryptionView;
 
     ArrayList<String> wireLessList = new ArrayList<String>();
 
@@ -72,7 +73,8 @@ public class BasicConfiguration extends Activity {
           wirelessSubnetView = (TextView)findViewById(R.id.router_subnet_view);
           dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
           dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
-
+          securityView = (TextView)findViewById(R.id.router__security_view);
+          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
@@ -146,11 +148,11 @@ public class BasicConfiguration extends Activity {
             routerIPView.setText(router.getLanIpAddr());
             routerUsrView.setText(router.getUsrname());
             routerPwdView.setText(router.getPswrd());
-
             wirelessSubnetView.setText(router.getSubnet());
             dhcpStartView.setText(router.getDhcpPool1());
             dhcpEndView.setText(router.getDhcpPool2());
-
+            securityView.setText(router.getSecurity());
+            encryptionView.setText(router.getEncryption());
 
             }
         }
