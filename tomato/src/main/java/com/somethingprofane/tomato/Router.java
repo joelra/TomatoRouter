@@ -36,6 +36,15 @@ public class Router implements Parcelable {
     String freeRam;
     ArrayList<Device> deviceList = new ArrayList<Device>();
 
+    String ssid;
+    String subnet;
+    String dhcpPool1;
+    String dhcpPool2;
+    String sharedKey;
+    String encryption;
+    String security;
+    String dhcpLeaseTime;
+
     /**
      *
      * @param url
@@ -62,6 +71,15 @@ public class Router implements Parcelable {
             setTotalRam(returnedHtml);
             setUptime(returnedHtml);
             setWanHwAddr(returnedHtml);
+            setSsid(returnedHtml);
+            setSubnet(returnedHtml);
+            setDhcpPool1(returnedHtml);
+            setDhcpPool2(returnedHtml);
+            setSharedKey(returnedHtml);
+            setEncryption(returnedHtml);
+            setDhcpLeaseTime(returnedHtml);
+            setSecurity(returnedHtml);
+            
             setDeviceList();
             System.out.println("Returned Html " + returnedHtml);
 
@@ -185,6 +203,49 @@ public class Router implements Parcelable {
         freeRam = new Parser().parseFreeRam(html);
     }
 
+// Adding in the Basic-Network getters, setters
+    public String getSsid() {
+        return ssid;
+    }
+    public void setSsid(String html) {ssid = new Parser().parseSsid(html);}
+
+    public String getSubnet() {
+        return subnet;
+    }
+    public void setSubnet(String html) {subnet = new Parser().parseSubnet(html);}
+
+    public String getDhcpPool1() {
+        return dhcpPool1;
+    }
+    public void setDhcpPool1(String html) {dhcpPool1 = new Parser().parseDhcpPool1(html);}
+
+    public String getDhcpPool2() {
+        return dhcpPool2;
+    }
+    public void setDhcpPool2(String html) {dhcpPool2 = new Parser().parseDhcpPool2(html);}
+
+    public String getSharedKey() {
+        return sharedKey;
+    }
+    public void setSharedKey(String html) { sharedKey = new Parser().parseSharedKey(html);}
+
+    public String getEncryption() {
+        return encryption;
+    }
+    public void setEncryption(String html) {encryption = new Parser().parseEncryption(html);}
+
+    public String getSecurity() {
+        return security;
+    }
+    public void setSecurity(String html) {security = new Parser().parseSecurity(html);}
+
+    public String getDhcpLeaseTime() {
+        return dhcpLeaseTime;
+    }
+    public void setDhcpLeaseTime(String html) {dhcpLeaseTime = new Parser().parseDhcpLeaseTime(html);}
+// End Basic-Network
+
+
     public ArrayList<Device> getDeviceList() {
         return deviceList;
     }
@@ -233,6 +294,13 @@ public class Router implements Parcelable {
             setFreeRam(returnedHtml);
             setTotalRam(returnedHtml);
             setUptime(returnedHtml);
+            setSsid(returnedHtml);
+            setSecurity(returnedHtml);
+            setSharedKey(returnedHtml);
+            setDhcpPool1(returnedHtml);
+            setDhcpPool2(returnedHtml);
+            setEncryption(returnedHtml);
+
             setDeviceList();
 
         } catch (IOException e) {
@@ -269,6 +337,14 @@ public class Router implements Parcelable {
         out.writeString(url);
         out.writeString(pswrd);
         out.writeString(httpId);
+        out.writeString(ssid);
+        out.writeString(subnet);
+        out.writeString(sharedKey);
+        out.writeString(security);
+        out.writeString(encryption);
+        out.writeString(dhcpPool1);
+        out.writeString(dhcpPool2);
+        out.writeString(dhcpLeaseTime);
         out.writeList(deviceList);
 
     }
@@ -285,6 +361,14 @@ public class Router implements Parcelable {
         url = in.readString();
         pswrd = in.readString();
         httpId = in.readString();
+        ssid = in.readString();
+        subnet = in.readString();
+        sharedKey = in.readString();
+        security = in.readString();
+        dhcpLeaseTime = in.readString();
+        dhcpPool1 = in.readString();
+        dhcpPool2 = in.readString();
+        encryption = in.readString();
         in.readList(deviceList,getClass().getClassLoader());
     }
 

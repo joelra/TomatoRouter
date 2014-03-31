@@ -111,45 +111,85 @@ public class Parser {
 
     public String parseSsid(String html){
         String ssid = null;
-        String brian = "Brian";
         String regex = "wl_ssid: '(.*?)'";
         Pattern r = Pattern.compile(regex, Pattern.DOTALL);
         Matcher m = r.matcher(html);
         if(m.find()){
-            System.out.println("HEY! SSID! " + m.group(1));
+//            System.out.println("SSID! " + m.group(1));
             ssid = m.group(1);
         }
-        return brian;
+        return ssid;
     }
     public String parseSubnet(String html){
         String subnet = null;
+        String regex = "lan_netmask: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            subnet = m.group(1);
+        }
         return subnet;
     }
-    public String parseDhcpPool(String html){
-        String dPool = null;
-        return dPool;
+    public String parseDhcpPool1(String html){
+        String dPool1 = null;
+        String regex = "dhcpd_startip: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            dPool1 = m.group(1);
+        }
+        return dPool1;
+    }
+    public String parseDhcpPool2(String html){
+        String dPool2 = null;
+        String regex = "dhcpd_endip: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            dPool2 = m.group(1);
+        }
+        return dPool2;
     }
     public String parseDhcpLeaseTime(String html){
         String dTime = null;
+        String regex = "dhcp_lease: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            dTime = m.group(1);
+        }
         return dTime;
     }
     public String parseSharedKey(String html){
         String sKey = null;
+        String regex = "wl_wpa_psk: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            sKey = m.group(1);
+        }
         return sKey;
     }
     public String parseEncryption(String html){
         String encrypt = null;
+        String regex = "wl_crypto: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            encrypt = m.group(1);
+        }
         return encrypt;
     }
     public String parseSecurity(String html){
         String security = null;
+        String regex = "security_mode2: '(.*?)'";
+        Pattern r = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            security = m.group(1);
+        }
         return security;
     }
-    public String parseWireless(String html){
-        String wireLess = null;
-        return wireLess;
-    }
-
 
 
 
