@@ -254,7 +254,8 @@ public class Router implements Parcelable {
         // Get the html from the status-devices page
         Connection conn = new Connection();
         String deviceHTML = "";
-        deviceHTML = conn.GetHTMLFromURL("http://192.168.1.1/status-devices.asp", "root", "admin");
+        String base64login = conn.GetBase64Login("root", "admin");
+        deviceHTML = conn.GetHTMLFromURL("http://192.168.1.1/status-devices.asp", base64login);
         deviceList = new Parser().parseDeviceList(deviceHTML);
     }
 

@@ -163,11 +163,10 @@ public class MainLoginActivity extends ActionBarActivity {
                 editor.putString("password", pswrdTextView.getText().toString());
                 editor.putString("IPAddress", ipTextView.getText().toString());
                 editor.commit();
-
+                dialog.dismiss();
                 Intent intent = new Intent(MainLoginActivity.this, MainScreen.class);
                 intent.putExtra("passed_router", router);
                 MainLoginActivity.this.startActivity(intent);
-                dialog.dismiss();
                 // Finish the activity;
                 finish();
             } else {

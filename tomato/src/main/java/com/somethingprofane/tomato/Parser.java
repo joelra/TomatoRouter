@@ -183,8 +183,8 @@ public class Parser {
 
 
     public ArrayList<Device> parseDeviceList(String deviceHTML){
-        ArrayList<Device> deviceListDHCP = new ArrayList<Device>();
-        ArrayList<Device> deviceListWIFI = new ArrayList<Device>();
+        ArrayList<Device> deviceListDHCP;
+        ArrayList<Device> deviceListWIFI;
 
         deviceListDHCP = parseDeviceDHCPLeaseInfo(deviceHTML);
         deviceListWIFI = parseWIFIConnectivityInfo(deviceHTML);
