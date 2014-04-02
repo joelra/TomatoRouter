@@ -18,16 +18,9 @@ import java.util.regex.Pattern;
  */
 public class Connection {
 
-    private int attempsToConnect = 1;
-
     public String PostToWebadress(String website, String username, String password, HashMap parameterMap) throws IOException {
         String responseHTML = "";
         String base64login = GetBase64Login(username, password);
-
-        /**
-         * This is just for testing purposes. //TODO implement the data parameters a lot better. Possibly a map?
-         */
-        //TODO Remove httpID from this
         Document doc = Jsoup.connect(website)
                 .header("Authorization", "Basic " + base64login)
                 .userAgent("Mozilla")
@@ -90,23 +83,14 @@ public class Connection {
 
     private Document GetDocumentFromAddress(String address, String base64login){
         Document doc = null;
-        // if(IsReachable(address)){
         try {
-            doc = Jsoup.connect(address).header("Authorization", "Basic " + base64login).timeout(5000).get();
-
+            doc = Jsoup.connect(address).header("Authorization", "Basic " + base64login).timeout(10000).get();
         } catch (SocketTimeoutException socketTimeout){
             socketTimeout.printStackTrace();
             Log.d("SocketTimeout", "Retrying to connect to router.");
-            if(attempsToConnect < 3) {
-                attempsToConnect++;
-                GetDocumentFromAddress(address, base64login);
-            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //}
-        attempsToConnect = 1;
         return doc;
     }
 
@@ -125,20 +109,16 @@ public class Connection {
             urlResponse = Jsoup.connect(ValidateWebAddress(url))
                     .header("Authorization", "Basic " + base64login)
                     .userAgent("Mozilla")
-                    .timeout(3000)
+                    .timeout(7000)
                     .execute();
             response = urlResponse.statusCode();
         } catch (SocketTimeoutException socketTimeout){
             socketTimeout.printStackTrace();
-            if(attempsToConnect < 3) {
-                GetResponseCodeFromAddress(url, base64login);
-            }
         } catch (HttpStatusException error401){
             response = error401.getStatusCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        attempsToConnect = 1;
         return response;
     }
 

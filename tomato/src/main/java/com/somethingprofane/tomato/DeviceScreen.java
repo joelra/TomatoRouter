@@ -1,34 +1,19 @@
 package com.somethingprofane.tomato;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import android.widget.ToggleButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class DeviceScreen extends ActionBarActivity {
@@ -70,6 +55,7 @@ public class DeviceScreen extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @OnClick(R.id.device_screen_updateButton)
     public void updateClicked(Button updateButton){
 
@@ -94,7 +80,6 @@ public class DeviceScreen extends ActionBarActivity {
             Router router = new Router("http://192.168.1.1", "root", "admin");
             return router;
         }
-
 
         @Override
         protected void onPostExecute(Router router) {

@@ -185,16 +185,9 @@ public class Parser {
     public ArrayList<Device> parseDeviceList(String deviceHTML){
         ArrayList<Device> deviceListDHCP;
         ArrayList<Device> deviceListWIFI;
-
         deviceListDHCP = parseDeviceDHCPLeaseInfo(deviceHTML);
         deviceListWIFI = parseWIFIConnectivityInfo(deviceHTML);
-
         deviceListDHCP = compareWiredWirelessDevices(deviceListDHCP, deviceListWIFI);
-
-        // ---- This is where the error takes place. The instance is null! ---- //
-        //TODO fix this error. For some reason the instance is null!
-
-        DatabaseManager.getInstance().addDeviceList(deviceListDHCP);
         return deviceListDHCP;
     }
 
@@ -204,6 +197,7 @@ public class Parser {
                 if(deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
                     device.setDeviceType("wireless");
                     device.setDeviceWifiConnected(true);
+                    DatabaseManager.getInstance().updateDevice(device);
                     break;
                 }
             }
@@ -248,7 +242,8 @@ public class Parser {
         if(DatabaseManager.getInstance() != null) {
             device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
             if(device2 == null){
-                return false;
+                toReturn = false;
+                DatabaseManager.getInstance().addDevice(device);
             } else if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
                 toReturn = true;
             }

@@ -9,11 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.somethingprofane.db.DatabaseManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,7 +46,7 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         Button dialog_cancel;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         ViewHolder holder = null;
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(convertView == null) {
@@ -60,10 +65,7 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         // Set the info for each row:
         holder.txtDeviceName.setText(device.getDeviceName());
         holder.txtDeviceIP.setText(device.getDeviceIPAddr());
-        // THIS IS FOR TESTING:
-        //holder.imgDeviceIcon.setImageResource(R.drawable.devices_wifi_on);
         holder.wifiToggle.setChecked(false);
-        //TODO Check to see if the device is currently connected via wifi and display the appropriate icon
         if(device.getDeviceType() == "wireless") {
             if(device.isDeviceWifiConnected()){
                 holder.imgDeviceIcon.setBackgroundResource(R.drawable.devices_wifi_on);
