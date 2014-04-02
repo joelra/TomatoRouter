@@ -49,7 +49,7 @@ public class BasicConfiguration extends Activity {
     Router router;
     Basic basic;
     Device device;
-    String[] day;
+    String[] encryptOptions;
 
     TextView routerNameView;
     TextView wirelessMacView;
@@ -78,7 +78,7 @@ public class BasicConfiguration extends Activity {
 //Encryption spinner - filled in on datalist.xml
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.day, android.R.layout.simple_spinner_item);
+                this, R.array.encryptOptions, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -88,16 +88,14 @@ public class BasicConfiguration extends Activity {
 
                 int index = arg0.getSelectedItemPosition();
 // storing string resources into Array
-                day = getResources().getStringArray(R.array.day);
-                Toast.makeText(getBaseContext(), "You have selected : " +day[index],
+                encryptOptions = getResources().getStringArray(R.array.encryptOptions);
+                Toast.makeText(getBaseContext(), "You have selected : " +encryptOptions[index],
                         Toast.LENGTH_SHORT).show();
             }
             public void onNothingSelected(AdapterView<?> arg0) {
 // do nothing
             }
         });
-
-
 
           routerNameView = (TextView)findViewById(R.id.router_name_view);
           wirelessMacView = (TextView)findViewById(R.id.router_wireMac_view);
@@ -108,7 +106,7 @@ public class BasicConfiguration extends Activity {
           dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
           dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
           securityView = (TextView)findViewById(R.id.router__security_view);
-          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
+//          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
         ssidView = (TextView)findViewById(R.id.router__ssid_view);
 
         Intent b = getIntent();
@@ -213,7 +211,7 @@ public class BasicConfiguration extends Activity {
             dhcpStartView.setText(router.getDhcpPool1());
             dhcpEndView.setText(router.getDhcpPool2());
             securityView.setText(router.getSecurity());
-            encryptionView.setText(router.getEncryption());
+//            encryptionView.setText(router.getEncryption());
             ssidView.setText(router.getSsid());
             }
         }

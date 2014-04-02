@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string-array name="day">
+        <string-array name="encryptOptions">
             <item >Disabled</item>
             <item >WEP</item>
             <item >WPA Personal</item>
