@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class BasicConfiguration extends Activity {
     Router router;
     Basic basic;
     Device device;
+    String[] day;
 
     TextView routerNameView;
     TextView wirelessMacView;
@@ -65,12 +67,37 @@ public class BasicConfiguration extends Activity {
     ArrayList<String> changeList = new ArrayList<String>();
     ArrayList<String> changeKey = new ArrayList<String>();
     ArrayList<String> wireLessList = new ArrayList<String>();
-//    ProgressDialog progDialog;
+    ProgressDialog progDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_configuration);
+
+
+//Encryption spinner - filled in on datalist.xml
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.day, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3){
+
+                int index = arg0.getSelectedItemPosition();
+// storing string resources into Array
+                day = getResources().getStringArray(R.array.day);
+                Toast.makeText(getBaseContext(), "You have selected : " +day[index],
+                        Toast.LENGTH_SHORT).show();
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+// do nothing
+            }
+        });
+
+
 
           routerNameView = (TextView)findViewById(R.id.router_name_view);
           wirelessMacView = (TextView)findViewById(R.id.router_wireMac_view);
@@ -86,7 +113,7 @@ public class BasicConfiguration extends Activity {
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
-//        progDialog = new ProgressDialog(this);
+        progDialog = new ProgressDialog(this);
 
         new routerInfo().execute(router);
 
@@ -124,49 +151,40 @@ public class BasicConfiguration extends Activity {
     public void saveClicked(Button routerButton){
 
         if (!routerNameView.getText().toString().equals(router.getRouterName())){
-//            progDialog.setMessage("Saving Changes");
-//            progDialog.show();
             changeList.add(routerNameView.getText().toString());
             changeKey.add("router_name");
-//            changeList.put("router_name", routerNameView.getText().toString());
-//            new updateInfo().execute(routerNameView.getText().toString());
         }
         if (!wirelessSubnetView.getText().toString().equals(router.getSubnet())){
-//            changeList.put("lan_netmask", routerNameView.getText().toString());
             changeList.add(wirelessSubnetView.getText().toString());
             changeKey.add("lan_netmask");
         }
         if (!dhcpStartView.getText().toString().equals(router.getDhcpPool1())){
-//            changeList.put("dhcpd_startip", routerNameView.getText().toString());
             changeList.add(dhcpStartView.getText().toString());
             changeKey.add("dhcpd_startip");
         }
         if (!dhcpEndView.getText().toString().equals(router.getDhcpPool2())){
-//            changeList.put("dhcpd_endip", routerNameView.getText().toString());
             changeList.add(dhcpEndView.getText().toString());
             changeKey.add("dhcpd_endip");
         }
         if (!ssidView.getText().toString().equals(router.getSsid())){
-//            changeList.put("wl_ssid", routerNameView.getText().toString());
             changeList.add(ssidView.getText().toString());
             changeKey.add("wl_ssid");
         }
 //        if (!routerUsrView.getText().toString().equals(router.getUsrname())){
-////            changeList.put("router_name", routerNameView.getText().toString());
 //            changeList.add(wirelessSubnetView.getText().toString());
 //            changeKey.add("");
 //        }
 //        if (!routerPwdView.getText().toString().equals(router.getPswrd())){
-////            changeList.put("router_name", routerNameView.getText().toString());
 //            changeList.add(wirelessSubnetView.getText().toString());
 //            changeKey.add("");
 //        }
         else{
-//            progDialog.setMessage("Refreshing Information");
-//            progDialog.show();
+            progDialog.setMessage("Refreshing Information");
+            progDialog.show();
             new routerInfo().execute(router);
         }
-
+            progDialog.setMessage("Saving Changes");
+            progDialog.show();
         new updateInfo().execute();
     }
 
@@ -179,8 +197,6 @@ public class BasicConfiguration extends Activity {
 
         @Override
         protected Router doInBackground(Router... routers) {
-//            getWireLessInfo();
-
             routers[0].refresh();
             return routers[0];
         }
@@ -211,7 +227,6 @@ public class BasicConfiguration extends Activity {
 
         @Override
         protected String doInBackground(String... strings) {
-//            Connection conn = new Connection();
             String returnedHTML = null;
             Connection conn = new Connection();
 
@@ -232,7 +247,6 @@ public class BasicConfiguration extends Activity {
                     isFailed = true;
                     e.printStackTrace();
                 }
-
             }
            return returnedHTML;
         }

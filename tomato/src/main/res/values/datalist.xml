@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="day">
+            <item >Disabled</item>
+            <item >WEP</item>
+            <item >WPA Personal</item>
+            <item >WPA Enterprise</item>
+            <item >WPA2 Personal</item>
+            <item >WPA2 Enterprise</item>
+            <item >WPA/WPA2 Personal</item>
+            <item >WPA/WPA2 Enterprise</item>
+            <item >Radius</item>
+        </string-array>
+</resources>
