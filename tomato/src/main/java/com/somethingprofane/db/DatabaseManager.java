@@ -10,6 +10,8 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.somethingprofane.tomato.Device;
 import com.somethingprofane.tomato.DeviceGroup;
 
@@ -94,6 +96,29 @@ public class DatabaseManager {
         try {
             deviceList = getHelper().getDeviceDao().queryForAll();
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getNonGroupDevices(){
+        List<Device> deviceList = null;
+        try{
+            QueryBuilder<Device, String> queryBuilder = getHelper().getDeviceDao().queryBuilder();
+            queryBuilder.where().isNull("deviceGroup_id");
+            PreparedQuery<Device> preparedQuery = queryBuilder.prepare();
+            deviceList = getHelper().getDeviceDao().query(preparedQuery);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDevicesByGroup(DeviceGroup deviceGroup){
+        List<Device> deviceList = null;
+        try{
+            deviceList = getHelper().getDeviceDao().queryForEq("deviceGroup_id", deviceGroup.getId());
+        }catch (SQLException e){
             e.printStackTrace();
         }
         return deviceList;
