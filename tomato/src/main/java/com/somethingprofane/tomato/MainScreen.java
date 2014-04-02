@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -185,6 +186,9 @@ public class MainScreen extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Intent intent = new Intent(MainScreen.this, DeviceScreen.class);
+            Bundle b = new Bundle();
+            b.putParcelable("Router", router);
+            intent.putExtras(b);
             MainScreen.this.startActivity(intent);
             return null;
         }

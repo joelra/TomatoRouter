@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.somethingprofane.db.DatabaseManager;
+
 import java.io.IOException;
 import java.util.HashMap;
 import butterknife.ButterKnife;
@@ -67,49 +70,56 @@ public class DeviceScreen extends ActionBarActivity {
     /**
      * Called from the DeviceListBaseAdapter. It will allow for an asynctask to be called to create
      * post information to the router.
-     * @param deviceName
+     * @param device
      */
-    public void updateNetworkStatusForDevice(String deviceName) {
-        Toast.makeText(context, deviceName + " from Activity", Toast.LENGTH_SHORT).show();
-        new turnOffWiFiForDevice().execute(deviceName);
+    public void updateNetworkStatusForDevice(Device device) {
+        new turnOffWiFiForDevice().execute(device);
     }
 
-    private class turnOffWiFiForDevice extends AsyncTask<String, Void, String>{
+    private class turnOffWiFiForDevice extends AsyncTask<Device, Void, String>{
+        ProgressDialog progress = new ProgressDialog(context);
 
         @Override
         protected void onPreExecute(){
-
+            progress.setMessage("Disabling wifi of device");
+            progress.show();
         }
 
         @Override
-        protected String doInBackground(String... strings) {
-//            HashMap<String, String> hashmap;
-//            Connection conn = new Connection();
-//            String htmlId = router.getHttpId();
-//            if(isChecked()){
-//                // Set the wifi of that particular device to off.
-//                // Update the DB with this information change
-//                hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+device.getDeviceMacAddr()+"|||0|Rule Description","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
-//                try {
-//                    conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                // Update the database that the device has been turned off.
-//                device.setDeviceWifiConnected(false);
-//                DatabaseManager.getInstance().updateDevice(device);
-//            }else {
-//                // Set the wifi to on of that particular device
-//                // Update the DB with that information
-//            }
+        protected String doInBackground(Device... devices) {
+            String responseReturn = "Something went wrong";
+            Device device = devices[0];
+            HashMap<String, String> hashmap;
+            Connection conn = new Connection();
+            Bundle bundle = getIntent().getExtras();
+            Router router = bundle.getParcelable("Router");
+            String htmlId = router.getHttpId();
+            if(!device.isDeviceWifiConnected()){
+                // Set the wifi of that particular device to off.
+                // Update the DB with this information change
+                hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+device.getDeviceMacAddr()+"|||0|Device Restriction - Tomato Mobile","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
+                try {
+                    conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // Update the database that the device has been turned off.
+                DatabaseManager.getInstance().updateDevice(device);
+                responseReturn = "Disabled internet access for " + device.getDeviceName();
+            }else {
+                // Set the wifi to on of that particular device
+                // Update the DB with that information
 
-            return null;
+                responseReturn = "Enabled internet access for " + device.getDeviceName();
+            }
+
+            return responseReturn;
         }
 
         @Override
         protected void onPostExecute(String response){
-
+            progress.dismiss();
+            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
         }
     }
 

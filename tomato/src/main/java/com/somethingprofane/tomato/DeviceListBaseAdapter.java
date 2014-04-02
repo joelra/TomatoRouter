@@ -82,7 +82,7 @@ public class DeviceListBaseAdapter extends BaseAdapter {
                 // Change the wifi State of the Device object:
                 device.setDeviceWifiConnected(!device.isDeviceWifiConnected());
                 // Call back to the Activity to run Network Code to update the device to the router.
-                activity.updateNetworkStatusForDevice(device.getDeviceName());
+                activity.updateNetworkStatusForDevice(device);
             }
         });
         if(device.getDeviceType() == "wireless") {
