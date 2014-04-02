@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import butterknife.ButterKnife;
@@ -64,6 +65,10 @@ public class DeviceScreen extends ActionBarActivity {
 
     }
 
+    public void updateNetworkStatusForDevice(String deviceName) {
+        Toast.makeText(context, deviceName + " from Activity", Toast.LENGTH_SHORT).show();
+
+    }
     private class createDeviceListView extends AsyncTask<ListView, Integer, Router> {
         ListView deviceListView;
         private ProgressDialog progressDialog = new ProgressDialog(DeviceScreen.this);

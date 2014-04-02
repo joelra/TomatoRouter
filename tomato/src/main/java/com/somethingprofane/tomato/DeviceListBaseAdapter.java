@@ -30,10 +30,12 @@ public class DeviceListBaseAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Device> deviceList;
     private AlertDialog alert;
+    private DeviceScreen activity;
 
     public DeviceListBaseAdapter(Context context, ArrayList<Device> devices){
         this.context = context;
         this.deviceList = devices;
+        this.activity = (DeviceScreen) context;
     }
 
     private class ViewHolder {
@@ -78,8 +80,8 @@ public class DeviceListBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 device.setDeviceWifiConnected(!device.isDeviceWifiConnected());
-                Toast.makeText(context, device.getDeviceName() + " " + device.isDeviceWifiConnected(), Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(context, device.getDeviceName() + " " + device.isDeviceWifiConnected(), Toast.LENGTH_SHORT).show();
+                activity.updateNetworkStatusForDevice(device.getDeviceName());
             }
         });
         if(device.getDeviceType() == "wireless") {
