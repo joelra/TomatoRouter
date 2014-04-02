@@ -10,11 +10,10 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
+import java.io.IOException;
+import java.util.HashMap;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class DeviceScreen extends ActionBarActivity {
@@ -65,10 +64,55 @@ public class DeviceScreen extends ActionBarActivity {
 
     }
 
+    /**
+     * Called from the DeviceListBaseAdapter. It will allow for an asynctask to be called to create
+     * post information to the router.
+     * @param deviceName
+     */
     public void updateNetworkStatusForDevice(String deviceName) {
         Toast.makeText(context, deviceName + " from Activity", Toast.LENGTH_SHORT).show();
-
+        new turnOffWiFiForDevice().execute(deviceName);
     }
+
+    private class turnOffWiFiForDevice extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+//            HashMap<String, String> hashmap;
+//            Connection conn = new Connection();
+//            String htmlId = router.getHttpId();
+//            if(isChecked()){
+//                // Set the wifi of that particular device to off.
+//                // Update the DB with this information change
+//                hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+device.getDeviceMacAddr()+"|||0|Rule Description","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
+//                try {
+//                    conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // Update the database that the device has been turned off.
+//                device.setDeviceWifiConnected(false);
+//                DatabaseManager.getInstance().updateDevice(device);
+//            }else {
+//                // Set the wifi to on of that particular device
+//                // Update the DB with that information
+//            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response){
+
+        }
+    }
+
     private class createDeviceListView extends AsyncTask<ListView, Integer, Router> {
         ListView deviceListView;
         private ProgressDialog progressDialog = new ProgressDialog(DeviceScreen.this);

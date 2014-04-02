@@ -79,8 +79,9 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         holder.wifiToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Change the wifi State of the Device object:
                 device.setDeviceWifiConnected(!device.isDeviceWifiConnected());
-                //Toast.makeText(context, device.getDeviceName() + " " + device.isDeviceWifiConnected(), Toast.LENGTH_SHORT).show();
+                // Call back to the Activity to run Network Code to update the device to the router.
                 activity.updateNetworkStatusForDevice(device.getDeviceName());
             }
         });
