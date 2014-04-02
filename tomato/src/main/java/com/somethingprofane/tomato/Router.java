@@ -209,9 +209,7 @@ public class Router implements Parcelable {
     }
     public void setSsid(String html) {ssid = new Parser().parseSsid(html);}
 
-    public String getSubnet() {
-        return subnet;
-    }
+    public String getSubnet() {return subnet;}
     public void setSubnet(String html) {subnet = new Parser().parseSubnet(html);}
 
     public String getDhcpPool1() {

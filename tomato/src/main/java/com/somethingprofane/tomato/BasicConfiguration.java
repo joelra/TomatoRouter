@@ -29,6 +29,8 @@ import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -57,8 +59,13 @@ public class BasicConfiguration extends Activity {
     TextView dhcpEndView;
     TextView securityView;
     TextView encryptionView;
+    TextView ssidView;
 
+//    LinkedHashMap<String, String> changeLink = new LinkedHashMap<String, String>();
+    ArrayList<String> changeList = new ArrayList<String>();
+    ArrayList<String> changeKey = new ArrayList<String>();
     ArrayList<String> wireLessList = new ArrayList<String>();
+//    ProgressDialog progDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +82,13 @@ public class BasicConfiguration extends Activity {
           dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
           securityView = (TextView)findViewById(R.id.router__security_view);
           encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
+        ssidView = (TextView)findViewById(R.id.router__ssid_view);
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
-
+//        progDialog = new ProgressDialog(this);
 
         new routerInfo().execute(router);
-        System.out.println(router.getRouterName() + "ROUTER NAME HERE!");
 
         System.out.println("SSID " + router.getSsid());
         System.out.println("Subnet " + router.getSubnet());
@@ -113,17 +120,55 @@ public class BasicConfiguration extends Activity {
         return super.onOptionsItemSelected(basicItem);
     }
 
+    @OnClick(R.id.admin_save_button)
+    public void saveClicked(Button routerButton){
 
-//    public String getWireLessInfo() {
-//    //Get the html from the basic page
-//    String wireLessHtml = null;
-//    Connection conn = new Connection();
-//    String basicHtml = "";
-//    basicHtml = conn.GetHTMLFromURL("http://192.168.1.1/basic-network.asp", "root", "admin");
-//    wireLessHtml = new Parser().parseWireless(basicHtml);
-//    System.out.println("Basic HTML " + basicHtml);
-//        return basicHtml;
-//}
+        if (!routerNameView.getText().toString().equals(router.getRouterName())){
+//            progDialog.setMessage("Saving Changes");
+//            progDialog.show();
+            changeList.add(routerNameView.getText().toString());
+            changeKey.add("router_name");
+//            changeList.put("router_name", routerNameView.getText().toString());
+//            new updateInfo().execute(routerNameView.getText().toString());
+        }
+        if (!wirelessSubnetView.getText().toString().equals(router.getSubnet())){
+//            changeList.put("lan_netmask", routerNameView.getText().toString());
+            changeList.add(wirelessSubnetView.getText().toString());
+            changeKey.add("lan_netmask");
+        }
+        if (!dhcpStartView.getText().toString().equals(router.getDhcpPool1())){
+//            changeList.put("dhcpd_startip", routerNameView.getText().toString());
+            changeList.add(dhcpStartView.getText().toString());
+            changeKey.add("dhcpd_startip");
+        }
+        if (!dhcpEndView.getText().toString().equals(router.getDhcpPool2())){
+//            changeList.put("dhcpd_endip", routerNameView.getText().toString());
+            changeList.add(dhcpEndView.getText().toString());
+            changeKey.add("dhcpd_endip");
+        }
+        if (!ssidView.getText().toString().equals(router.getSsid())){
+//            changeList.put("wl_ssid", routerNameView.getText().toString());
+            changeList.add(ssidView.getText().toString());
+            changeKey.add("wl_ssid");
+        }
+//        if (!routerUsrView.getText().toString().equals(router.getUsrname())){
+////            changeList.put("router_name", routerNameView.getText().toString());
+//            changeList.add(wirelessSubnetView.getText().toString());
+//            changeKey.add("");
+//        }
+//        if (!routerPwdView.getText().toString().equals(router.getPswrd())){
+////            changeList.put("router_name", routerNameView.getText().toString());
+//            changeList.add(wirelessSubnetView.getText().toString());
+//            changeKey.add("");
+//        }
+        else{
+//            progDialog.setMessage("Refreshing Information");
+//            progDialog.show();
+            new routerInfo().execute(router);
+        }
+
+        new updateInfo().execute();
+    }
 
     private class routerInfo extends AsyncTask<Router, Void, Router> {
 
@@ -153,8 +198,55 @@ public class BasicConfiguration extends Activity {
             dhcpEndView.setText(router.getDhcpPool2());
             securityView.setText(router.getSecurity());
             encryptionView.setText(router.getEncryption());
+            ssidView.setText(router.getSsid());
+            }
+        }
+//Update changed settings
+    private class updateInfo extends AsyncTask<String,Void,String> {
+        boolean isFailed = false;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+//            Connection conn = new Connection();
+            String returnedHTML = null;
+            Connection conn = new Connection();
+
+            for ( int i = 0; i<changeList.size(); i++) {
+                System.out.println(changeList.get(i) + " ChangeList" + i);
+                System.out.println(changeList.size() + " ChangeSize");
+
+                String key = null;
+                String value = changeList.get(i);
+                key = changeKey.get(i);
+                System.out.println(key + " Key" + i);
+
+
+                HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", BasicConfiguration.this.router.getHttpId(), key, value);
+                try {
+                    returnedHTML = conn.PostToWebadress(BasicConfiguration.this.router.getUrl() + "/tomato.cgi", BasicConfiguration.this.router.getUsrname(), BasicConfiguration.this.router.getPswrd(), tempHashMap);
+                } catch (IOException e) {
+                    isFailed = true;
+                    e.printStackTrace();
+                }
 
             }
+           return returnedHTML;
+        }
+
+        protected void onPostExecute(String string) {
+            if (isFailed) {
+                Toast.makeText(BasicConfiguration.this, "Unable to Save Changes", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(BasicConfiguration.this, "Router is Updated", Toast.LENGTH_SHORT).show();
+            }
+
+            new BasicConfiguration.routerInfo().execute(BasicConfiguration.this.router);
+           }
         }
 
     }
