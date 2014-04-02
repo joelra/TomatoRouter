@@ -90,7 +90,6 @@ public class DeviceScreen extends ActionBarActivity {
             DeviceListBaseAdapter adapter = new DeviceListBaseAdapter(DeviceScreen.this, router.deviceList);
             deviceListView.setAdapter(adapter);
 
-
         }
     }
 

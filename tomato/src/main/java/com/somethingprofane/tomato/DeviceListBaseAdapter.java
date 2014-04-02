@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.somethingprofane.db.DatabaseManager;
@@ -65,7 +66,22 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         // Set the info for each row:
         holder.txtDeviceName.setText(device.getDeviceName());
         holder.txtDeviceIP.setText(device.getDeviceIPAddr());
-        holder.wifiToggle.setChecked(false);
+
+        if(device.isDeviceWifiConnected()){
+            holder.wifiToggle.setChecked(true);
+        } else {
+            holder.wifiToggle.setChecked(false);
+        }
+
+        //TODO Set OnClickListener for ToggleButton
+        holder.wifiToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                device.setDeviceWifiConnected(!device.isDeviceWifiConnected());
+                Toast.makeText(context, device.getDeviceName() + " " + device.isDeviceWifiConnected(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
         if(device.getDeviceType() == "wireless") {
             if(device.isDeviceWifiConnected()){
                 holder.imgDeviceIcon.setBackgroundResource(R.drawable.devices_wifi_on);
