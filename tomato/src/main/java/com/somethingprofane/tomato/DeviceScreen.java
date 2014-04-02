@@ -89,20 +89,47 @@ public class DeviceScreen extends ActionBarActivity {
         protected String doInBackground(Device... devices) {
             String responseReturn = "Something went wrong";
             Device device = devices[0];
-            HashMap<String, String> hashmap;
             Connection conn = new Connection();
+
+            // Get the router object passed to the screen
             Bundle bundle = getIntent().getExtras();
-            Router router = bundle.getParcelable("Router");
-            String htmlId = router.getHttpId();
+            Router router = null;
+            if (bundle != null) {
+                router = bundle.getParcelable("Router");
+            }
+            String htmlId = null;
+            if (router != null) {
+                htmlId = router.getHttpId();
+            }
+
+            // The device's wifi true/false state is set in the DeviceListBaseAdapter before being passed to this method.
             if(!device.isDeviceWifiConnected()){
                 // Set the wifi of that particular device to off.
                 // Update the DB with this information change
-                hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+device.getDeviceMacAddr()+"|||0|Device Restriction - Tomato Mobile","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
-                try {
-                    conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                // Get rule from router
+                String htmlRules = conn.GetHTMLFromURL("http://192.168.1.1/restrict.asp", conn.GetBase64Login("root", "admin"));
+                Parser parser = new Parser();
+                String[] accessRulesArray = parser.parseAccessRestrictionRules(htmlRules);
+                String deviceRestrictionRule;
+                String macAddresses = "";
+                for(String rule : accessRulesArray){
+                    if(rule.isEmpty()){
+                        continue;
+                    }
+                    // Grab each rule and check the title of rule for the string Device Restrictions.
+                    String[] ruleParams = rule.trim().split("\\|");
+                    if(ruleParams[ruleParams.length - 1].equals("Device Restriction")){
+                        // With that rule, grab the MAC addresses and add the additional MAC address
+                        macAddresses = ruleParams[4];
+                        if(!macAddresses.contains(device.getDeviceMacAddr())) { // If the device isn't already in the rule list
+                            macAddresses += (">" + device.getDeviceMacAddr());
+                            postRuleToRouter(macAddresses, htmlId, conn);
+                        }
+                        break;
+                    }
                 }
+
                 // Update the database that the device has been turned off.
                 DatabaseManager.getInstance().updateDevice(device);
                 responseReturn = "Disabled internet access for " + device.getDeviceName();
@@ -114,6 +141,17 @@ public class DeviceScreen extends ActionBarActivity {
             }
 
             return responseReturn;
+        }
+
+        private void postRuleToRouter(String macAddresses, String htmlId, Connection conn) {
+            HashMap hashmap;
+            // Update the mac address that are contained within that rule
+            hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+macAddresses+"|||0|Device Restriction","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
+            try {
+                conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

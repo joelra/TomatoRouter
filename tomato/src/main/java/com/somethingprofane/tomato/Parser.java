@@ -180,7 +180,17 @@ public class Parser {
         return security;
     }
 
-
+    public String[] parseAccessRestrictionRules(String html){
+        String[] accessRulesArray;
+        accessRulesArray = new String[0];
+        String pattern = "rrules = \\[(.*?)\\]";
+        Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
+        Matcher m = r.matcher(html);
+        if(m.find()){
+            accessRulesArray = m.group(1).trim().replace("'", "").split(",");
+        }
+        return accessRulesArray;
+    }
 
     public ArrayList<Device> parseDeviceList(String deviceHTML){
         ArrayList<Device> deviceListDHCP;
