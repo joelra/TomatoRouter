@@ -165,7 +165,9 @@ public class MainLoginActivity extends ActionBarActivity {
                 editor.commit();
                 dialog.dismiss();
                 Intent intent = new Intent(MainLoginActivity.this, MainScreen.class);
-                intent.putExtra("passed_router", router);
+                Bundle b = new Bundle();
+                b.putParcelable("Router", router);
+                intent.putExtras(b);
                 MainLoginActivity.this.startActivity(intent);
                 // Finish the activity;
                 finish();

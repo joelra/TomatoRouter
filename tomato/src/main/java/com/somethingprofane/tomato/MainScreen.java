@@ -34,18 +34,21 @@ public class MainScreen extends ActionBarActivity {
     @InjectView(R.id.mainscr_btnProfiles)ImageButton profilesButton;
     @InjectView(R.id.mainscr_btnLogout)ImageButton logoutButton;
 
-    Router router;
+    private static Router router;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
         ButterKnife.inject(this);
-
         SharedPreferences prefs = getSharedPreferences("user_prefs", MainScreen.MODE_PRIVATE);
-        Intent i = getIntent();
-        router = (Router) i.getParcelableExtra("passed_router");
+
+        // Update the router object only if the bundle contains a key named 'Router'
+        Bundle b = getIntent().getExtras();
+        if (b.containsKey("Router")) {
+            router = b.getParcelable("Router");
+        }
+        //router = (Router) i.getParcelableExtra("passed_router"); <- This is less effective. Router will be null;
 
         // Resetting the font of the Title in the main screen. May not be working...
         Typeface sensationFont = Typeface.createFromAsset(getAssets(), "Lato-BlaIta.ttf");
@@ -250,5 +253,13 @@ public class MainScreen extends ActionBarActivity {
             finish();
             return null;
         }
+    }
+
+    /**
+     * Setter for the router object that is contained on the main screen. This is to update the router object.
+     * @param router The router object
+     */
+    public static void setRouter(Router router) {
+        MainScreen.router = router;
     }
 }
