@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -36,6 +37,20 @@ public class NewGroupActivity extends ActionBarActivity {
     private ListView deviceListView;
     private List<Device> deviceList;
 
+    private CheckBox enabledCheckbox;
+    private CheckBox sunCheckBox;
+    private CheckBox monCheckBox;
+    private CheckBox tueCheckBox;
+    private CheckBox wedCheckBox;
+    private CheckBox thuCheckBox;
+    private CheckBox friCheckBox;
+    private CheckBox satCheckBox;
+    private EditText ruleDescEditTxt;
+    private Spinner beginSpinner;
+    private Spinner finishSpinner;
+
+    private Rule rule;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +60,27 @@ public class NewGroupActivity extends ActionBarActivity {
         groupNameTxtView = (TextView) findViewById(R.id.activity_new_group_groupNameLabel);
         deviceListView = (ListView) findViewById(R.id.activity_new_group_deviceList);
 
+        enabledCheckbox = (CheckBox) findViewById(R.id.activity_group_new_enabledChkBox);
+        ruleDescEditTxt = (EditText) findViewById(R.id.activity_group_new_descTxtView);
+        sunCheckBox = (CheckBox) findViewById(R.id.activity_group_new_sunCheckBox);
+        monCheckBox = (CheckBox) findViewById(R.id.activity_group_new_monCheckBox);
+        tueCheckBox = (CheckBox) findViewById(R.id.activity_group_new_tueCheckBox);
+        wedCheckBox = (CheckBox) findViewById(R.id.activity_group_new_wedCheckBox);
+        thuCheckBox = (CheckBox) findViewById(R.id.activity_group_new_thuCheckBox);
+        friCheckBox = (CheckBox) findViewById(R.id.activity_group_new_friCheckBox);
+        satCheckBox = (CheckBox) findViewById(R.id.activity_group_new_satCheckBox);
+        beginSpinner = (Spinner) findViewById(R.id.activity_group_new_beginTimeSpinner);
+        finishSpinner = (Spinner) findViewById(R.id.activity_group_new_endTimeSpinner);
+
         ButterKnife.inject(this);
 
         deleteButton.setVisibility(View.INVISIBLE);
 
-
-        setupDeviceGroup();
-        setupDeviceListView(deviceListView);
         setupSpinners();
+        setupDeviceGroup();
+        setupRule();
+        setupDeviceListView(deviceListView);
+
 
 
     }
@@ -86,6 +114,44 @@ public class NewGroupActivity extends ActionBarActivity {
             groupName.setText(deviceGroup.getGroupName());
             deleteButton.setVisibility(View.VISIBLE);
             groupNameTxtView.setText("Group Name:");
+        }
+    }
+
+    private void setupRule(){
+        Bundle bundle = getIntent().getExtras();
+        if (null != bundle && bundle.containsKey("deviceGroupID")) {
+            rule = deviceGroup.getRule();
+            if(rule.isEnabled()){
+                enabledCheckbox.setChecked(true);
+            }
+            if(rule.getDescription()!=null){
+                ruleDescEditTxt.setText(rule.getDescription());
+            }
+            if(rule.isSunday()){
+                sunCheckBox.setChecked(true);
+            }
+            if(rule.isMonday()){
+                monCheckBox.setChecked(true);
+            }
+            if(rule.isTuesday()){
+                tueCheckBox.setChecked(true);
+            }
+            if(rule.isWednesday()){
+                wedCheckBox.setChecked(true);
+            }
+            if(rule.isThursday()){
+                thuCheckBox.setChecked(true);
+            }
+            if(rule.isFriday()){
+                friCheckBox.setChecked(true);
+            }
+            if(rule.isSaturday()){
+                satCheckBox.setChecked(true);
+            }
+            beginSpinner.setSelection(rule.getStartTime()/15);
+
+            finishSpinner.setSelection(rule.getFinishTime()/15);
+
         }
     }
 
@@ -140,7 +206,9 @@ public class NewGroupActivity extends ActionBarActivity {
     @OnClick(R.id.activity_new_group_saveGroupButton)
     public void onSaveButtonClick(Button saveButton) {
 
+        List<Rule> ruleList;
 
+        //Save and update group
         String name = groupName.getText().toString();
         if (null != name && name.length() > 0) {
             if (null != deviceGroup) {
@@ -150,6 +218,8 @@ public class NewGroupActivity extends ActionBarActivity {
             }
         }
 
+
+        //Save and update devices to group
         SparseBooleanArray checked = deviceListView.getCheckedItemPositions();
 
         for (int i = 0; i < checked.size(); i++) {
@@ -168,6 +238,67 @@ public class NewGroupActivity extends ActionBarActivity {
             System.out.println("Device "+deviceList.get(position).getDeviceName());
             updateDevice(deviceList.get(position));
         }
+
+       Bundle bundle = getIntent().getExtras();
+        if (null != bundle && bundle.containsKey("deviceGroupID")) {
+
+        }else{rule = new Rule();}
+
+        //Save and update rules
+        if (enabledCheckbox.isChecked()){
+            rule.setEnabled(true);
+        }else rule.setEnabled(false);
+
+        if(ruleDescEditTxt.getText().toString()!=null){
+            rule.setDescription(ruleDescEditTxt.getText().toString());
+        }
+
+        if (sunCheckBox.isChecked()){
+            rule.setSunday(true);
+        }else rule.setSunday(false);
+
+        if (monCheckBox.isChecked()){
+            rule.setMonday(true);
+        }else rule.setMonday(false);
+
+        if (tueCheckBox.isChecked()){
+            rule.setTuesday(true);
+        }else rule.setTuesday(false);
+
+        if (wedCheckBox.isChecked()){
+            rule.setWednesday(true);
+        }else rule.setWednesday(false);
+
+        if (thuCheckBox.isChecked()){
+            rule.setThursday(true);
+        }else rule.setThursday(false);
+
+        if (friCheckBox.isChecked()){
+            rule.setFriday(true);
+        }else rule.setFriday(false);
+
+        if (satCheckBox.isChecked()){
+            rule.setSaturday(true);
+        }else rule.setSaturday(false);
+
+        rule.setStartTime(beginSpinner.getSelectedItemPosition()*15);
+
+        rule.setFinishTime(finishSpinner.getSelectedItemPosition()*15);
+
+        if (rule.getTomatoRuleId()==0){
+
+
+        }
+
+
+        if (null != bundle && bundle.containsKey("deviceGroupID")) {
+            updateRule(rule);
+        }else createRule(rule);
+
+        deviceGroup.setRule(rule);
+        DatabaseManager.getInstance().updateDeviceGroup(deviceGroup);
+
+
         finish();
     }
 
@@ -184,6 +315,9 @@ public class NewGroupActivity extends ActionBarActivity {
         for (Device device:devicesToDelete){
             device.setDeviceGroup(null);
             updateDevice(device);
+        }
+        if (deviceGroup.getRule()!=null){
+            DatabaseManager.getInstance().deleteRule(deviceGroup.getRule());
         }
         DatabaseManager.getInstance().deleteDeviceGroup(deviceGroup);
 
@@ -211,6 +345,14 @@ public class NewGroupActivity extends ActionBarActivity {
             System.out.println("Device "+device.getDeviceName()+" DeviceGroup is being set to null");
         }
         DatabaseManager.getInstance().updateDevice(device);
+    }
+
+    private void createRule(Rule rule){
+        DatabaseManager.getInstance().addRule(rule);
+    }
+
+    private void updateRule(Rule rule){
+        DatabaseManager.getInstance().updateRule(rule);
     }
 
 }

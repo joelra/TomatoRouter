@@ -17,6 +17,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.somethingprofane.tomato.Device;
 import com.somethingprofane.tomato.DeviceGroup;
+import com.somethingprofane.tomato.Rule;
 
 /**
  * Created by garrett on 3/24/2014.
@@ -25,12 +26,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "tomatoDB.sqlite";
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 7;
     // DB version 4: Added device table. Hope it works
+    // DB version 5: Added rule table. - Garrett
 
     //DAO objects used to access the table
     private Dao<DeviceGroup, Integer> deviceGroupDao = null;
     private Dao<Device, String> deviceDao = null;
+    private Dao<Rule, String> ruleDao = null;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +45,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, DeviceGroup.class);
             // Create the Device table
             TableUtils.createTable(connectionSource, Device.class);
+            //Create the Rule table
+            TableUtils.createTable(connectionSource, Rule.class);
         }
         catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
@@ -88,6 +93,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return deviceDao;
+    }
+
+    public Dao<Rule, String> getRuleDao(){
+        if(null == ruleDao){
+            try {
+                ruleDao = getDao(Rule.class);
+            } catch (java.sql.SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return ruleDao;
     }
 
 
