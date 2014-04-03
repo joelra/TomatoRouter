@@ -35,7 +35,7 @@ public class DeviceScreen extends ActionBarActivity {
         ButterKnife.inject(this);
 
         lv = (ListView) findViewById(R.id.devicescrn_listviewDevices);
-
+        new createDeviceListView().execute(lv);
     }
 
 
@@ -76,13 +76,21 @@ public class DeviceScreen extends ActionBarActivity {
         new turnOffWiFiForDevice().execute(device);
     }
 
-    private class turnOffWiFiForDevice extends AsyncTask<Device, Void, String>{
+    private class turnOffWiFiForDevice extends AsyncTask<Device, Integer, String>{
         ProgressDialog progress = new ProgressDialog(context);
 
         @Override
         protected void onPreExecute(){
-            progress.setMessage("Disabling wifi of device");
+            progress.setMessage("");
             progress.show();
+        }
+
+        protected void onProgressUpdate(Integer... progUpdate){
+            if(progUpdate[0] == 1){
+                progress.setMessage("Disabling wifi for device");
+            } else {
+                progress.setMessage("Enabling wifi for device");
+            }
         }
 
         @Override
@@ -102,17 +110,15 @@ public class DeviceScreen extends ActionBarActivity {
                 htmlId = router.getHttpId();
             }
 
+            // Get rules from router
+            String[] accessRulesArray = getRulesFromRouter(conn);
+            String macAddresses;
+
             // The device's wifi true/false state is set in the DeviceListBaseAdapter before being passed to this method.
             if(!device.isDeviceWifiConnected()){
+                publishProgress(1);
                 // Set the wifi of that particular device to off.
-                // Update the DB with this information change
 
-                // Get rule from router
-                String htmlRules = conn.GetHTMLFromURL("http://192.168.1.1/restrict.asp", conn.GetBase64Login("root", "admin"));
-                Parser parser = new Parser();
-                String[] accessRulesArray = parser.parseAccessRestrictionRules(htmlRules);
-                String deviceRestrictionRule;
-                String macAddresses = "";
                 for(String rule : accessRulesArray){
                     if(rule.isEmpty()){
                         continue;
@@ -123,7 +129,12 @@ public class DeviceScreen extends ActionBarActivity {
                         // With that rule, grab the MAC addresses and add the additional MAC address
                         macAddresses = ruleParams[4];
                         if(!macAddresses.contains(device.getDeviceMacAddr())) { // If the device isn't already in the rule list
-                            macAddresses += (">" + device.getDeviceMacAddr());
+                            // Is this the first MAC address in the rule:
+                            if(macAddresses.length() > 1){
+                                macAddresses += (">" + device.getDeviceMacAddr());
+                            } else {
+                                macAddresses = device.getDeviceMacAddr();
+                            }
                             postRuleToRouter(macAddresses, htmlId, conn);
                         }
                         break;
@@ -131,16 +142,45 @@ public class DeviceScreen extends ActionBarActivity {
                 }
 
                 // Update the database that the device has been turned off.
+                // TODO update appropriate DB information.
                 DatabaseManager.getInstance().updateDevice(device);
                 responseReturn = "Disabled internet access for " + device.getDeviceName();
             }else {
+                publishProgress(2);
                 // Set the wifi to on of that particular device
                 // Update the DB with that information
 
+                for(String rule : accessRulesArray){
+                    if(rule.isEmpty()){
+                        continue;
+                    }
+                    // Grab each rule and check the title of rule for the string Device Restrictions.
+                    String[] ruleParams = rule.trim().split("\\|");
+                    if(ruleParams[ruleParams.length - 1].equals("Device Restriction")){
+                        // With that rule, grab the MAC addresses and add the additional MAC address
+                        macAddresses = ruleParams[4];
+                        if(macAddresses.contains(device.getDeviceMacAddr())) { // If the device is in the rule list
+                            String newMacAddresses = "";
+                            if(macAddresses.length() > 17) {
+                                newMacAddresses = macAddresses.replace(">" + device.getDeviceMacAddr(), "");
+                            } else {
+                                newMacAddresses = macAddresses.replace(device.getDeviceMacAddr(), "");
+                            }
+                            postRuleToRouter(newMacAddresses, htmlId, conn);
+                        }
+                        break;
+                    }
+                }
                 responseReturn = "Enabled internet access for " + device.getDeviceName();
             }
 
             return responseReturn;
+        }
+
+        private String[] getRulesFromRouter(Connection conn) {
+            String htmlRules = conn.GetHTMLFromURL("http://192.168.1.1/restrict.asp", conn.GetBase64Login("root", "admin"));
+            Parser parser = new Parser();
+            return parser.parseAccessRestrictionRules(htmlRules);
         }
 
         private void postRuleToRouter(String macAddresses, String htmlId, Connection conn) {
