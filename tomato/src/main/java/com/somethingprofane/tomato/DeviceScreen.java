@@ -1,5 +1,6 @@
 package com.somethingprofane.tomato;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -226,7 +227,7 @@ public class DeviceScreen extends ActionBarActivity {
 
             DeviceListBaseAdapter adapter = new DeviceListBaseAdapter(DeviceScreen.this, router.deviceList);
             deviceListView.setAdapter(adapter);
-
+            MainScreen.setRouter(router);
         }
     }
 

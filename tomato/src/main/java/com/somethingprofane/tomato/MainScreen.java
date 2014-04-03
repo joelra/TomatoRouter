@@ -45,7 +45,7 @@ public class MainScreen extends ActionBarActivity {
 
         // Update the router object only if the bundle contains a key named 'Router'
         Bundle b = getIntent().getExtras();
-        if (b.containsKey("Router")) {
+        if (b != null && b.containsKey("Router")) {
             router = b.getParcelable("Router");
         }
         //router = (Router) i.getParcelableExtra("passed_router"); <- This is less effective. Router will be null;
