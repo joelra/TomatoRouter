@@ -21,6 +21,17 @@ public class DeviceGroup {
     @ForeignCollectionField
     private ForeignCollection<Device> devices;
 
+    public Rule getRule() {
+        return rule;
+    }
+
+    public void setRule(Rule rule) {
+        this.rule = rule;
+    }
+
+    @DatabaseField(foreign=true,foreignAutoRefresh=true)
+    Rule rule;
+
     public DeviceGroup(){}
 
     public void setId (int id){

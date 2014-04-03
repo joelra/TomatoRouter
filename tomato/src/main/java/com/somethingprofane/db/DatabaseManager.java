@@ -14,6 +14,7 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.somethingprofane.tomato.Device;
 import com.somethingprofane.tomato.DeviceGroup;
+import com.somethingprofane.tomato.Rule;
 
 public class DatabaseManager {
 
@@ -84,7 +85,7 @@ public class DatabaseManager {
 
     /**
      * These following methods are for the Device table.
-     * Created by JRA
+     * Created by JRA & some by Garrett
      */
 
     /**
@@ -185,6 +186,47 @@ public class DatabaseManager {
             }
         } catch (Exception e){
             Log.d("SQL Error", "There was an error adding a device list to the database");
+        }
+    }
+
+    /**
+     * These following methods are for the Rule table.
+     * Created by Garrett
+     */
+
+    public List<Rule> getAllRules(){
+        List<Rule> ruleList = null;
+        try {
+            ruleList = getHelper().getRuleDao().queryForAll();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ruleList;
+    }
+
+    public void addRule(Rule rule){
+        try{
+            getHelper().getRuleDao().create(rule);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateRule(Rule rule){
+        try{
+            getHelper().getRuleDao().update(rule);
+        } catch (SQLException e){
+            Log.d("SQL Error", "There was an error updating a rule in the database");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteRule(Rule rule){
+        try{
+            getHelper().getRuleDao().delete(rule);
+        } catch (SQLException e){
+            Log.d("SQL Error", "There was an error deleting a rule from the database");
+            e.printStackTrace();
         }
     }
 }
