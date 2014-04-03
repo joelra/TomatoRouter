@@ -74,29 +74,6 @@ public class BasicConfiguration extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_configuration);
 
-
-//Encryption spinner - filled in on datalist.xml
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.encryptOptions, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3){
-
-                int index = arg0.getSelectedItemPosition();
-// storing string resources into Array
-                encryptOptions = getResources().getStringArray(R.array.encryptOptions);
-                Toast.makeText(getBaseContext(), "You have selected : " +encryptOptions[index],
-                        Toast.LENGTH_SHORT).show();
-            }
-            public void onNothingSelected(AdapterView<?> arg0) {
-// do nothing
-            }
-        });
-
           routerNameView = (TextView)findViewById(R.id.router_name_view);
           wirelessMacView = (TextView)findViewById(R.id.router_wireMac_view);
           routerIPView = (TextView)findViewById(R.id.router_ip_view);
@@ -114,6 +91,36 @@ public class BasicConfiguration extends Activity {
         progDialog = new ProgressDialog(this);
 
         new routerInfo().execute(router);
+
+
+//Encryption spinner - filled in on datalist.xml
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.encryptOptionsList, android.R.layout.simple_spinner_item);
+
+        String name = router.getEncryption();
+        int index = adapter.getPosition(name);
+        System.out.println(index + " INDEX!");
+        if (index != -1) spinner.setSelection(index);
+
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3){
+
+                int index = arg0.getSelectedItemPosition();
+// storing string resources into Array
+                encryptOptions = getResources().getStringArray(R.array.encryptOptionsList);
+                Toast.makeText(getBaseContext(), "You have selected : " + encryptOptions[index],
+                        Toast.LENGTH_SHORT).show();
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+// do nothing
+            }
+        });
 
         System.out.println("SSID " + router.getSsid());
         System.out.println("Subnet " + router.getSubnet());
