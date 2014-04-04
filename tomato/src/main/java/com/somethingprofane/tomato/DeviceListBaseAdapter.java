@@ -69,23 +69,24 @@ public class DeviceListBaseAdapter extends BaseAdapter {
         holder.txtDeviceName.setText(device.getDeviceName());
         holder.txtDeviceIP.setText(device.getDeviceIPAddr());
 
-        if(device.isDeviceWifiConnected()){
-            holder.wifiToggle.setChecked(true);
-        } else {
+        if(device.isDeviceRestricted()){
+            // The internet access to the device is restricted
             holder.wifiToggle.setChecked(false);
+        } else {
+            holder.wifiToggle.setChecked(true);
         }
 
-        //TODO Set OnClickListener for ToggleButton
+        // OnClick Listener for the toggle button for Wifi:
         holder.wifiToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Change the wifi State of the Device object:
-                device.setDeviceWifiConnected(!device.isDeviceWifiConnected());
+                device.setDeviceRestricted(!device.isDeviceRestricted());
                 // Call back to the Activity to run Network Code to update the device to the router.
                 activity.updateNetworkStatusForDevice(device);
             }
         });
-        if(device.getDeviceType() == "wireless") {
+        if(device.getDeviceType().equals("wireless")) {
             if(device.isDeviceWifiConnected()){
                 holder.imgDeviceIcon.setBackgroundResource(R.drawable.devices_wifi_on);
             }else {

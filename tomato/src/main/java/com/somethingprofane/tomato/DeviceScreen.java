@@ -116,7 +116,7 @@ public class DeviceScreen extends ActionBarActivity {
             String macAddresses;
 
             // The device's wifi true/false state is set in the DeviceListBaseAdapter before being passed to this method.
-            if(!device.isDeviceWifiConnected()){
+            if(device.isDeviceRestricted()){
                 publishProgress(1);
                 // Set the wifi of that particular device to off.
 
@@ -137,14 +137,13 @@ public class DeviceScreen extends ActionBarActivity {
                                 macAddresses = device.getDeviceMacAddr();
                             }
                             postRuleToRouter(macAddresses, htmlId, conn);
+                            // Set restriction on the device to true;
+                            device.setDeviceRestricted(true);
                         }
                         break;
                     }
                 }
 
-                // Update the database that the device has been turned off.
-                // TODO update appropriate DB information.
-                DatabaseManager.getInstance().updateDevice(device);
                 responseReturn = "Disabled internet access for " + device.getDeviceName();
             }else {
                 publishProgress(2);
@@ -168,6 +167,8 @@ public class DeviceScreen extends ActionBarActivity {
                                 newMacAddresses = macAddresses.replace(device.getDeviceMacAddr(), "");
                             }
                             postRuleToRouter(newMacAddresses, htmlId, conn);
+                            // Set device to show that the restriction is false
+                            device.setDeviceRestricted(false);
                         }
                         break;
                     }
@@ -175,6 +176,8 @@ public class DeviceScreen extends ActionBarActivity {
                 responseReturn = "Enabled internet access for " + device.getDeviceName();
             }
 
+            // Update the device to the DB:
+            DatabaseManager.getInstance().updateDevice(device);
             return responseReturn;
         }
 

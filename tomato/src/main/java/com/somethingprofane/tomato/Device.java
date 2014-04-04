@@ -33,6 +33,9 @@ public class Device implements Parcelable {
     String deviceType = "";
     @DatabaseField
     boolean deviceWifiConnected;
+
+    @DatabaseField
+    boolean deviceRestricted;
     @DatabaseField(foreign=true,foreignAutoRefresh=true)
     DeviceGroup deviceGroup;
 
@@ -142,6 +145,14 @@ public class Device implements Parcelable {
      */
     public void setDeviceWifiConnected(boolean deviceWifiConnected) {
         this.deviceWifiConnected = deviceWifiConnected;
+    }
+
+    public boolean isDeviceRestricted() {
+        return deviceRestricted;
+    }
+
+    public void setDeviceRestricted(boolean deviceRestricted) {
+        this.deviceRestricted = deviceRestricted;
     }
 
     /**

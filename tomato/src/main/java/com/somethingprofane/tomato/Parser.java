@@ -202,17 +202,43 @@ public class Parser {
     }
 
     private ArrayList<Device> compareWiredWirelessDevices(ArrayList<Device> deviceListDHCP, ArrayList<Device> deviceListWIFI) {
+
         for(Device device : deviceListDHCP){
+            boolean toUpdate = true;
+
             for(Device deviceWifi: deviceListWIFI){
                 if(deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
                     device.setDeviceType("wireless");
                     device.setDeviceWifiConnected(true);
                     DatabaseManager.getInstance().updateDevice(device);
-                    break;
+                    toUpdate = false;
+                    break; // Break out of first for loop
                 }
+            }
+
+            if(toUpdate) {
+                // Is the Device contained within the DB already?
+                checkSetDeviceType(device);
+                DatabaseManager.getInstance().updateDevice(device);
             }
         }
         return deviceListDHCP;
+    }
+
+    private void checkSetDeviceType(Device device) {
+        Device dbDevice;
+        if(DatabaseManager.getInstance() != null){
+            dbDevice = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
+            if(dbDevice != null) {
+                //Check to see if device type is already set:
+                if(dbDevice.getDeviceType().equals("wireless")){
+                    device.setDeviceWifiConnected(false);
+                }
+            } else {
+                device.setDeviceType("wired");
+                device.setDeviceWifiConnected(false);
+            }
+        }
     }
 
     private ArrayList<Device> parseDeviceDHCPLeaseInfo(String deviceHTML) {
@@ -233,32 +259,26 @@ public class Parser {
                 device.setDeviceMacAddr(deviceInfoArray[2]);
                 device.setDeviceConnTime(deviceInfoArray[3] + deviceInfoArray[4]);
                 //TODO check the database and see if the device is in the db to set the device type.
-                if(verifyWifiToDB(device)){
-                    device.setDeviceType("wireless");
-                    device.setDeviceWifiConnected(false);
-                }else{
-                    device.setDeviceType("wired");
-                    device.setDeviceWifiConnected(false);
-                }
+                verifyDeviceToDB(device);
                 deviceList.add(device);
             }
         }
         return deviceList;
     }
 
-    private boolean verifyWifiToDB(Device device) {
-        boolean toReturn = false;
+    private void verifyDeviceToDB(Device device) {
         Device device2;
         if(DatabaseManager.getInstance() != null) {
             device2 = DatabaseManager.getInstance().getDeviceById(device.getDeviceMacAddr());
             if(device2 == null){
-                toReturn = false;
+                // Do nothing.
+                device.setDeviceRestricted(false);
                 DatabaseManager.getInstance().addDevice(device);
             } else if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
-                toReturn = true;
+                device.setDeviceRestricted(device2.isDeviceRestricted());
+                device.setDeviceType(device2.getDeviceType());
             }
         }
-        return toReturn;
     }
 
     private ArrayList<Device> parseWIFIConnectivityInfo(String deviceHTML) {
