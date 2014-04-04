@@ -182,7 +182,7 @@ public class DeviceScreen extends ActionBarActivity {
         }
 
         private String[] getRulesFromRouter(Connection conn) {
-            String htmlRules = conn.GetHTMLFromURL("http://192.168.1.1/restrict.asp", conn.GetBase64Login("root", "admin"));
+            String htmlRules = conn.GetHTMLFromURL("http://" + TomatoMobile.getInstance().getIpaddress() +"/restrict.asp");
             Parser parser = new Parser();
             return parser.parseAccessRestrictionRules(htmlRules);
         }
@@ -192,7 +192,7 @@ public class DeviceScreen extends ActionBarActivity {
             // Update the mac address that are contained within that rule
             hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+macAddresses+"|||0|Device Restriction","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
             try {
-                conn.PostToWebadress("http://192.168.1.1/tomato.cgi", "root", "admin", hashmap);
+                conn.PostToWebadress("http://"+ TomatoMobile.getInstance().getIpaddress()+"/tomato.cgi", hashmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -218,7 +218,7 @@ public class DeviceScreen extends ActionBarActivity {
         @Override
         protected Router doInBackground(ListView... listViews) {
             deviceListView = listViews[0];
-            Router router = new Router("http://192.168.1.1", "root", "admin");
+            Router router = new Router();
             return router;
         }
 

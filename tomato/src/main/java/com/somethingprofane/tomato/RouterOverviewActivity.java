@@ -144,7 +144,7 @@ public class RouterOverviewActivity extends Activity {
             String returnedHTML = null;
             HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", RouterOverviewActivity.this.router.getHttpId(), "router_name", strings[0]);
             try {
-                returnedHTML = conn.PostToWebadress(RouterOverviewActivity.this.router.getUrl() + "/tomato.cgi", RouterOverviewActivity.this.router.getUsrname(), RouterOverviewActivity.this.router.getPswrd(), tempHashMap);
+                returnedHTML = conn.PostToWebadress(RouterOverviewActivity.this.router.getUrl() + "/tomato.cgi", tempHashMap);
             } catch (IOException e) {
                 isFailed = true;
                 e.printStackTrace();

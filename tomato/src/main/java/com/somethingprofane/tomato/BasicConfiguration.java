@@ -247,7 +247,7 @@ public class BasicConfiguration extends Activity {
 
                 HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", BasicConfiguration.this.router.getHttpId(), key, value);
                 try {
-                    returnedHTML = conn.PostToWebadress(BasicConfiguration.this.router.getUrl() + "/tomato.cgi", BasicConfiguration.this.router.getUsrname(), BasicConfiguration.this.router.getPswrd(), tempHashMap);
+                    returnedHTML = conn.PostToWebadress("http://" + TomatoMobile.getInstance().getIpaddress() + "/tomato.cgi", tempHashMap);
                 } catch (IOException e) {
                     isFailed = true;
                     e.printStackTrace();
