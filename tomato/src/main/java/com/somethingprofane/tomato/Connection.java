@@ -18,9 +18,9 @@ import java.util.regex.Pattern;
  */
 public class Connection {
 
-    public String PostToWebadress(String website, String username, String password, HashMap parameterMap) throws IOException {
+    public String PostToWebadress(String website, HashMap parameterMap) throws IOException {
         String responseHTML = "";
-        String base64login = GetBase64Login(username, password);
+        String base64login = GetBase64Login(TomatoMobile.getInstance().getUsername(), TomatoMobile.getInstance().getPassword());
         Document doc = Jsoup.connect(website)
                 .header("Authorization", "Basic " + base64login)
                 .userAgent("Mozilla")
@@ -43,11 +43,11 @@ public class Connection {
         return paramsMap;
     }
 
-    public String GetHTMLFromURL(String website, String base64login){
+    public String GetHTMLFromURL(String website){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
         Document doc = null;
-        doc = GetDocumentFromAddress(properSite, base64login);
+        doc = GetDocumentFromAddress(properSite);
         returnHTML = doc.html();
         return returnHTML;
     }
@@ -59,11 +59,11 @@ public class Connection {
      * @param cssQuery The cssQuery that is to be applied. For more information on valid CSS queries, see http://jsoup.org/cookbook/extracting-data/selector-syntax.
      * @return The string of all the selected elements that were passed in as the cssQuery.
      */
-    public String GetHTMLFromURL(String website, String username, String password, String cssQuery){
+    public String GetHTMLFromURL(String website, String cssQuery){
         String returnHTML = "";
         String properSite = ValidateWebAddress(website);
-        String base64login = GetBase64Login(username, password);
-        Document doc = GetDocumentFromAddress(properSite, base64login);
+        String base64login = GetBase64Login(TomatoMobile.getInstance().getUsername(), TomatoMobile.getInstance().getPassword());
+        Document doc = GetDocumentFromAddress(properSite);
         Elements elements = doc.select(cssQuery);
         returnHTML = elements.text();
         return returnHTML;
@@ -81,10 +81,10 @@ public class Connection {
         return validated;
     }
 
-    private Document GetDocumentFromAddress(String address, String base64login){
+    private Document GetDocumentFromAddress(String address){
         Document doc = null;
         try {
-            doc = Jsoup.connect(address).header("Authorization", "Basic " + base64login).timeout(10000).get();
+            doc = Jsoup.connect(address).header("Authorization", "Basic " + GetBase64Login(TomatoMobile.getInstance().getUsername(), TomatoMobile.getInstance().getPassword())).timeout(10000).get();
         } catch (SocketTimeoutException socketTimeout){
             socketTimeout.printStackTrace();
             Log.d("SocketTimeout", "Retrying to connect to router.");
@@ -136,7 +136,7 @@ public class Connection {
         String http_id = "";
         String website = "http://192.168.1.1";
         String basic64login = GetBase64Login("root", "admin");
-        Document doc = GetDocumentFromAddress(website, basic64login);
+        Document doc = GetDocumentFromAddress(website);
         String scriptTag = doc.getElementsByTag("head").html();
         String pattern = "http_id=(.*?)\"";
         Pattern r = Pattern.compile(pattern, Pattern.DOTALL);

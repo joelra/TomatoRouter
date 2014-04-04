@@ -46,23 +46,20 @@ public class Router implements Parcelable {
     String dhcpLeaseTime;
 
     /**
-     *
-     * @param url
-     * @param usrname
-     * @param pswrd
+     * Create a new Router object
      */
-    public Router (String url, String usrname, String pswrd){
+    public Router (){
 
-        this.url = url;
-        this.usrname = usrname;
-        this.pswrd = pswrd;
+        this.url = "http://" + TomatoMobile.getInstance().getIpaddress();
+        this.usrname = TomatoMobile.getInstance().getUsername();
+        this.pswrd = TomatoMobile.getInstance().getPassword();
         Connection conn = new Connection();
         String returnedHtml = null;
         setHttpId(conn.GetRouterHTTPId());
         HashMap <String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx", tempHashMap);
             //Set all the values with the returned HTML
             setRouterName(returnedHtml);
             setFreeRam(returnedHtml);
@@ -251,9 +248,8 @@ public class Router implements Parcelable {
     public void setDeviceList() {
         // Get the html from the status-devices page
         Connection conn = new Connection();
-        String deviceHTML = "";
-        String base64login = conn.GetBase64Login("root", "admin");
-        deviceHTML = conn.GetHTMLFromURL("http://192.168.1.1/status-devices.asp", base64login);
+        String deviceHTML;
+        deviceHTML = conn.GetHTMLFromURL("http://" + TomatoMobile.getInstance().getIpaddress() + "/status-devices.asp");
         deviceList = new Parser().parseDeviceList(deviceHTML);
     }
 
@@ -287,7 +283,7 @@ public class Router implements Parcelable {
         HashMap <String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx","root","admin", tempHashMap);
+            returnedHtml = conn.PostToWebadress(url+"/status-data.jsx", tempHashMap);
             //Set all the values with the returned HTML
             setRouterName(returnedHtml);
             setFreeRam(returnedHtml);

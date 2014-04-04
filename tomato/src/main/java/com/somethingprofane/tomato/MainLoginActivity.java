@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.os.Build;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.TextView;
@@ -145,7 +146,11 @@ public class MainLoginActivity extends ActionBarActivity {
 
             if(response.equals("200")){
                 correctResponse = true;
-                router = new Router("http://"+ip, username, password);
+                //Set the global variables to be used throughout the class.
+                TomatoMobile.getInstance().setIpaddress(ip);
+                TomatoMobile.getInstance().setPassword(password);
+                TomatoMobile.getInstance().setUsername(username);
+                router = new Router();
             } else {
                 correctResponse = false;
             }

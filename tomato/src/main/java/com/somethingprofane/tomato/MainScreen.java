@@ -242,7 +242,7 @@ public class MainScreen extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                conn.PostToWebadress("http://192.168.1.1/logout.asp", "root", "admin", conn.buildParamsMap("_http_id",router.getHttpId()));
+                conn.PostToWebadress("http://" + TomatoMobile.getInstance().getIpaddress() + "/logout.asp", conn.buildParamsMap("_http_id",router.getHttpId()));
             } catch (IOException e) {
                 e.printStackTrace();
                 finish();

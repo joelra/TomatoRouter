@@ -38,18 +38,18 @@ public class Basic implements Parcelable {
     String httpId;
     ArrayList<Basic> basicList = new ArrayList<Basic>();
 
-    public Basic(String url, String usrname, String pswrd) {
+    public Basic() {
 
-        this.url = url;
-        this.usrname = usrname;
-        this.pswrd = pswrd;
+        this.url = "http://" + TomatoMobile.getInstance().getIpaddress();
+        this.usrname = TomatoMobile.getInstance().getUsername();
+        this.pswrd = TomatoMobile.getInstance().getPassword();
         Connection conn = new Connection();
         String basicHtml = null;
         setHttpId(conn.GetRouterHTTPId());
         HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            basicHtml = conn.PostToWebadress(url + "/status-data.jsx", "root", "admin", tempHashMap);
+            basicHtml = conn.PostToWebadress(url + "/status-data.jsx", tempHashMap);
             //Set all the values with the returned HTML
             setSsid(basicHtml);
             setSubnet(basicHtml);
@@ -175,7 +175,7 @@ public String getUrl() {
         HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", getHttpId());
 
         try {
-            basicHtml = conn.PostToWebadress(url + "/status-data.jsx", "root", "admin", tempHashMap);
+            basicHtml = conn.PostToWebadress(url + "/status-data.jsx", tempHashMap);
             //Set all the values with the returned HTML
             setSsid(basicHtml);
             setSecurity(basicHtml);
