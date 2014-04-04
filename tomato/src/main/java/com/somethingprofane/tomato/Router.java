@@ -1,15 +1,10 @@
 package com.somethingprofane.tomato;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by somethingPr0fane on 2/25/14.

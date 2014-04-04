@@ -2,7 +2,6 @@ package com.somethingprofane.tomato;
 
 import android.util.Base64;
 import android.util.Log;
-
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

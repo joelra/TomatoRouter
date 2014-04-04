@@ -13,12 +13,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.somethingprofane.db.DatabaseManager;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -36,7 +33,6 @@ public class NewGroupActivity extends ActionBarActivity {
     private DeviceGroup deviceGroup;
     private ListView deviceListView;
     private List<Device> deviceList;
-
     private CheckBox enabledCheckbox;
     private CheckBox sunCheckBox;
     private CheckBox monCheckBox;
@@ -48,7 +44,6 @@ public class NewGroupActivity extends ActionBarActivity {
     private EditText ruleDescEditTxt;
     private Spinner beginSpinner;
     private Spinner finishSpinner;
-
     private Rule rule;
 
     @Override

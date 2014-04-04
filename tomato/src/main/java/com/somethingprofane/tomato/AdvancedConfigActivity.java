@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by garrett on 3/23/2014.

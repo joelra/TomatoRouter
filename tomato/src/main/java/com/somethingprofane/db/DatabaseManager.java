@@ -6,10 +6,8 @@ package com.somethingprofane.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.util.Log;
-
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.somethingprofane.tomato.Device;
