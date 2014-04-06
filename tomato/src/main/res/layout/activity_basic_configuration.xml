@@ -229,31 +229,10 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:layout_toRightOf="@+id/router_main_labelRouter"/>
         </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="Security: "
-                    android:id="@+id/router__security_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="7pt"
-                    android:padding="10dp"
-                    android:layout_alignParentTop="true">
-                </TextView>
-
-                <TextView
-                    android:id="@+id/router__security_view"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="7pt"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
-            </TableRow>
-
             <!--<TableRow>-->
                 <!--<TextView-->
-                    <!--android:text="Encryption: "-->
-                    <!--android:id="@+id/router__encrypt_label"-->
+                    <!--android:text="Security: "-->
+                    <!--android:id="@+id/router__security_label"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:textStyle="bold"-->
@@ -263,16 +242,17 @@
                 <!--</TextView>-->
 
                 <!--<TextView-->
-                    <!--android:id="@+id/router__encrypt_view"-->
+                    <!--android:id="@+id/router__security_view"-->
                     <!--android:layout_width="fill_parent"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:textSize="7pt"-->
                     <!--android:paddingTop="@dimen/activity_vertical_margin"-->
                     <!--android:layout_toRightOf="@+id/router_main_labelRouter"/>-->
             <!--</TableRow>-->
+
             <TableRow>
                 <TextView
-                    android:text="Encryption: "
+                    android:text="Security: "
                     android:id="@+id/router__spinner_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -288,6 +268,26 @@
                     android:drawSelectorOnTop = "true"/>
 
 
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Encryption: "
+                    android:id="@+id/router__encrypt_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/router__encrypt_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
         <TableRow>
             <TableRow>

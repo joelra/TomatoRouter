@@ -37,7 +37,7 @@ public class BasicConfiguration extends Activity {
     Router router;
     Basic basic;
     Device device;
-    String[] encryptOptions;
+    String[] securityOptions;
 
     TextView routerNameView;
     TextView wirelessMacView;
@@ -47,7 +47,7 @@ public class BasicConfiguration extends Activity {
     TextView wirelessSubnetView;
     TextView dhcpStartView;
     TextView dhcpEndView;
-    TextView securityView;
+//    TextView securityView;
     TextView encryptionView;
     TextView ssidView;
 
@@ -70,8 +70,8 @@ public class BasicConfiguration extends Activity {
           wirelessSubnetView = (TextView)findViewById(R.id.router_subnet_view);
           dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
           dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
-          securityView = (TextView)findViewById(R.id.router__security_view);
-//          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
+//          securityView = (TextView)findViewById(R.id.router__security_view);
+          encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
         ssidView = (TextView)findViewById(R.id.router__ssid_view);
 
         Intent b = getIntent();
@@ -84,13 +84,25 @@ public class BasicConfiguration extends Activity {
 //Encryption spinner - filled in on datalist.xml
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.encryptOptionsList, android.R.layout.simple_spinner_item);
+                this, R.array.securityOptionsList, android.R.layout.simple_spinner_item);
 
-        String name = router.getEncryption();
-        int index = adapter.getPosition(name);
-        System.out.println(index + " INDEX!");
-        if (index != -1) spinner.setSelection(index);
+        String myString = router.getSecurity(); //the value you want the position for
+        int spinnerPosition = adapter.getPosition(myString);
+        System.out.println(myString + "MY STRING!");
+        System.out.println(spinnerPosition + "SPINNER POSITION");
+//set the default according to value
+        spinner.setSelection(spinnerPosition);
 
+
+
+
+
+//        String name = router.getSecurity();
+//        System.out.println(router.getSecurity() + " getSecurity!");
+//        int index = adapter.getPosition(name);
+//        System.out.println(index + " INDEX!");
+//        if (index != -1) spinner.setSelection(index);
+            spinner.setSelection(3);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -101,8 +113,8 @@ public class BasicConfiguration extends Activity {
 
                 int index = arg0.getSelectedItemPosition();
 // storing string resources into Array
-                encryptOptions = getResources().getStringArray(R.array.encryptOptionsList);
-                Toast.makeText(getBaseContext(), "You have selected : " + encryptOptions[index],
+                securityOptions = getResources().getStringArray(R.array.securityOptionsList);
+                Toast.makeText(getBaseContext(), "You have selected : " + securityOptions[index],
                         Toast.LENGTH_SHORT).show();
             }
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -205,8 +217,8 @@ public class BasicConfiguration extends Activity {
             wirelessSubnetView.setText(router.getSubnet());
             dhcpStartView.setText(router.getDhcpPool1());
             dhcpEndView.setText(router.getDhcpPool2());
-            securityView.setText(router.getSecurity());
-//            encryptionView.setText(router.getEncryption());
+//            securityView.setText(router.getSecurity());
+            encryptionView.setText(router.getEncryption());
             ssidView.setText(router.getSsid());
             }
         }
