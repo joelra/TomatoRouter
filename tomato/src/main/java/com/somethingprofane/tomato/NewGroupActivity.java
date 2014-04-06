@@ -42,7 +42,6 @@ public class NewGroupActivity extends ActionBarActivity {
     private DeviceGroup deviceGroup;
     private ListView deviceListView;
     private List<Device> deviceList;
-
     private CheckBox enabledCheckbox;
     private CheckBox sunCheckBox;
     private CheckBox monCheckBox;
@@ -54,7 +53,6 @@ public class NewGroupActivity extends ActionBarActivity {
     private EditText ruleDescEditTxt;
     private Spinner beginSpinner;
     private Spinner finishSpinner;
-
     private Rule rule;
 
     @Override

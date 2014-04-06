@@ -1,6 +1,5 @@
 package com.somethingprofane.tomato;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,9 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.somethingprofane.db.DatabaseManager;
-
 import java.io.IOException;
 import java.util.HashMap;
 import butterknife.ButterKnife;

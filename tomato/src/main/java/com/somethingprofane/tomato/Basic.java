@@ -2,9 +2,6 @@ package com.somethingprofane.tomato;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.j256.ormlite.field.DatabaseField;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

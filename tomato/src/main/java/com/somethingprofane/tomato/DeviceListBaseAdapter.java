@@ -2,25 +2,15 @@ package com.somethingprofane.tomato;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.somethingprofane.db.DatabaseManager;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by somethingPr0fane on 3/18/14.
