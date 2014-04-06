@@ -111,6 +111,8 @@ public class DeviceScreen extends ActionBarActivity {
             // Get rules from router
             String[] accessRulesArray = getRulesFromRouter(conn);
             String macAddresses;
+            boolean ruleSet = false;
+            boolean deleteRule = false;
 
             // The device's wifi true/false state is set in the DeviceListBaseAdapter before being passed to this method.
             if(device.isDeviceRestricted()){
@@ -133,14 +135,22 @@ public class DeviceScreen extends ActionBarActivity {
                             } else {
                                 macAddresses = device.getDeviceMacAddr();
                             }
-                            postRuleToRouter(macAddresses, htmlId, conn);
-                            // Set restriction on the device to true;
-                            device.setDeviceRestricted(true);
                         }
+                        postRuleToRouter(macAddresses, htmlId, conn, deleteRule);
+                        // Set restriction on the device to true;
+                        device.setDeviceRestricted(true);
+                        ruleSet = true;
                         break;
                     }
                 }
 
+                if(!ruleSet){
+                    // Rule does not exist, create it.
+                    macAddresses = device.getDeviceMacAddr();
+                    postRuleToRouter(macAddresses, htmlId, conn, deleteRule);
+                    // Set restriction on the device to true;
+                    device.setDeviceRestricted(true);
+                }
                 responseReturn = "Disabled internet access for " + device.getDeviceName();
             }else {
                 publishProgress(2);
@@ -161,9 +171,11 @@ public class DeviceScreen extends ActionBarActivity {
                             if(macAddresses.length() > 17) {
                                 newMacAddresses = macAddresses.replace(">" + device.getDeviceMacAddr(), "");
                             } else {
+                                // Delete the rule entirely
                                 newMacAddresses = macAddresses.replace(device.getDeviceMacAddr(), "");
+                                deleteRule = true;
                             }
-                            postRuleToRouter(newMacAddresses, htmlId, conn);
+                            postRuleToRouter(newMacAddresses, htmlId, conn, deleteRule);
                             // Set device to show that the restriction is false
                             device.setDeviceRestricted(false);
                         }
@@ -184,11 +196,15 @@ public class DeviceScreen extends ActionBarActivity {
             return parser.parseAccessRestrictionRules(htmlRules);
         }
 
-        private void postRuleToRouter(String macAddresses, String htmlId, Connection conn) {
+        private void postRuleToRouter(String macAddresses, String htmlId, Connection conn, boolean delete) {
             HashMap hashmap;
-            // Update the mac address that are contained within that rule
-            hashmap = conn.buildParamsMap("_service","restrict-restart","rrule2","1|-1|-1|127|"+macAddresses+"|||0|Device Restriction","f_enabled","on","f_desc","Test Description","f_sched_begin","1380","f_sched_end","240","f_sched_sun","on","f_sched_mon","on","f_sched_tue","on","f_sched_wed","on","f_sched_thu","on","f_type","on","f_comp_all","1","f_block_all","on","_http_id",htmlId);
-            try {
+            if(!delete) {
+                // Update the mac address that are contained within that rule
+                hashmap = conn.buildParamsMap("_service", "restrict-restart", "rrule9", "1|-1|-1|127|" + macAddresses + "|||0|Device Restriction", "f_enabled", "on", "f_desc", "Test Description", "f_sched_begin", "1380", "f_sched_end", "240", "f_sched_sun", "on", "f_sched_mon", "on", "f_sched_tue", "on", "f_sched_wed", "on", "f_sched_thu", "on", "f_type", "on", "f_comp_all", "1", "f_block_all", "on", "_http_id", htmlId);
+            } else {
+                hashmap = conn.buildParamsMap("_service", "restrict-restart", "rrule9", "", "f_enabled", "on", "f_desc", "Test Description", "f_sched_begin", "1380", "f_sched_end", "240", "f_sched_sun", "on", "f_sched_mon", "on", "f_sched_tue", "on", "f_sched_wed", "on", "f_sched_thu", "on", "f_type", "on", "f_comp_all", "1", "f_block_all", "on", "_http_id", htmlId);
+            }
+                try {
                 conn.PostToWebadress("http://"+ TomatoMobile.getInstance().getIpaddress()+"/tomato.cgi", hashmap);
             } catch (IOException e) {
                 e.printStackTrace();
