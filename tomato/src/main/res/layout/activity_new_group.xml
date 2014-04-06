@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         android:text="New Group Name:"
                         android:id="@+id/activity_new_group_groupNameLabel"
-                        android:textSize="9pt"
+                        android:textSize="10.5pt"
                         android:textStyle="bold"
                         android:layout_marginRight="10dp" />
 
@@ -43,63 +43,16 @@
             </TableLayout>
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Select devices below to be added to this group:"
-                android:id="@+id/activity_new_group_deviceListLabel"
-                android:textSize="9pt"
-                android:textStyle="bold"
-                android:layout_column="0"
-                android:layout_below="@+id/tableLayout"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-            <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="150dp"
-                android:id="@+id/activity_new_group_deviceList"
-                android:layout_below="@+id/activity_new_group_deviceListLabel"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                tools:listitem="@android:layout/simple_list_item_multiple_choice"
-                android:background="#c8c8c8"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                style="@style/ButtonText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/activity_new_group_deleteGroupButton"
-                android:background="@drawable/gradient"
-                android:text="Delete"
-                android:layout_below="@+id/activity_new_group_deviceList"
-                android:layout_toLeftOf="@+id/activity_new_group_saveGroupButton" />
-
-            <Button
-                style="@style/ButtonText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:id="@+id/activity_new_group_saveGroupButton"
-                android:background="@drawable/gradient"
-                android:layout_below="@+id/activity_new_group_deviceList"
-                android:layout_alignRight="@+id/activity_new_group_deviceList"
-                android:layout_alignEnd="@+id/activity_new_group_deviceList" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Group Access Restriction:"
                 android:id="@+id/activity_new_group_groupAccessRestTxt"
-                android:layout_below="@+id/activity_new_group_deleteGroupButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:textStyle="bold"
                 android:textSize="9pt"
-                android:layout_margin="10dp" />
+                android:layout_below="@+id/tableLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp" />
 
             <TableLayout
                 android:layout_width="fill_parent"
@@ -246,7 +199,8 @@
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/activity_group_new_timeLabel"
                 android:layout_alignLeft="@+id/activity_group_new_timeLabel"
-                android:layout_alignRight="@+id/activity_new_group_deviceList">
+                android:layout_alignRight="@+id/activity_new_group_deviceList"
+                android:id="@+id/activity_group_new_lower_table">
 
                 <TableRow
                     android:layout_width="fill_parent"
@@ -270,6 +224,56 @@
 
                 </TableRow>
             </TableLayout>
+
+            <Button
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/activity_new_group_saveGroupButton"
+                android:background="@drawable/gradient"
+                android:layout_alignRight="@+id/activity_new_group_deviceList"
+                android:layout_alignEnd="@+id/activity_new_group_deviceList"
+                android:layout_below="@+id/activity_new_group_deviceList"
+                android:layout_marginTop="10dp" />
+
+            <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:id="@+id/activity_new_group_deviceList"
+                tools:listitem="@android:layout/simple_list_item_multiple_choice"
+                android:background="#c8c8c8"
+                android:layout_below="@+id/activity_new_group_deviceListLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_group_deleteGroupButton"
+                android:background="@drawable/gradient"
+                android:text="Delete"
+                android:layout_toLeftOf="@+id/activity_new_group_saveGroupButton"
+                android:layout_below="@+id/activity_new_group_deviceList"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Select devices below to be added to this group:"
+                android:id="@+id/activity_new_group_deviceListLabel"
+                android:textSize="9pt"
+                android:textStyle="bold"
+                android:layout_column="0"
+                android:layout_below="@+id/activity_group_new_lower_table"
+                android:layout_alignLeft="@+id/activity_new_group_deviceList"
+                android:layout_alignStart="@+id/activity_new_group_deviceList"
+                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
     </ScrollView>
