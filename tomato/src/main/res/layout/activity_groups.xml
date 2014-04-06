@@ -8,9 +8,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select a group below to edit, delete, or add devices to it."
+        android:text="Select a group below to edit, delete, or add devices to it, as well as modify access restriction associated with the group."
         android:id="@+id/activity_groups_txtGroupLabel"
-        android:textSize="9pt"
+        android:textSize="8pt"
         android:textStyle="bold"
         android:layout_marginBottom="10dp" />
 

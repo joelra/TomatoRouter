@@ -36,7 +36,7 @@
     <string name="advconfig_imagebutton_contentdescription">Button Image for Advanced Configuration</string>
     <string name="mainscr_AppTitle">Tomato Router Mobile</string>
     <string name="title_activity_groups">Groups</string>
-    <string name="title_activity_new_group">NewGroupActivity</string>
+    <string name="title_activity_new_group">Group Details</string>
     <string-array name="time_array">
         <item value="0">12:00 AM</item>
         <item value="15">12:15 AM</item>
