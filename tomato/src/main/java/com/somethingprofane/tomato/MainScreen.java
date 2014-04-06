@@ -221,6 +221,9 @@ public class MainScreen extends ActionBarActivity {
     @OnClick(R.id.mainscr_btnGroups)
     public void groupsClicked (ImageButton groupsButton){
         Intent intent = new Intent (MainScreen.this, GroupsActivity.class);
+        Bundle b = new Bundle();
+        b.putParcelable("Router", router);
+        intent.putExtras(b);
         MainScreen.this.startActivity(intent);
     }
 

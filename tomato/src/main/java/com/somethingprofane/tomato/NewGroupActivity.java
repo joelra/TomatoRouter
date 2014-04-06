@@ -1,5 +1,7 @@
 package com.somethingprofane.tomato;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -13,10 +15,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.somethingprofane.db.DatabaseManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -82,7 +88,6 @@ public class NewGroupActivity extends ActionBarActivity {
         setupDeviceListView(deviceListView);
 
 
-
     }
 
 
@@ -117,40 +122,40 @@ public class NewGroupActivity extends ActionBarActivity {
         }
     }
 
-    private void setupRule(){
+    private void setupRule() {
         Bundle bundle = getIntent().getExtras();
         if (null != bundle && bundle.containsKey("deviceGroupID")) {
             rule = deviceGroup.getRule();
-            if(rule.isEnabled()){
+            if (rule.isEnabled()) {
                 enabledCheckbox.setChecked(true);
             }
-            if(rule.getDescription()!=null){
+            if (rule.getDescription() != null) {
                 ruleDescEditTxt.setText(rule.getDescription());
             }
-            if(rule.isSunday()){
+            if (rule.isSunday()) {
                 sunCheckBox.setChecked(true);
             }
-            if(rule.isMonday()){
+            if (rule.isMonday()) {
                 monCheckBox.setChecked(true);
             }
-            if(rule.isTuesday()){
+            if (rule.isTuesday()) {
                 tueCheckBox.setChecked(true);
             }
-            if(rule.isWednesday()){
+            if (rule.isWednesday()) {
                 wedCheckBox.setChecked(true);
             }
-            if(rule.isThursday()){
+            if (rule.isThursday()) {
                 thuCheckBox.setChecked(true);
             }
-            if(rule.isFriday()){
+            if (rule.isFriday()) {
                 friCheckBox.setChecked(true);
             }
-            if(rule.isSaturday()){
+            if (rule.isSaturday()) {
                 satCheckBox.setChecked(true);
             }
-            beginSpinner.setSelection(rule.getStartTime()/15);
+            beginSpinner.setSelection(rule.getStartTime() / 15);
 
-            finishSpinner.setSelection(rule.getFinishTime()/15);
+            finishSpinner.setSelection(rule.getFinishTime() / 15);
 
         }
     }
@@ -185,6 +190,7 @@ public class NewGroupActivity extends ActionBarActivity {
             for (Device device : deviceList) {
 
                 deviceNames.add(device.getDeviceName());
+                System.out.println(device.getDeviceGroup());
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, deviceNames);
@@ -194,8 +200,7 @@ public class NewGroupActivity extends ActionBarActivity {
             if (null != bundle && bundle.containsKey("deviceGroupID")) {
                 for (int i = 0; i < deviceList.size(); i++) {
                     if (deviceList.get(i).getDeviceGroup() != null &&
-                            deviceList.get(i).getDeviceGroup().getId() == bundle.getInt("deviceGroupID"))
-                    {
+                            deviceList.get(i).getDeviceGroup().getId() == bundle.getInt("deviceGroupID")) {
                         deviceListView.setItemChecked(i, true);
                     }
                 }
@@ -207,116 +212,240 @@ public class NewGroupActivity extends ActionBarActivity {
     public void onSaveButtonClick(Button saveButton) {
 
         List<Rule> ruleList;
+        List<DeviceGroup> tempDeviceGroup = DatabaseManager.getInstance().getAllDeviceGroups();
+        ArrayList<String> deviceGroupNames = new ArrayList<String>();
+
+        for (DeviceGroup tempDG : tempDeviceGroup) {
+            deviceGroupNames.add(tempDG.getGroupName());
+        }
 
         //Save and update group
         String name = groupName.getText().toString();
+
         if (null != name && name.length() > 0) {
+
             if (null != deviceGroup) {
                 updateDeviceGroup(name);
             } else {
                 createDeviceGroup(name);
             }
-        }
 
 
-        //Save and update devices to group
-        SparseBooleanArray checked = deviceListView.getCheckedItemPositions();
+            //Save and update devices to group
+            SparseBooleanArray checked = deviceListView.getCheckedItemPositions();
 
-        for (int i = 0; i < checked.size(); i++) {
-            // Add device to selectedDevices if it is checked i.e.) == TRUE!
-            int position = checked.keyAt(i);
+            for (int i = 0; i < checked.size(); i++) {
+                // Add device to selectedDevices if it is checked i.e.) == TRUE!
+                int position = checked.keyAt(i);
 
-            if (checked.valueAt(i)) {
+                if (checked.valueAt(i)) {
 
-                deviceList.get(position).setDeviceGroup(deviceGroup);
-                System.out.println("Device "+deviceList.get(position).deviceName+" is checked");
+                    deviceList.get(position).setDeviceGroup(deviceGroup);
+                    System.out.println("Device " + deviceList.get(position).deviceName + " is checked");
+                } else {
+                    deviceList.get(position).setDeviceGroup(null);
+                    System.out.println("Device " + deviceList.get(position).deviceName + " is not checked");
+                }
+                System.out.println("Device " + deviceList.get(position).getDeviceName());
+                updateDevice(deviceList.get(position));
             }
-            else{
-                deviceList.get(position).setDeviceGroup(null);
-                System.out.println("Device "+deviceList.get(position).deviceName+" is not checked");
+
+            deviceGroup = DatabaseManager.getInstance().getDeviceGroupWithId(deviceGroup.getId());
+
+
+            Bundle bundle = getIntent().getExtras();
+            if (null != bundle && bundle.containsKey("deviceGroupID")) {
+
+            } else {
+                rule = new Rule();
             }
-            System.out.println("Device "+deviceList.get(position).getDeviceName());
-            updateDevice(deviceList.get(position));
+
+            //Save and update rules
+            if (enabledCheckbox.isChecked()) {
+                rule.setEnabled(true);
+            } else rule.setEnabled(false);
+
+            if (ruleDescEditTxt.getText().toString() != null) {
+                rule.setDescription(ruleDescEditTxt.getText().toString());
+            }
+
+            if (sunCheckBox.isChecked()) {
+                rule.setSunday(true);
+            } else rule.setSunday(false);
+
+            if (monCheckBox.isChecked()) {
+                rule.setMonday(true);
+            } else rule.setMonday(false);
+
+            if (tueCheckBox.isChecked()) {
+                rule.setTuesday(true);
+            } else rule.setTuesday(false);
+
+            if (wedCheckBox.isChecked()) {
+                rule.setWednesday(true);
+            } else rule.setWednesday(false);
+
+            if (thuCheckBox.isChecked()) {
+                rule.setThursday(true);
+            } else rule.setThursday(false);
+
+            if (friCheckBox.isChecked()) {
+                rule.setFriday(true);
+            } else rule.setFriday(false);
+
+            if (satCheckBox.isChecked()) {
+                rule.setSaturday(true);
+            } else rule.setSaturday(false);
+
+            rule.setStartTime(beginSpinner.getSelectedItemPosition() * 15);
+
+            rule.setFinishTime(finishSpinner.getSelectedItemPosition() * 15);
+
+
+            if (null != bundle && bundle.containsKey("deviceGroupID")) {
+                updateRule(rule);
+            } else createRule(rule);
+
+            deviceGroup.setRule(rule);
+            DatabaseManager.getInstance().updateDeviceGroup(deviceGroup);
+
+            rule.setToDelete(false);
+
+            new updateRuleOnRouter().execute(rule);
+        } else {
+            Toast.makeText(NewGroupActivity.this, "Please enter a value for the group name.", Toast.LENGTH_SHORT).show();
         }
-
-       Bundle bundle = getIntent().getExtras();
-        if (null != bundle && bundle.containsKey("deviceGroupID")) {
-
-        }else{rule = new Rule();}
-
-        //Save and update rules
-        if (enabledCheckbox.isChecked()){
-            rule.setEnabled(true);
-        }else rule.setEnabled(false);
-
-        if(ruleDescEditTxt.getText().toString()!=null){
-            rule.setDescription(ruleDescEditTxt.getText().toString());
-        }
-
-        if (sunCheckBox.isChecked()){
-            rule.setSunday(true);
-        }else rule.setSunday(false);
-
-        if (monCheckBox.isChecked()){
-            rule.setMonday(true);
-        }else rule.setMonday(false);
-
-        if (tueCheckBox.isChecked()){
-            rule.setTuesday(true);
-        }else rule.setTuesday(false);
-
-        if (wedCheckBox.isChecked()){
-            rule.setWednesday(true);
-        }else rule.setWednesday(false);
-
-        if (thuCheckBox.isChecked()){
-            rule.setThursday(true);
-        }else rule.setThursday(false);
-
-        if (friCheckBox.isChecked()){
-            rule.setFriday(true);
-        }else rule.setFriday(false);
-
-        if (satCheckBox.isChecked()){
-            rule.setSaturday(true);
-        }else rule.setSaturday(false);
-
-        rule.setStartTime(beginSpinner.getSelectedItemPosition()*15);
-
-        rule.setFinishTime(finishSpinner.getSelectedItemPosition()*15);
-
-        if (rule.getTomatoRuleId()==0){
-
-
-        }
-
-
-        if (null != bundle && bundle.containsKey("deviceGroupID")) {
-            updateRule(rule);
-        }else createRule(rule);
-
-        deviceGroup.setRule(rule);
-        DatabaseManager.getInstance().updateDeviceGroup(deviceGroup);
-
-
-        finish();
     }
 
     @OnClick(R.id.activity_new_group_deleteGroupButton)
     public void onDeleteButtonClick(Button deleteButton) {
         if (null != deviceGroup) {
             deleteDeviceGroup(deviceGroup);
+
+            rule.setToDelete(true);
+
+            new updateRuleOnRouter().execute(rule);
+        }
+    }
+
+    private class updateRuleOnRouter extends AsyncTask<Rule, Integer, Void> {
+
+        private ProgressDialog dialog = new ProgressDialog(NewGroupActivity.this);
+
+        protected void onPreExecute() {
+            this.dialog.setMessage("Updating...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Rule... rules) {
+
+            Connection conn = new Connection();
+
+            boolean postHasBeenSent = false;
+
+            // Get the router object passed to the screen
+            Bundle bundle = getIntent().getExtras();
+            Router router = null;
+            if (bundle != null) {
+                router = bundle.getParcelable("Router");
+            }
+            String htmlId = null;
+            if (router != null) {
+                htmlId = router.getHttpId();
+            }
+
+            // Get rules from router
+            String[] accessRulesArray = getRulesFromRouter(conn);
+
+            ArrayList<String> accessRulesNamesArray = new ArrayList<String>();
+
+            //Check to see if this rule exists
+            for (String accessRule : accessRulesArray) {
+                if (accessRule.isEmpty()) {
+                    continue;
+                }
+
+                String[] ruleParams = accessRule.trim().split("\\|");
+
+                accessRulesNamesArray.add(ruleParams[ruleParams.length - 1]);
+            }
+
+            if (accessRulesNamesArray.contains(deviceGroup.getGroupName())) {
+                int i = 0;
+                for (String accessRule : accessRulesArray) {
+                    if (accessRule.isEmpty()) {
+                        i++;
+                        continue;
+                    }
+                    // Grab each rule and check the title of rule for the string Device Restrictions.
+                    String[] ruleParams = accessRule.trim().split("\\|");
+                    if (ruleParams[ruleParams.length - 1].equals(deviceGroup.getGroupName())) {
+
+                        postRuleToRouter(rules[0], htmlId, conn, i, rule.isToDelete());
+                        postHasBeenSent = true;
+                        break;
+                    }
+                    i++;
+                }
+            } else {
+                int i = 0;
+                for (String accessRule : accessRulesArray) {
+                    if (accessRule.isEmpty()) {
+
+                        postRuleToRouter(rules[0], htmlId, conn, i, rule.isToDelete());
+                        postHasBeenSent = true;
+
+                        break;
+                    }
+                    i++;
+                }
+                if (postHasBeenSent == false) {
+                    postRuleToRouter(rules[0], htmlId, conn, accessRulesArray.length, rule.isToDelete());
+                }
+            }
+            onPostExecute();
+            return null;
+        }
+
+        private String[] getRulesFromRouter(Connection conn) {
+            String htmlRules = conn.GetHTMLFromURL("http://" + TomatoMobile.getInstance().getIpaddress() + "/restrict.asp");
+            Parser parser = new Parser();
+            return parser.parseAccessRestrictionRules(htmlRules);
+        }
+
+        private void postRuleToRouter(Rule rule, String httpId, Connection conn, int rruleNum, boolean delete) {
+
+            String macAddresses = null;
+            for (Device device : deviceGroup.getDevices()) {
+                if (macAddresses != null) {
+                    macAddresses += (">" + device.getDeviceMacAddr());
+                } else {
+                    macAddresses = device.getDeviceMacAddr();
+                }
+            }
+
+
+            try {
+                conn.PostToWebadress("http://" + TomatoMobile.getInstance().getIpaddress() + "/tomato.cgi", rule.buildPostHashMap(deviceGroup.getGroupName(), rruleNum, httpId, macAddresses, delete));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void onPostExecute() {
+            dialog.dismiss();
             finish();
         }
     }
 
-    private void deleteDeviceGroup(DeviceGroup dg){
+    private void deleteDeviceGroup(DeviceGroup dg) {
         List<Device> devicesToDelete = DatabaseManager.getInstance().getDevicesByGroup(dg);
-        for (Device device:devicesToDelete){
+        for (Device device : devicesToDelete) {
             device.setDeviceGroup(null);
             updateDevice(device);
         }
-        if (deviceGroup.getRule()!=null){
+        if (deviceGroup.getRule() != null) {
             DatabaseManager.getInstance().deleteRule(deviceGroup.getRule());
         }
         DatabaseManager.getInstance().deleteDeviceGroup(deviceGroup);
@@ -338,20 +467,19 @@ public class NewGroupActivity extends ActionBarActivity {
     }
 
     private void updateDevice(Device device) {
-        if (device.getDeviceGroup()!=null){
-            System.out.println("Device "+device.getDeviceName()+" is being added to group "+device.getDeviceGroup().getGroupName());
-        }
-        else{
-            System.out.println("Device "+device.getDeviceName()+" DeviceGroup is being set to null");
+        if (device.getDeviceGroup() != null) {
+            System.out.println("Device " + device.getDeviceName() + " is being added to group " + device.getDeviceGroup().getGroupName());
+        } else {
+            System.out.println("Device " + device.getDeviceName() + " DeviceGroup is being set to null");
         }
         DatabaseManager.getInstance().updateDevice(device);
     }
 
-    private void createRule(Rule rule){
+    private void createRule(Rule rule) {
         DatabaseManager.getInstance().addRule(rule);
     }
 
-    private void updateRule(Rule rule){
+    private void updateRule(Rule rule) {
         DatabaseManager.getInstance().updateRule(rule);
     }
 

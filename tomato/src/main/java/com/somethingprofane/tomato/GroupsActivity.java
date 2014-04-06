@@ -67,7 +67,14 @@ public class GroupsActivity extends ActionBarActivity {
 
     @OnClick(R.id.activity_groups_addGroupButton)
     public void addGroupButtonClicked (Button addGroupButton){
+        Bundle bundle = getIntent().getExtras();
+        Router router = null;
+        if (bundle != null) {
+            router = bundle.getParcelable("Router");
+        }
         Intent intent = new Intent (GroupsActivity.this, NewGroupActivity.class);
+        bundle.putParcelable("Router", router);
+        intent.putExtras(bundle);
         GroupsActivity.this.startActivity(intent);
     }
 
@@ -90,6 +97,13 @@ public class GroupsActivity extends ActionBarActivity {
                     DeviceGroup deviceGroup = groupList.get(position);
                     Intent intent = new Intent(GroupsActivity.this, NewGroupActivity.class);
                     intent.putExtra("deviceGroupID", deviceGroup.getId());
+                    Bundle bundle = getIntent().getExtras();
+                    Router router = null;
+                    if (bundle != null) {
+                        router = bundle.getParcelable("Router");
+                    }
+                    bundle.putParcelable("Router", router);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });

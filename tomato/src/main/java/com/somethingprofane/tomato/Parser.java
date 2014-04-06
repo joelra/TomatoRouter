@@ -277,6 +277,7 @@ public class Parser {
             } else if(device2.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
                 device.setDeviceRestricted(device2.isDeviceRestricted());
                 device.setDeviceType(device2.getDeviceType());
+                device.setDeviceGroup(device2.getDeviceGroup());
             }
         }
     }

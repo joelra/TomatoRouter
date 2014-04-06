@@ -160,6 +160,7 @@ public class DatabaseManager {
     public void updateDevice(Device device){
         try{
             getHelper().getDeviceDao().update(device);
+            System.out.println("Device "+device.getDeviceName()+" has officially been updated to group "+device.getDeviceGroup());
         } catch (SQLException e){
             Log.d("SQL Error", "There was an error updating a device in the database");
             e.printStackTrace();
