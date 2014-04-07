@@ -85,11 +85,11 @@
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/mainscr_btnAdvanced"
-            android:background="@drawable/advanced_icon_flat"
-            android:layout_toRightOf="@id/mainscr_centerPointBasicAdv"
-            android:focusableInTouchMode="false"
-            android:contentDescription="@string/advconfig_imagebutton_contentdescription" />
+            android:background="@drawable/groups_icon_flat"
+            android:id="@+id/mainscr_btnGroups"
+            android:contentDescription="@string/groups_imagebutton_contentdescription"
+            android:layout_toRightOf="@+id/mainscr_centerPointBasicAdv" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -98,28 +98,28 @@
         android:layout_height="fill_parent"
         android:layout_weight=".2">
 
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="90dp"
-            android:background="@drawable/groups_icon_flat"
-            android:layout_toLeftOf="@+id/mainscr_centerPointGroupsProfiles"
-            android:id="@+id/mainscr_btnGroups"
-            android:contentDescription="@string/groups_imagebutton_contentdescription" />
+        <!--<ImageButton-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:id="@+id/mainscr_btnAdvanced"-->
+        <!--android:background="@drawable/advanced_icon_flat"-->
+        <!--android:layout_toRightOf="@id/mainscr_centerPointBasicAdv"-->
+        <!--android:focusableInTouchMode="false"-->
+        <!--android:contentDescription="@string/advconfig_imagebutton_contentdescription" />-->
 
-        <TextView
-            android:layout_width="0dip"
-            android:text=""
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/mainscr_centerPointGroupsProfiles" />
+        <!--<TextView-->
+            <!--android:layout_width="0dip"-->
+            <!--android:text=""-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:id="@+id/mainscr_centerPointGroupsProfiles" />-->
 
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/mainscr_btnProfiles"
-            android:background="@drawable/profiles_icon_flat"
-            android:layout_toRightOf="@+id/mainscr_centerPointGroupsProfiles"/>
+        <!--<ImageButton-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:id="@+id/mainscr_btnProfiles"-->
+            <!--android:background="@drawable/profiles_icon_flat"-->
+            <!--android:layout_toRightOf="@+id/mainscr_centerPointGroupsProfiles"/>-->
     </RelativeLayout>
 
     <RelativeLayout

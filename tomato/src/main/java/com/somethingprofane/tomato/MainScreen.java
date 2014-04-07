@@ -23,8 +23,8 @@ public class MainScreen extends ActionBarActivity {
     @InjectView(R.id.mainscr_btnRouter)ImageButton routerButton;
     @InjectView(R.id.mainscr_btnDevices)ImageButton devicesButton;
     @InjectView(R.id.mainscr_btnBasic)ImageButton basicButton;
-    @InjectView(R.id.mainscr_btnAdvanced)ImageButton advancedButton;
-    @InjectView(R.id.mainscr_btnGroups)ImageButton groupsButton;
+//    @InjectView(R.id.mainscr_btnAdvanced)ImageButton advancedButton;
+//    @InjectView(R.id.mainscr_btnGroups)ImageButton groupsButton;
     @InjectView(R.id.mainscr_btnProfiles)ImageButton profilesButton;
     @InjectView(R.id.mainscr_btnLogout)ImageButton logoutButton;
 
@@ -86,29 +86,30 @@ public class MainScreen extends ActionBarActivity {
             }
         });
 
-        advancedButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
-                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat);
-                }
-                return false;
-            }
-        });
-
-        groupsButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
-                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
-                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat);
-                }
-                return false;
-            }
-        });
+        //This is not yet implemented
+//        advancedButton.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+//                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat_pressed);
+//                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+//                    advancedButton.setBackgroundResource(R.drawable.advanced_icon_flat);
+//                }
+//                return false;
+//            }
+//        });
+//
+//        groupsButton.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+//                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat_pressed);
+//                } else if (motionEvent.getAction() == motionEvent.ACTION_UP){
+//                    groupsButton.setBackgroundResource(R.drawable.groups_icon_flat);
+//                }
+//                return false;
+//            }
+//        });
 
         profilesButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
