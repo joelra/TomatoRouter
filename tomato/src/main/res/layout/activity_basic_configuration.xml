@@ -95,7 +95,7 @@
                     android:layout_alignParentTop="true">
                 </TextView>
 
-                <TextView
+                <EditText
                     android:id="@+id/router_ip_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                     android:layout_alignParentTop="true">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/router_username_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
                 android:layout_alignParentTop="true">
             </TextView>
 
-            <EditText
+            <TextView
                 android:id="@+id/router_password_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -229,31 +229,10 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:layout_toRightOf="@+id/router_main_labelRouter"/>
         </TableRow>
-            <!--<TableRow>-->
-                <!--<TextView-->
-                    <!--android:text="Security: "-->
-                    <!--android:id="@+id/router__security_label"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:textSize="7pt"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:layout_alignParentTop="true">-->
-                <!--</TextView>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/router__security_view"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textSize="7pt"-->
-                    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-                    <!--android:layout_toRightOf="@+id/router_main_labelRouter"/>-->
-            <!--</TableRow>-->
-
             <TableRow>
                 <TextView
                     android:text="Security: "
-                    android:id="@+id/router__spinner_label"
+                    android:id="@+id/router__security_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
@@ -261,14 +240,35 @@
                     android:padding="10dp"
                     android:layout_alignParentTop="true">
                 </TextView>
-                <Spinner
-                    android:id="@+id/spinner"
+
+                <TextView
+                    android:id="@+id/router__security_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:drawSelectorOnTop = "true"/>
-
-
+                    android:textSize="7pt"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_toRightOf="@+id/router_main_labelRouter"/>
             </TableRow>
+
+            <!--<TableRow>-->
+                <!--<TextView-->
+                    <!--android:text="Security: "-->
+                    <!--android:id="@+id/router__spinner_label"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="7pt"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:layout_alignParentTop="true">-->
+                <!--</TextView>-->
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:drawSelectorOnTop = "true"/>-->
+
+
+            <!--</TableRow>-->
             <TableRow>
                 <TextView
                     android:text="Encryption: "

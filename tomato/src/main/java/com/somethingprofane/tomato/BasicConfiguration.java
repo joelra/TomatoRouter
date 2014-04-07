@@ -47,7 +47,7 @@ public class BasicConfiguration extends Activity {
     TextView wirelessSubnetView;
     TextView dhcpStartView;
     TextView dhcpEndView;
-//    TextView securityView;
+    TextView securityView;
     TextView encryptionView;
     TextView ssidView;
 
@@ -70,9 +70,9 @@ public class BasicConfiguration extends Activity {
           wirelessSubnetView = (TextView)findViewById(R.id.router_subnet_view);
           dhcpStartView = (TextView)findViewById(R.id.router_dhcpStart_view);
           dhcpEndView = (TextView)findViewById(R.id.router_dhcpEnd_view);
-//          securityView = (TextView)findViewById(R.id.router__security_view);
+          securityView = (TextView)findViewById(R.id.router__security_view);
           encryptionView = (TextView)findViewById(R.id.router__encrypt_view);
-        ssidView = (TextView)findViewById(R.id.router__ssid_view);
+          ssidView = (TextView)findViewById(R.id.router__ssid_view);
 
         Intent b = getIntent();
         router = (Router) b.getParcelableExtra("basic_router");
@@ -82,57 +82,44 @@ public class BasicConfiguration extends Activity {
 
 
 //Encryption spinner - filled in on datalist.xml
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.securityOptionsList, android.R.layout.simple_spinner_item);
-
-        String myString = router.getSecurity(); //the value you want the position for
-        int spinnerPosition = adapter.getPosition(myString);
-        System.out.println(myString + "MY STRING!");
-        System.out.println(spinnerPosition + "SPINNER POSITION");
-//set the default according to value
-        spinner.setSelection(spinnerPosition);
-
-
-
-
-
+//        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//                this, R.array.securityOptionsList, android.R.layout.simple_spinner_item);
+//
+//        String myString = router.getSecurity(); //the value you want the position for
+//        int spinnerPosition = adapter.getPosition(myString);
+//        System.out.println(myString + "MY STRING!");
+//        System.out.println(spinnerPosition + "SPINNER POSITION");
+////set the default according to value
+//        spinner.setSelection(spinnerPosition);
 //        String name = router.getSecurity();
 //        System.out.println(router.getSecurity() + " getSecurity!");
 //        int index = adapter.getPosition(name);
 //        System.out.println(index + " INDEX!");
 //        if (index != -1) spinner.setSelection(index);
-            spinner.setSelection(3);
+//            spinner.setSelection(3);
+//
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//
+//            public void onItemSelected(AdapterView<?> arg0, View arg1,
+//                                       int arg2, long arg3){
+//
+//                int index = arg0.getSelectedItemPosition();
+//// storing string resources into Array
+//                securityOptions = getResources().getStringArray(R.array.securityOptionsList);
+//                Toast.makeText(getBaseContext(), "You have selected : " + securityOptions[index],
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//// do nothing
+//            }
+//        });
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3){
-
-                int index = arg0.getSelectedItemPosition();
-// storing string resources into Array
-                securityOptions = getResources().getStringArray(R.array.securityOptionsList);
-                Toast.makeText(getBaseContext(), "You have selected : " + securityOptions[index],
-                        Toast.LENGTH_SHORT).show();
-            }
-            public void onNothingSelected(AdapterView<?> arg0) {
-// do nothing
-            }
-        });
-
-        System.out.println("SSID " + router.getSsid());
-        System.out.println("Subnet " + router.getSubnet());
-        System.out.println("Start IP " + router.getDhcpPool1());
-        System.out.println("End IP " + router.getDhcpPool2());
-        System.out.println("Lease Time " + router.getDhcpLeaseTime());
-        System.out.println("Shared Key " + router.getSharedKey());
-        System.out.println("Encryption " + router.getEncryption());
-        System.out.println("Security " + router.getSecurity());
-
+        System.out.println("Username " + TomatoMobile.getInstance().getUsername());
+        System.out.println("Password " + TomatoMobile.getInstance().getPassword());
         ButterKnife.inject(this);
-
     }
 
     @Override
@@ -153,7 +140,7 @@ public class BasicConfiguration extends Activity {
     }
 
     @OnClick(R.id.admin_save_button)
-    public void saveClicked(Button routerButton){
+    public void saveClicked(Button saveButton){
 
         if (!routerNameView.getText().toString().equals(router.getRouterName())){
             changeList.add(routerNameView.getText().toString());
@@ -175,13 +162,16 @@ public class BasicConfiguration extends Activity {
             changeList.add(ssidView.getText().toString());
             changeKey.add("wl_ssid");
         }
-//        if (!routerUsrView.getText().toString().equals(router.getUsrname())){
-//            changeList.add(wirelessSubnetView.getText().toString());
-//            changeKey.add("");
+        if (!routerIPView.getText().toString().equals(router.getLanIpAddr())){
+            changeList.add(routerIPView.getText().toString());
+            changeKey.add("lan_ipaddr");
+//
+        }
+//        if (!routerUsrView.getText().toString().equals(TomatoMobile.getInstance().getUsername())){
+//            TomatoMobile.getInstance().setUsername(routerUsrView.getText().toString());
 //        }
-//        if (!routerPwdView.getText().toString().equals(router.getPswrd())){
-//            changeList.add(wirelessSubnetView.getText().toString());
-//            changeKey.add("");
+//        if (!routerPwdView.getText().toString().equals(TomatoMobile.getInstance().getPassword())){
+//            TomatoMobile.getInstance().setPassword(routerPwdView.getText().toString());
 //        }
         else{
             progDialog.setMessage("Refreshing Information");
@@ -191,6 +181,13 @@ public class BasicConfiguration extends Activity {
             progDialog.setMessage("Saving Changes");
             progDialog.show();
         new updateInfo().execute();
+    }
+
+    @OnClick(R.id.admin_cancel_button)
+    public void cancelClicked(){
+            Intent intent = new Intent(BasicConfiguration.this, MainScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
     }
 
     private class routerInfo extends AsyncTask<Router, Void, Router> {
@@ -212,12 +209,12 @@ public class BasicConfiguration extends Activity {
             routerNameView.setText(router.getRouterName());
             wirelessMacView.setText(router.getWanHwAddr());
             routerIPView.setText(router.getLanIpAddr());
-            routerUsrView.setText(router.getUsrname());
-            routerPwdView.setText(router.getPswrd());
+            routerUsrView.setText(TomatoMobile.getInstance().getUsername());
+            routerPwdView.setText(TomatoMobile.getInstance().getPassword());
             wirelessSubnetView.setText(router.getSubnet());
             dhcpStartView.setText(router.getDhcpPool1());
             dhcpEndView.setText(router.getDhcpPool2());
-//            securityView.setText(router.getSecurity());
+            securityView.setText(router.getSecurity());
             encryptionView.setText(router.getEncryption());
             ssidView.setText(router.getSsid());
             }
@@ -262,6 +259,8 @@ public class BasicConfiguration extends Activity {
             } else {
 
                 Toast.makeText(BasicConfiguration.this, "Router is Updated", Toast.LENGTH_SHORT).show();
+                TomatoMobile.getInstance().setIpaddress(routerIPView.getText().toString());
+                System.out.println(TomatoMobile.getInstance().getIpaddress() + " NEW IP ADDRESS!");
             }
 
             new BasicConfiguration.routerInfo().execute(BasicConfiguration.this.router);
