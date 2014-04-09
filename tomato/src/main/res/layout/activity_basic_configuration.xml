@@ -74,7 +74,7 @@
                     android:layout_alignParentTop="true">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/router__ssid_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                     android:layout_alignParentTop="true">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/router_ip_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
