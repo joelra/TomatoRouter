@@ -161,10 +161,13 @@ public class BasicConfiguration extends Activity {
         if (!ssidView.getText().toString().equals(router.getSsid())){
             changeList.add(ssidView.getText().toString());
             changeKey.add("wl_ssid");
+
         }
         if (!routerIPView.getText().toString().equals(router.getLanIpAddr())){
             changeList.add(routerIPView.getText().toString());
             changeKey.add("lan_ipaddr");
+            changeKey.add("_moveip");
+            changeList.add("1");
 //
         }
 //        if (!routerUsrView.getText().toString().equals(TomatoMobile.getInstance().getUsername())){
@@ -217,6 +220,10 @@ public class BasicConfiguration extends Activity {
             securityView.setText(router.getSecurity());
             encryptionView.setText(router.getEncryption());
             ssidView.setText(router.getSsid());
+
+            if (progDialog.isShowing()) {
+                progDialog.dismiss();
+            }
             }
         }
 //Update changed settings
@@ -242,7 +249,7 @@ public class BasicConfiguration extends Activity {
                 System.out.println(key + " Key" + i);
 
 
-                HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", BasicConfiguration.this.router.getHttpId(), key, value);
+                HashMap<String, String> tempHashMap = conn.buildParamsMap("_http_id", BasicConfiguration.this.router.getHttpId(), key, value, "_service", "*");
                 try {
                     returnedHTML = conn.PostToWebadress("http://" + TomatoMobile.getInstance().getIpaddress() + "/tomato.cgi", tempHashMap);
                 } catch (IOException e) {
@@ -260,7 +267,7 @@ public class BasicConfiguration extends Activity {
 
                 Toast.makeText(BasicConfiguration.this, "Router is Updated", Toast.LENGTH_SHORT).show();
                 TomatoMobile.getInstance().setIpaddress(routerIPView.getText().toString());
-                System.out.println(TomatoMobile.getInstance().getIpaddress() + " NEW IP ADDRESS!");
+//                System.out.println(TomatoMobile.getInstance().getIpaddress() + " NEW IP ADDRESS!");
             }
 
             new BasicConfiguration.routerInfo().execute(BasicConfiguration.this.router);
