@@ -85,9 +85,9 @@ public class DeviceScreen extends ActionBarActivity {
 
         protected void onProgressUpdate(Integer... progUpdate){
             if(progUpdate[0] == 1){
-                progress.setMessage("Disabling wifi for device");
+                progress.setMessage("Disabling internet access for device");
             } else {
-                progress.setMessage("Enabling wifi for device");
+                progress.setMessage("Enabling internet access for device");
             }
         }
 
