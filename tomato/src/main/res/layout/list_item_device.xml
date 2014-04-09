@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Android Phone"
             android:id="@+id/deviceRowName"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:textIsSelectable="false"
             android:textStyle="bold" />
 
