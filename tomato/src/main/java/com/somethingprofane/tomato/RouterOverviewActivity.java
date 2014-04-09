@@ -80,16 +80,11 @@ public class RouterOverviewActivity extends Activity {
 
         //new retrieveRouterInfo().execute(routerNameTxt, routerMacTxt,routerIPTxt,routerModelTxt, routerUptimeTxt,routerRamTxt);
 
-        if (!routerNameTxt.getText().toString().equals(router.getRouterName())){
-            dialog.setMessage("Updating router...");
-            dialog.show();
-            new updateRouterInfo().execute(routerNameTxt.getText().toString());
-        }
-        else{
+
             dialog.setMessage("Refreshing router...");
             dialog.show();
             new refreshRouterInfo().execute(router);
-        }
+
     }
 
     private class refreshRouterInfo extends AsyncTask<Router, Void, Router> {

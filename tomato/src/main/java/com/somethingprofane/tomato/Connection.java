@@ -81,6 +81,7 @@ public class Connection {
     }
 
     private Document GetDocumentFromAddress(String address){
+        address = ValidateWebAddress(address);
         Document doc = null;
         try {
             doc = Jsoup.connect(address).header("Authorization", "Basic " + GetBase64Login(TomatoMobile.getInstance().getUsername(), TomatoMobile.getInstance().getPassword())).timeout(10000).get();
@@ -133,8 +134,8 @@ public class Connection {
 
     public String GetRouterHTTPId() {
         String http_id = "";
-        String website = "http://192.168.1.1";
-        String basic64login = GetBase64Login("root", "admin");
+        String website = TomatoMobile.getInstance().getIpaddress();
+        String basic64login = GetBase64Login(TomatoMobile.getInstance().getUsername(), TomatoMobile.getInstance().getPassword());
         Document doc = GetDocumentFromAddress(website);
         String scriptTag = doc.getElementsByTag("head").html();
         String pattern = "http_id=(.*?)\"";

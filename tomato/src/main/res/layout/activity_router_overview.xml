@@ -58,7 +58,7 @@
                     android:layout_alignParentTop="true">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/router_main_txtRouter"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                     android:layout_below="@+id/router_main_labelMAC">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/trouter_main_txtIP"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

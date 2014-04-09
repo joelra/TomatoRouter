@@ -19,7 +19,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "tomatoDB.sqlite";
 
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     // DB version 4: Added device table. Hope it works
     // DB version 5: Added rule table. - Garrett
     // DB Version 8: Updated device table with restriction variable - Joel

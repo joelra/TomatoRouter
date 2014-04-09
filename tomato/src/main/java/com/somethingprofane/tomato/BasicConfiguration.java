@@ -261,6 +261,9 @@ public class BasicConfiguration extends Activity {
         }
 
         protected void onPostExecute(String string) {
+            if (progDialog.isShowing()) {
+                progDialog.dismiss();
+            }
             if (isFailed) {
                 Toast.makeText(BasicConfiguration.this, "Unable to Save Changes", Toast.LENGTH_SHORT).show();
             } else {

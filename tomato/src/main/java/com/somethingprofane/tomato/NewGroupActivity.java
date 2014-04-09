@@ -80,10 +80,10 @@ public class NewGroupActivity extends ActionBarActivity {
 
         deleteButton.setVisibility(View.INVISIBLE);
 
+        new updateRouter().execute(deviceListView);
         setupSpinners();
         setupDeviceGroup();
         setupRule();
-        setupDeviceListView(deviceListView);
 
 
     }
@@ -323,6 +323,30 @@ public class NewGroupActivity extends ActionBarActivity {
             rule.setToDelete(true);
 
             new updateRuleOnRouter().execute(rule);
+        }
+    }
+
+    private class updateRouter extends AsyncTask<ListView, Void, ListView> {
+        private ProgressDialog dialog = new ProgressDialog(NewGroupActivity.this);
+
+
+
+        protected void onPreExecute(){
+            this.dialog.setMessage("Getting devices...");
+            this.dialog.show();
+        }
+
+
+        @Override
+        protected ListView doInBackground(ListView... listViews) {
+
+            new Router();
+            return listViews[0];
+        }
+
+        protected void onPostExecute(ListView listView){
+            this.dialog.dismiss();
+            setupDeviceListView(listView);
         }
     }
 
