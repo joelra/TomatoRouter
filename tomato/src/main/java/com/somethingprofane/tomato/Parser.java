@@ -206,13 +206,15 @@ public class Parser {
         for(Device device : deviceListDHCP){
             boolean toUpdate = true;
 
-            for(Device deviceWifi: deviceListWIFI){
-                if(deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())){
-                    device.setDeviceType("wireless");
-                    device.setDeviceWifiConnected(true);
-                    DatabaseManager.getInstance().updateDevice(device);
-                    toUpdate = false;
-                    break; // Break out of first for loop
+            if(deviceListWIFI != null) {
+                for (Device deviceWifi : deviceListWIFI) {
+                    if (deviceWifi.getDeviceMacAddr().equals(device.getDeviceMacAddr())) {
+                        device.setDeviceType("wireless");
+                        device.setDeviceWifiConnected(true);
+                        DatabaseManager.getInstance().updateDevice(device);
+                        toUpdate = false;
+                        break; // Break out of first for loop
+                    }
                 }
             }
 
@@ -294,6 +296,9 @@ public class Parser {
             Matcher m2 = r2.matcher(m.group(1));
             while(m2.find()){
                 deviceInfoArray = m2.group(1).trim().replaceAll("[\\[']", "").split(",");
+                if(deviceInfoArray[0].equals("")){
+                    return null;
+                }
                 Device device = new Device();
                 device.setDeviceMacAddr(deviceInfoArray[1]);
                 deviceList.add(device);
